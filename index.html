@@ -819,6 +819,152 @@
     }
     .input-with-label input { padding-top: 22px; padding-bottom: 8px; }
 
+    /* === Meal builder === */
+    .builder { display: flex; flex-direction: column; gap: 14px; padding-bottom: 4px; }
+    .builder-total {
+      position: sticky; top: 56px; z-index: 3;
+      background: linear-gradient(180deg, var(--surface), var(--surface-2));
+      border: 1px solid var(--hairline-strong);
+      border-radius: 10px;
+      padding: 12px 14px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    }
+    .builder-total-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+    .builder-total-eyebrow {
+      font-family: var(--font-mono); font-size: 9.5px;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 2px;
+    }
+    .builder-total-kcal {
+      font-size: 28px; font-weight: 500; letter-spacing: -0.04em; line-height: 1;
+      color: var(--ink);
+    }
+    .builder-total-unit { font-size: 12px; color: var(--muted); font-family: var(--font-mono); margin-left: 2px; letter-spacing: 0; }
+    .builder-total-pp { text-align: right; font-family: var(--font-mono); }
+    .builder-total-macros {
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px dashed var(--hairline);
+      display: flex; flex-wrap: wrap; gap: 4px;
+      font-size: 11.5px;
+      color: var(--ink-2);
+    }
+    .builder-total-macros .sep { color: var(--dim); }
+    .builder-total-mlbl {
+      color: var(--muted); font-size: 9.5px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      margin-right: 2px;
+    }
+
+    .builder-search {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--surface-2);
+      border: 1px solid var(--hairline);
+      border-radius: 8px;
+      padding: 4px 6px 4px 12px;
+    }
+    .builder-search:focus-within { border-color: var(--hairline-strong); background: var(--surface); }
+    .builder-search-input {
+      flex: 1; min-width: 0;
+      background: transparent; border: none; outline: none;
+      color: var(--ink); padding: 8px 0;
+      font-family: var(--font-sans); font-size: 13.5px;
+    }
+    .builder-search-input::placeholder { color: var(--dim); }
+
+    .builder-group {
+      display: flex; flex-direction: column;
+    }
+    .builder-group-head {
+      font-family: var(--font-mono);
+      font-size: 10.5px; font-weight: 500;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--muted);
+      padding: 4px 2px 8px;
+      display: flex; justify-content: space-between; align-items: baseline;
+    }
+    .builder-group-count {
+      font-size: 10px; color: var(--dim); letter-spacing: 0.04em;
+    }
+
+    .builder-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px; align-items: center;
+      padding: 10px 12px;
+      background: var(--surface-2);
+      border: 1px solid var(--hairline);
+      border-radius: 8px;
+      margin-bottom: 6px;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .builder-row.active {
+      border-color: var(--good-line);
+      background: oklch(0.32 0.07 145 / 0.10);
+    }
+    .builder-row-info { min-width: 0; }
+    .builder-row-name {
+      font-size: 13px; font-weight: 500; color: var(--ink);
+      letter-spacing: -0.01em; line-height: 1.25;
+      margin-bottom: 3px; word-break: break-word;
+    }
+    .builder-row-unit { color: var(--muted); font-size: 10.5px; font-weight: 400; letter-spacing: 0; }
+    .builder-row-macros {
+      font-size: 11px; color: var(--muted); letter-spacing: -0.005em;
+    }
+    .builder-row-macros .sep { color: var(--dim); margin: 0 4px; }
+
+    .builder-stepper {
+      display: inline-flex; align-items: center;
+      background: var(--surface);
+      border: 1px solid var(--hairline-strong);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .step-btn {
+      width: 32px; height: 32px;
+      background: transparent; border: none;
+      color: var(--ink); font-family: var(--font-mono);
+      font-size: 16px; line-height: 1; cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+    .step-btn:hover:not(:disabled) { background: var(--surface-2); }
+    .step-btn:disabled { color: var(--dim); cursor: not-allowed; }
+    .step-qty {
+      width: 44px; height: 32px;
+      background: transparent; border: none; outline: none;
+      color: var(--ink);
+      text-align: center;
+      font-size: 13px; font-weight: 500;
+      border-left: 1px solid var(--hairline-strong);
+      border-right: 1px solid var(--hairline-strong);
+      -moz-appearance: textfield;
+      appearance: textfield;
+    }
+    .step-qty::-webkit-outer-spin-button,
+    .step-qty::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    .step-qty::placeholder { color: var(--dim); }
+
+    .builder-foot {
+      position: sticky; bottom: 0;
+      background: linear-gradient(180deg, transparent, var(--surface) 35%);
+      padding: 14px 0 4px;
+      margin-top: 4px;
+    }
+    .builder-name-input {
+      width: 100%;
+      background: var(--surface-2);
+      border: 1px solid var(--hairline);
+      color: var(--ink);
+      padding: 11px 12px;
+      border-radius: 8px;
+      font-family: var(--font-sans);
+      font-size: 13.5px;
+      margin-bottom: 8px;
+    }
+    .builder-name-input:focus { outline: none; border-color: var(--hairline-strong); background: var(--surface); }
+    .builder-name-input::placeholder { color: var(--dim); }
+
     .btn {
       display: inline-flex; align-items: center; justify-content: center; gap: 6px;
       background: var(--ink);
@@ -1461,6 +1607,100 @@ const PRESETS = [
   { name: 'Thai massaman beef', sub: 'with rice, 1 plate', kcal: 700, p: 30, f: 35, c: 65, fiber: 5, cat: 'filler', tags: ['dinner', 'thai'], cuisine: 'asian' },
   { name: 'Thai prawn curry', sub: 'with rice, 1 plate', kcal: 530, p: 28, f: 22, c: 55, fiber: 3, cat: 'filler', tags: ['dinner', 'thai'], cuisine: 'asian' },
   { name: 'Pad thai', sub: 'chicken, 1 plate', kcal: 580, p: 28, f: 22, c: 65, fiber: 4, cat: 'filler', tags: ['dinner', 'thai'], cuisine: 'asian' },
+
+  // === Builder components (per-unit ingredients; hidden from Quick by 'component' tag) ===
+  // Proteins
+  { name: 'Chicken thigh', sub: 'cooked', kcal: 130, p: 19, f: 6, c: 0, fiber: 0, cat: 'anchor', tags: ['component'], cuisine: 'generic', unit: '100g', scale_step: 50, group: 'protein' },
+  { name: 'Chicken breast', sub: 'cooked', kcal: 165, p: 31, f: 3.5, c: 0, fiber: 0, cat: 'anchor', tags: ['component'], cuisine: 'generic', unit: '100g', scale_step: 50, group: 'protein' },
+  { name: 'Chicken mince', sub: 'cooked', kcal: 110, p: 19, f: 4, c: 0, fiber: 0, cat: 'anchor', tags: ['component'], cuisine: 'generic', unit: '100g', scale_step: 50, group: 'protein' },
+  { name: 'Lamb mince', sub: 'cooked', kcal: 175, p: 18, f: 11, c: 0, fiber: 0, cat: 'anchor', tags: ['component'], cuisine: 'generic', unit: '100g', scale_step: 50, group: 'protein' },
+  { name: 'Mutton (bone-in)', sub: 'meat only', kcal: 200, p: 20, f: 13, c: 0, fiber: 0, cat: 'balanced', tags: ['component'], cuisine: 'generic', unit: '100g', scale_step: 50, group: 'protein' },
+  { name: 'Prawns', sub: 'cleaned, cooked', kcal: 100, p: 20, f: 1, c: 0, fiber: 0, cat: 'anchor', tags: ['component'], cuisine: 'generic', unit: '100g', scale_step: 50, group: 'protein' },
+  { name: 'Calamari / squid', sub: 'cooked', kcal: 105, p: 18, f: 3, c: 1, fiber: 0, cat: 'anchor', tags: ['component'], cuisine: 'generic', unit: '100g', scale_step: 50, group: 'protein' },
+  { name: 'Crab meat', sub: 'cooked', kcal: 100, p: 20, f: 1.5, c: 0, fiber: 0, cat: 'anchor', tags: ['component'], cuisine: 'generic', unit: '100g', scale_step: 50, group: 'protein' },
+  { name: 'Paneer', sub: 'plain', kcal: 265, p: 18, f: 20, c: 3, fiber: 0, cat: 'balanced', tags: ['component'], cuisine: 'indian', unit: '100g', scale_step: 50, group: 'protein' },
+  { name: 'Tofu (firm)', sub: '', kcal: 145, p: 15, f: 8, c: 4, fiber: 0, cat: 'anchor', tags: ['component'], cuisine: 'generic', unit: '100g', scale_step: 50, group: 'protein' },
+  { name: 'Steak (sirloin)', sub: 'cooked', kcal: 200, p: 26, f: 10, c: 0, fiber: 0, cat: 'anchor', tags: ['component'], cuisine: 'continental', unit: '100g', scale_step: 50, group: 'protein' },
+  { name: 'Whey protein', sub: '1 scoop', kcal: 120, p: 25, f: 2, c: 3, fiber: 0, cat: 'anchor', tags: ['component'], cuisine: 'generic', unit: '1 scoop', scale_step: 0.5, group: 'protein' },
+
+  // Dairy & fats
+  { name: 'Greek yogurt', sub: 'per 100g', kcal: 65, p: 10, f: 2, c: 4, fiber: 0, cat: 'anchor', tags: ['component'], cuisine: 'generic', unit: '100g', scale_step: 50, group: 'dairy' },
+  { name: 'Hung curd', sub: 'per 100g', kcal: 65, p: 10, f: 2, c: 4, fiber: 0, cat: 'anchor', tags: ['component'], cuisine: 'indian', unit: '100g', scale_step: 50, group: 'dairy' },
+  { name: 'Whole milk', sub: '', kcal: 60, p: 3, f: 3, c: 5, fiber: 0, cat: 'filler', tags: ['component'], cuisine: 'generic', unit: '100ml', scale_step: 50, group: 'dairy' },
+  { name: 'Skim milk', sub: '', kcal: 35, p: 3.5, f: 0, c: 5, fiber: 0, cat: 'balanced', tags: ['component'], cuisine: 'generic', unit: '100ml', scale_step: 50, group: 'dairy' },
+  { name: 'Cheese (shredded)', sub: '', kcal: 110, p: 7, f: 9, c: 1, fiber: 0, cat: 'balanced', tags: ['component'], cuisine: 'generic', unit: '30g', scale_step: 1, group: 'dairy' },
+  { name: 'Butter', sub: '', kcal: 100, p: 0, f: 11, c: 0, fiber: 0, cat: 'filler', tags: ['component'], cuisine: 'generic', unit: '1 tbsp', scale_step: 0.5, group: 'dairy' },
+  { name: 'Ghee', sub: '', kcal: 45, p: 0, f: 5, c: 0, fiber: 0, cat: 'filler', tags: ['component'], cuisine: 'indian', unit: '1 tsp', scale_step: 0.5, group: 'dairy' },
+  { name: 'Cream', sub: '', kcal: 50, p: 0.5, f: 5, c: 1, fiber: 0, cat: 'filler', tags: ['component'], cuisine: 'generic', unit: '1 tbsp', scale_step: 0.5, group: 'dairy' },
+  { name: 'Sour cream', sub: '', kcal: 30, p: 0.5, f: 3, c: 0.5, fiber: 0, cat: 'filler', tags: ['component'], cuisine: 'generic', unit: '1 tbsp', scale_step: 0.5, group: 'dairy' },
+
+  // Carb bases
+  { name: 'Rice (white, cooked)', sub: 'per 100g', kcal: 130, p: 2.5, f: 0.5, c: 29, fiber: 0, cat: 'filler', tags: ['component'], cuisine: 'generic', unit: '100g', scale_step: 50, group: 'carb' },
+  { name: 'Roti (plain, 6")', sub: '', kcal: 80, p: 2.5, f: 0.8, c: 16, fiber: 1, cat: 'filler', tags: ['component'], cuisine: 'indian', unit: '1 piece', scale_step: 0.5, group: 'carb' },
+  { name: 'Puri', sub: '', kcal: 100, p: 2, f: 5, c: 12, fiber: 0.5, cat: 'filler', tags: ['component'], cuisine: 'indian', unit: '1 piece', scale_step: 1, group: 'carb' },
+  { name: 'Naan', sub: '', kcal: 260, p: 8, f: 5, c: 45, fiber: 2, cat: 'filler', tags: ['component'], cuisine: 'indian', unit: '1 piece', scale_step: 0.5, group: 'carb' },
+  { name: 'Pav', sub: '', kcal: 110, p: 3, f: 2, c: 18, fiber: 1, cat: 'filler', tags: ['component'], cuisine: 'indian', unit: '1 piece', scale_step: 1, group: 'carb' },
+  { name: 'Egg noodles', sub: 'cooked', kcal: 130, p: 4.5, f: 1, c: 25, fiber: 1, cat: 'filler', tags: ['component'], cuisine: 'asian', unit: '100g', scale_step: 50, group: 'carb' },
+  { name: 'Lentil pasta', sub: 'dry', kcal: 350, p: 25, f: 2, c: 50, fiber: 8, cat: 'balanced', tags: ['component'], cuisine: 'continental', unit: '100g', scale_step: 25, group: 'carb' },
+  { name: 'Regular pasta', sub: 'dry', kcal: 350, p: 12, f: 2, c: 70, fiber: 3, cat: 'filler', tags: ['component'], cuisine: 'continental', unit: '100g', scale_step: 25, group: 'carb' },
+  { name: 'High-protein tortilla', sub: '', kcal: 100, p: 12, f: 3, c: 10, fiber: 5, cat: 'anchor', tags: ['component'], cuisine: 'tex-mex', unit: '1 piece', scale_step: 1, group: 'carb' },
+  { name: 'Regular flour tortilla', sub: '6"', kcal: 100, p: 2, f: 3, c: 16, fiber: 1, cat: 'filler', tags: ['component'], cuisine: 'tex-mex', unit: '1 piece', scale_step: 1, group: 'carb' },
+  { name: 'Bread / toast', sub: '', kcal: 80, p: 3, f: 1, c: 14, fiber: 1, cat: 'filler', tags: ['component'], cuisine: 'generic', unit: '1 slice', scale_step: 1, group: 'carb' },
+  { name: 'Mashed potato', sub: '', kcal: 85, p: 2, f: 2, c: 15, fiber: 1, cat: 'filler', tags: ['component'], cuisine: 'continental', unit: '100g', scale_step: 50, group: 'carb' },
+  { name: 'Roast potato', sub: '', kcal: 150, p: 2.5, f: 5, c: 24, fiber: 2, cat: 'filler', tags: ['component'], cuisine: 'continental', unit: '100g', scale_step: 50, group: 'carb' },
+  { name: 'Oats', sub: 'dry', kcal: 115, p: 4, f: 2, c: 20, fiber: 3, cat: 'filler', tags: ['component'], cuisine: 'generic', unit: '30g', scale_step: 1, group: 'carb' },
+  { name: 'Sushi rice', sub: 'cooked', kcal: 140, p: 2.5, f: 0.5, c: 31, fiber: 0, cat: 'filler', tags: ['component'], cuisine: 'asian', unit: '100g', scale_step: 50, group: 'carb' },
+
+  // Legumes
+  { name: 'Toor dal', sub: 'cooked, per 100g', kcal: 100, p: 7, f: 0.5, c: 17, fiber: 2, cat: 'balanced', tags: ['component'], cuisine: 'indian', unit: '100g', scale_step: 50, group: 'legume' },
+  { name: 'Chickpeas / chole', sub: 'cooked', kcal: 120, p: 6, f: 2, c: 20, fiber: 5, cat: 'filler', tags: ['component'], cuisine: 'indian', unit: '100g', scale_step: 50, group: 'legume' },
+  { name: 'Rajma / kidney beans', sub: 'cooked', kcal: 115, p: 6, f: 0.5, c: 20, fiber: 4, cat: 'filler', tags: ['component'], cuisine: 'indian', unit: '100g', scale_step: 50, group: 'legume' },
+  { name: 'Black beans', sub: 'cooked', kcal: 130, p: 9, f: 0.5, c: 24, fiber: 7, cat: 'balanced', tags: ['component'], cuisine: 'tex-mex', unit: '100g', scale_step: 50, group: 'legume' },
+
+  // Vegetables & sides
+  { name: 'Steamed veg', sub: 'broccoli, beans, etc.', kcal: 35, p: 2.5, f: 0, c: 6, fiber: 3, cat: 'balanced', tags: ['component'], cuisine: 'generic', unit: '100g', scale_step: 50, group: 'veg' },
+  { name: 'Roasted veg', sub: 'peppers, courgette, onion', kcal: 45, p: 2, f: 1, c: 8, fiber: 2, cat: 'filler', tags: ['component'], cuisine: 'continental', unit: '100g', scale_step: 50, group: 'veg' },
+  { name: 'Stir fry veg', sub: 'mixed, no oil', kcal: 30, p: 2, f: 0, c: 5, fiber: 2, cat: 'balanced', tags: ['component'], cuisine: 'asian', unit: '100g', scale_step: 50, group: 'veg' },
+  { name: 'Jackfruit sabzi', sub: 'fried pata', kcal: 275, p: 3, f: 14.5, c: 35, fiber: 3, cat: 'filler', tags: ['component'], cuisine: 'indian', unit: '1 katori', scale_step: 0.5, group: 'veg' },
+  { name: 'Bhaji mash', sub: 'pav bhaji veg, no butter', kcal: 60, p: 2, f: 0, c: 12, fiber: 2, cat: 'filler', tags: ['component'], cuisine: 'indian', unit: '100g', scale_step: 50, group: 'veg' },
+  { name: 'Side salad', sub: '', kcal: 20, p: 1, f: 0, c: 4, fiber: 1.5, cat: 'filler', tags: ['component'], cuisine: 'generic', unit: '100g', scale_step: 50, group: 'veg' },
+  { name: 'Onion', sub: 'raw or cooked', kcal: 40, p: 1, f: 0, c: 10, fiber: 1, cat: 'filler', tags: ['component'], cuisine: 'generic', unit: '100g', scale_step: 25, group: 'veg' },
+
+  // Sauces & gravies
+  { name: 'Marinara sauce', sub: '', kcal: 55, p: 1.5, f: 3, c: 7, fiber: 1, cat: 'filler', tags: ['component'], cuisine: 'continental', unit: '100ml', scale_step: 25, group: 'sauce' },
+  { name: 'Coconut milk', sub: 'full fat', kcal: 150, p: 1.5, f: 15, c: 3, fiber: 0, cat: 'filler', tags: ['component'], cuisine: 'asian', unit: '100ml', scale_step: 25, group: 'sauce' },
+  { name: 'Onion-tomato gravy', sub: 'no oil', kcal: 30, p: 1, f: 0, c: 6, fiber: 1, cat: 'filler', tags: ['component'], cuisine: 'indian', unit: '1 katori', scale_step: 0.5, group: 'sauce' },
+  { name: 'Teriyaki glaze', sub: '', kcal: 25, p: 0.5, f: 0, c: 6, fiber: 0, cat: 'filler', tags: ['component'], cuisine: 'asian', unit: '1 tbsp', scale_step: 0.5, group: 'sauce' },
+  { name: 'Enchilada sauce', sub: '', kcal: 20, p: 0.5, f: 0.5, c: 3.5, fiber: 0, cat: 'filler', tags: ['component'], cuisine: 'tex-mex', unit: '50ml', scale_step: 1, group: 'sauce' },
+  { name: 'Guacamole', sub: '', kcal: 80, p: 1, f: 7, c: 4, fiber: 2, cat: 'filler', tags: ['component'], cuisine: 'tex-mex', unit: '50g', scale_step: 1, group: 'sauce' },
+  { name: 'Hummus', sub: '', kcal: 80, p: 3, f: 5, c: 6, fiber: 1, cat: 'filler', tags: ['component'], cuisine: 'middle-eastern', unit: '30g', scale_step: 1, group: 'sauce' },
+  { name: 'Peanut butter', sub: '', kcal: 95, p: 4, f: 8, c: 3, fiber: 1, cat: 'filler', tags: ['component'], cuisine: 'generic', unit: '1 tbsp', scale_step: 0.5, group: 'sauce' },
+  { name: 'Salsa', sub: '', kcal: 15, p: 0.5, f: 0, c: 3, fiber: 0.5, cat: 'filler', tags: ['component'], cuisine: 'tex-mex', unit: '50g', scale_step: 1, group: 'sauce' },
+  { name: 'Tadka', sub: 'ghee + spices', kcal: 50, p: 0, f: 5, c: 1, fiber: 0, cat: 'filler', tags: ['component'], cuisine: 'indian', unit: '1 tsp ghee', scale_step: 0.5, group: 'sauce' },
+
+  // Fruits
+  { name: 'Banana (piece)', sub: '', kcal: 105, p: 1, f: 0, c: 27, fiber: 3, cat: 'filler', tags: ['component'], cuisine: 'generic', unit: '1 piece', scale_step: 0.5, group: 'fruit' },
+  { name: 'Mango (Alphonso, piece)', sub: '', kcal: 150, p: 1, f: 0, c: 35, fiber: 3, cat: 'filler', tags: ['component'], cuisine: 'generic', unit: '1 piece', scale_step: 0.5, group: 'fruit' },
+  { name: 'Apple', sub: '', kcal: 95, p: 0.5, f: 0, c: 25, fiber: 4, cat: 'filler', tags: ['component'], cuisine: 'generic', unit: '1 piece', scale_step: 0.5, group: 'fruit' },
+
+  // Drinks
+  { name: 'Chocolate milk (mug)', sub: '', kcal: 180, p: 8, f: 5, c: 26, fiber: 0, cat: 'filler', tags: ['component'], cuisine: 'generic', unit: '1 mug', scale_step: 0.5, group: 'drink' },
+  { name: 'Salt lassi (glass)', sub: '', kcal: 150, p: 8, f: 5, c: 18, fiber: 0, cat: 'filler', tags: ['component'], cuisine: 'indian', unit: '1 glass', scale_step: 0.5, group: 'drink' },
+
+  // Supplements
+  { name: 'Creatine', sub: '5g', kcal: 0, p: 0, f: 0, c: 0, fiber: 0, cat: 'filler', tags: ['component'], cuisine: 'generic', unit: '5g', scale_step: 1, group: 'supplement' },
+];
+
+const BUILDER_GROUPS = [
+  { key: 'protein',    label: 'Proteins' },
+  { key: 'dairy',      label: 'Dairy & fats' },
+  { key: 'carb',       label: 'Carb bases' },
+  { key: 'legume',     label: 'Legumes' },
+  { key: 'veg',        label: 'Vegetables & sides' },
+  { key: 'sauce',      label: 'Sauces & gravies' },
+  { key: 'fruit',      label: 'Fruits' },
+  { key: 'drink',      label: 'Drinks' },
+  { key: 'supplement', label: 'Supplements' },
 ];
 
 const CATEGORIES = [
@@ -2326,6 +2566,7 @@ function AddSheet({ onClose, onAdd, presets, savedMeals, onRemoveSaved, tab, set
           <div className="sheet-title">Add meal</div>
           <div className="sheet-tabs" role="tablist">
             <button className={`sheet-tab ${tab === 'quick' ? 'active' : ''}`} onClick={() => setTab('quick')}>Quick</button>
+            <button className={`sheet-tab ${tab === 'builder' ? 'active' : ''}`} onClick={() => setTab('builder')}>Builder</button>
             <button className={`sheet-tab ${tab === 'custom' ? 'active' : ''}`} onClick={() => setTab('custom')}>Custom</button>
           </div>
           <button className="icon-btn" onClick={onClose} aria-label="Close">
@@ -2342,6 +2583,11 @@ function AddSheet({ onClose, onAdd, presets, savedMeals, onRemoveSaved, tab, set
               onRemoveSaved={onRemoveSaved}
               pulseId={pulseId}
             />
+          ) : tab === 'builder' ? (
+            <BuilderTab
+              presets={presets}
+              onAdd={(m) => { handleAdd(m); }}
+            />
           ) : (
             <CustomAdd onSubmit={(m) => { handleAdd(m); }} onCancel={onClose} />
           )}
@@ -2352,6 +2598,8 @@ function AddSheet({ onClose, onAdd, presets, savedMeals, onRemoveSaved, tab, set
 }
 
 function QuickAdd({ presets, savedMeals, onAdd, onRemoveSaved, pulseId }) {
+  // Hide builder-only components from the Quick tab
+  presets = presets.filter(p => !p.tags?.includes('component'));
   return (
     <div>
       <div className="sheet-section">
@@ -2448,6 +2696,211 @@ function CustomAdd({ onSubmit, onCancel }) {
       </div>
     </div>
   );
+}
+
+function BuilderTab({ presets, onAdd }) {
+  const components = useMemo(
+    () => presets.filter(p => p.tags?.includes('component')),
+    [presets]
+  );
+  // selected: { [name]: quantity }
+  const [selected, setSelected] = useState({});
+  const [name, setName] = useState('');
+  const [query, setQuery] = useState('');
+
+  const setQty = (compName, qty) => {
+    setSelected(prev => {
+      const next = { ...prev };
+      if (qty <= 0) delete next[compName];
+      else next[compName] = qty;
+      return next;
+    });
+  };
+
+  const totals = useMemo(() => {
+    let kcal = 0, p = 0, f = 0, c = 0, fiber = 0;
+    for (const [compName, qty] of Object.entries(selected)) {
+      const comp = components.find(x => x.name === compName);
+      if (!comp) continue;
+      kcal  += (comp.kcal  || 0) * qty;
+      p     += (comp.p     || 0) * qty;
+      f     += (comp.f     || 0) * qty;
+      c     += (comp.c     || 0) * qty;
+      fiber += (comp.fiber || 0) * qty;
+    }
+    return { kcal, p, f, c, fiber };
+  }, [selected, components]);
+
+  const ratio = totals.kcal > 0 ? (totals.p / totals.kcal) * 100 : null;
+  const itemCount = Object.keys(selected).length;
+
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return components;
+    return components.filter(c =>
+      c.name.toLowerCase().includes(q) ||
+      (c.sub || '').toLowerCase().includes(q) ||
+      (c.group || '').toLowerCase().includes(q)
+    );
+  }, [components, query]);
+
+  const submit = () => {
+    if (itemCount === 0) return;
+    const parts = Object.entries(selected).map(([n, q]) => {
+      const comp = components.find(x => x.name === n);
+      const unit = comp?.unit ? ` ${comp.unit}` : '';
+      return `${formatQty(q)}×${unit ? unit + ' ' : ' '}${n}`;
+    });
+    const finalName = (name.trim() || 'Custom build') + ` · ${parts.join(' + ')}`;
+    onAdd({
+      name: finalName,
+      kcal: Math.round(totals.kcal),
+      p: round1(totals.p),
+      f: round1(totals.f),
+      c: round1(totals.c),
+      fiber: round1(totals.fiber),
+    });
+    setSelected({});
+    setName('');
+    setQuery('');
+  };
+
+  return (
+    <div className="builder">
+      {/* Running total — sticky-ish header */}
+      <div className="builder-total">
+        <div className="builder-total-row">
+          <div>
+            <div className="builder-total-eyebrow">Running total</div>
+            <div className="builder-total-kcal mono">
+              {Math.round(totals.kcal)}<span className="builder-total-unit"> kcal</span>
+            </div>
+          </div>
+          <div className="builder-total-pp">
+            <span className="mono" style={{ fontSize: 14, color: 'var(--ink)' }}>
+              {ratio == null ? '—' : ratio.toFixed(1)}
+            </span>
+            <span className="builder-total-unit"> g/100kcal</span>
+          </div>
+        </div>
+        <div className="builder-total-macros mono">
+          <span><span className="builder-total-mlbl">P</span> {round1(totals.p)}g</span>
+          <span className="sep">·</span>
+          <span><span className="builder-total-mlbl">F</span> {round1(totals.f)}g</span>
+          <span className="sep">·</span>
+          <span><span className="builder-total-mlbl">C</span> {round1(totals.c)}g</span>
+          <span className="sep">·</span>
+          <span><span className="builder-total-mlbl">Fb</span> {round1(totals.fiber)}g</span>
+          <span className="sep">·</span>
+          <span><span className="builder-total-mlbl">items</span> {itemCount}</span>
+        </div>
+      </div>
+
+      {/* Search */}
+      <div className="builder-search">
+        <input
+          className="builder-search-input"
+          placeholder="Search ingredients…"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
+        {query && (
+          <button className="icon-btn" onClick={() => setQuery('')} aria-label="Clear search" style={{ width: 28, height: 28 }}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          </button>
+        )}
+      </div>
+
+      {/* Groups */}
+      {BUILDER_GROUPS.map(g => {
+        const items = filtered.filter(c => c.group === g.key);
+        if (items.length === 0) return null;
+        return (
+          <div key={g.key} className="builder-group">
+            <div className="builder-group-head">{g.label} <span className="builder-group-count mono">{items.length}</span></div>
+            {items.map(comp => {
+              const qty = selected[comp.name] || 0;
+              return (
+                <BuilderRow key={comp.name} comp={comp} qty={qty} onChange={(q) => setQty(comp.name, q)} />
+              );
+            })}
+          </div>
+        );
+      })}
+
+      {/* Build action */}
+      <div className="builder-foot">
+        <input
+          className="builder-name-input"
+          placeholder="Optional name (e.g., Tonight's plate)"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <div className="form-actions">
+          <button className="btn btn-secondary" onClick={() => { setSelected({}); setName(''); }} disabled={itemCount === 0}>
+            Reset
+          </button>
+          <button className="btn" onClick={submit} disabled={itemCount === 0} style={itemCount === 0 ? { opacity: 0.45 } : null}>
+            Add to log{itemCount > 0 ? ` (${itemCount})` : ''}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function BuilderRow({ comp, qty, onChange }) {
+  const step = comp.scale_step || 1;
+  const dec = () => onChange(Math.max(0, round1(qty - step)));
+  const inc = () => onChange(round1(qty + step));
+  const onInput = (e) => {
+    const v = parseFloat(e.target.value);
+    if (Number.isFinite(v) && v >= 0) onChange(v);
+    else if (e.target.value === '') onChange(0);
+  };
+  const active = qty > 0;
+  return (
+    <div className={`builder-row ${active ? 'active' : ''}`}>
+      <div className="builder-row-info">
+        <div className="builder-row-name">
+          {comp.name}
+          {comp.unit && <span className="builder-row-unit mono"> · {comp.unit}</span>}
+        </div>
+        <div className="builder-row-macros mono">
+          {comp.kcal} kcal
+          <span className="sep">·</span>
+          {comp.p}p
+          <span className="sep">·</span>
+          {comp.f}f
+          <span className="sep">·</span>
+          {comp.c}c
+          {comp.fiber ? <><span className="sep">·</span>{comp.fiber}fb</> : null}
+        </div>
+      </div>
+      <div className="builder-stepper">
+        <button className="step-btn" onClick={dec} disabled={qty <= 0} aria-label="Decrease">−</button>
+        <input
+          className="step-qty mono"
+          type="number"
+          inputMode="decimal"
+          step={step}
+          min="0"
+          value={qty || ''}
+          placeholder="0"
+          onChange={onInput}
+        />
+        <button className="step-btn" onClick={inc} aria-label="Increase">+</button>
+      </div>
+    </div>
+  );
+}
+
+function formatQty(q) {
+  if (q === Math.floor(q)) return String(q);
+  return String(Number(q.toFixed(2)));
+}
+function round1(n) {
+  return Math.round(n * 10) / 10;
 }
 
 function NumField({ label, unit, value, onChange, error, min, step }) {
