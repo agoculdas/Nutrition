@@ -1392,6 +1392,9 @@ const PRESETS = [
   { name: 'Chicken shawarma plate', sub: 'takeaway', kcal: 550, p: 42, f: 22, c: 45, fiber: 3, cat: 'balanced' },
   { name: 'Keema pav (2)', sub: 'comfort food', kcal: 550, p: 35, f: 28, c: 40, fiber: 2, cat: 'balanced' },
   { name: 'Butter chicken + 2 roti', sub: 'budget-spender', kcal: 650, p: 38, f: 30, c: 50, fiber: 3, cat: 'balanced' },
+  { name: 'Prawn & chive dumplings', sub: '4 pieces', kcal: 200, p: 14, f: 5, c: 22, fiber: 1, cat: 'balanced' },
+  { name: 'Siu mai', sub: 'pork/prawn, 4 pieces', kcal: 240, p: 16, f: 14, c: 12, fiber: 1, cat: 'balanced' },
+  { name: 'Tom kha gai', sub: 'chicken coconut soup, 1 bowl', kcal: 350, p: 22, f: 22, c: 14, fiber: 2, cat: 'balanced' },
 
   { name: 'Dal + rice', sub: '1 cup each', kcal: 400, p: 16, f: 6, c: 68, fiber: 8, cat: 'filler' },
   { name: 'Bean rice', sub: 'fiber + carbs', kcal: 230, p: 11, f: 3, c: 40, fiber: 7, cat: 'filler' },
@@ -1401,6 +1404,14 @@ const PRESETS = [
   { name: 'Chocolate milk', sub: '1 mug · non-negotiable', kcal: 180, p: 8, f: 5, c: 26, fiber: 0, cat: 'filler' },
   { name: 'Nuts (30g)', sub: 'fat filler', kcal: 180, p: 5, f: 16, c: 6, fiber: 2, cat: 'filler' },
   { name: 'Banana', sub: 'carb + fiber', kcal: 105, p: 1, f: 0, c: 27, fiber: 3, cat: 'filler' },
+  { name: 'Palak paneer', sub: '1 cup, restaurant-style', kcal: 410, p: 19, f: 32, c: 11, fiber: 5, cat: 'filler' },
+  { name: 'Baked potato', sub: '1 medium, plain', kcal: 170, p: 4, f: 0, c: 38, fiber: 4, cat: 'filler' },
+  { name: 'Cheung fun', sub: 'shrimp, 3 rolls', kcal: 320, p: 14, f: 4, c: 55, fiber: 2, cat: 'filler' },
+  { name: 'Char siu bao', sub: 'BBQ pork bun, 1 piece', kcal: 160, p: 7, f: 4, c: 22, fiber: 1, cat: 'filler' },
+  { name: 'Thai green curry chicken', sub: 'with rice, 1 plate', kcal: 620, p: 28, f: 28, c: 57, fiber: 4, cat: 'filler' },
+  { name: 'Thai massaman beef', sub: 'with rice, 1 plate', kcal: 700, p: 30, f: 35, c: 65, fiber: 5, cat: 'filler' },
+  { name: 'Thai prawn curry', sub: 'with rice, 1 plate', kcal: 530, p: 28, f: 22, c: 55, fiber: 3, cat: 'filler' },
+  { name: 'Pad thai', sub: 'chicken, 1 plate', kcal: 580, p: 28, f: 22, c: 65, fiber: 4, cat: 'filler' },
 ];
 
 const CATEGORIES = [
@@ -1600,22 +1611,22 @@ function App() {
 
     if (totals.kcal >= targets.caloriesFloor && totals.kcal < targets.caloriesTarget) {
       const need = targets.caloriesTarget - totals.kcal;
-      out.push({ severity: 'info', msg: <><strong>{Math.round(need)} kcal to hit {targets.caloriesTarget.toLocaleString()}.</strong> {need > 500 ? 'Plan a carb/fat-forward meal: dal+rice, bean rice, sabzi+roti.' : 'A snack or two closes it: chocolate milk, nuts, fruit.'}</> });
+      out.push({ severity: 'info', msg: <><strong>{Math.round(need)} kcal to hit {targets.caloriesTarget.toLocaleString()}.</strong> {need > 500 ? 'Plan a carb/fat-forward meal: rice + legumes, beans + rice, vegetables + bread.' : 'A snack or two closes it: chocolate milk, nuts, fruit.'}</> });
     } else if (totals.kcal < targets.caloriesFloor && hour < 19) {
       const need = targets.caloriesTarget - totals.kcal;
-      out.push({ severity: 'info', msg: <><strong>{Math.round(need)} kcal to hit {targets.caloriesTarget.toLocaleString()}.</strong> Eat carb/fat-forward — rice, dal, roti, fruit, nuts.</> });
+      out.push({ severity: 'info', msg: <><strong>{Math.round(need)} kcal to hit {targets.caloriesTarget.toLocaleString()}.</strong> Eat carb/fat-forward — rice, bread, fruit, nuts.</> });
     }
 
     if (kcalRemaining < 500 && proteinRemaining > 25) {
-      out.push({ severity: 'warn', msg: <><strong>{Math.round(proteinRemaining)}g protein needed</strong> with only {Math.round(kcalRemaining)} kcal of room. Pure-protein only: whey, chicken breast, hung curd.</> });
+      out.push({ severity: 'warn', msg: <><strong>{Math.round(proteinRemaining)}g protein needed</strong> with only {Math.round(kcalRemaining)} kcal of room. Pure-protein only: whey, chicken breast, Greek yogurt.</> });
     }
 
     const pctKcal = totals.kcal / targets.caloriesTarget;
     if (pctKcal >= 0.40 && pctKcal < 0.85) {
       const lagging = [];
-      if (totals.f < targets.fat.min * 0.35) lagging.push({ name: 'fat', tip: 'nuts, ghee, guac' });
-      if (totals.c < targets.carbs.min * 0.35) lagging.push({ name: 'carbs', tip: 'rice, roti, dal' });
-      if (totals.fiber < targets.fiber.min * 0.35) lagging.push({ name: 'fiber', tip: 'beans, sabzi, oats' });
+      if (totals.f < targets.fat.min * 0.35) lagging.push({ name: 'fat', tip: 'nuts, butter, avocado' });
+      if (totals.c < targets.carbs.min * 0.35) lagging.push({ name: 'carbs', tip: 'rice, bread, oats' });
+      if (totals.fiber < targets.fiber.min * 0.35) lagging.push({ name: 'fiber', tip: 'beans, vegetables, oats' });
       if (lagging.length > 0) {
         const names = lagging.map(l => l.name).join(', ');
         out.push({ severity: 'info', msg: <><strong>Pace check:</strong> {names} running behind. Plan your next meal around {lagging[0].tip}.</> });
@@ -1623,9 +1634,9 @@ function App() {
     }
 
     if (kcalRemaining > 0 && kcalRemaining < 500) {
-      if (totals.f < 50) out.push({ severity: 'warn', msg: <><strong>Fat at {Math.round(totals.f)}g</strong> — below hormonal floor. Add nuts, ghee, guac, or cooking oil.</> });
-      if (totals.c < 130) out.push({ severity: 'warn', msg: <><strong>Carbs at {Math.round(totals.c)}g</strong> — add rice, roti, fruit, or dal to close the gap.</> });
-      if (totals.fiber < 18) out.push({ severity: 'warn', msg: <><strong>Fiber at {Math.round(totals.fiber)}g</strong> — Mounjaro slows motility. Add beans, sabzi, fruit, or oats.</> });
+      if (totals.f < 50) out.push({ severity: 'warn', msg: <><strong>Fat at {Math.round(totals.f)}g</strong> — below hormonal floor. Add nuts, butter, avocado, or cooking oil.</> });
+      if (totals.c < 130) out.push({ severity: 'warn', msg: <><strong>Carbs at {Math.round(totals.c)}g</strong> — add rice, bread, fruit, or potato to close the gap.</> });
+      if (totals.fiber < 18) out.push({ severity: 'warn', msg: <><strong>Fiber at {Math.round(totals.fiber)}g</strong> — Mounjaro slows motility. Add beans, vegetables, fruit, or oats.</> });
     }
 
     return out;
@@ -1818,7 +1829,7 @@ function ImpliedRatio({ impliedRatio, proteinHit, kcalHit, proteinRemaining, kca
     return (
       <div className="ratio-strip bad">
         <div className="ratio-left">
-          Over calorie target — <strong>{Math.round(proteinRemaining)}g</strong> protein still short. Lean on whey or hung curd only.
+          Over calorie target — <strong>{Math.round(proteinRemaining)}g</strong> protein still short. Lean on whey or Greek yogurt only.
         </div>
       </div>
     );
@@ -1829,7 +1840,7 @@ function ImpliedRatio({ impliedRatio, proteinHit, kcalHit, proteinRemaining, kca
     ? 'Achievable with any balanced meal.'
     : band === 'warn'
     ? 'Need protein-forward picks: shake, kebab, enchiladas.'
-    : 'Pure protein only: whey, chicken breast, hung curd.';
+    : 'Pure protein only: whey, chicken breast, Greek yogurt.';
   return (
     <div className={`ratio-strip ${band}`}>
       <div className="ratio-left">
@@ -2758,9 +2769,9 @@ function ArchitectureGuidance() {
   const targets = useContext(TargetsContext);
   const items = [
     { n: '01', label: 'Protein anchor', meta: '~550 kcal · 60g P', detail: 'shake' },
-    { n: '02', label: 'Protein meal',   meta: '400–600 kcal · 40–60g P', detail: 'seekh, enchiladas, chicken' },
-    { n: '03', label: 'Balance meal',   meta: '~400–500 kcal · 15–20g P', detail: 'dal+rice, bean rice, sabzi+roti' },
-    { n: '04', label: 'Snacks/extras',  meta: 'fill remaining', detail: 'chocolate milk, fruit, nuts, hung curd' },
+    { n: '02', label: 'Protein meal',   meta: '400–600 kcal · 40–60g P', detail: 'chicken, fish, eggs, kebabs' },
+    { n: '03', label: 'Balance meal',   meta: '~400–500 kcal · 15–20g P', detail: 'rice + legumes, beans + rice, vegetables + bread' },
+    { n: '04', label: 'Snacks/extras',  meta: 'fill remaining', detail: 'chocolate milk, fruit, nuts, Greek yogurt' },
   ];
   return (
     <div className="card" style={{ marginTop: 10 }}>
