@@ -974,9 +974,9 @@
   <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 
   <script type="text/babel" data-presets="env,react">
-const { useState, useEffect, useMemo, useCallback, useRef } = React;
+const { useState, useEffect, useMemo, useCallback, useRef, useContext } = React;
 
-const TARGETS = {
+const DEFAULT_TARGETS = {
   protein: 170,
   caloriesTarget: 2200,
   caloriesFloor: 1800,
@@ -984,6 +984,23 @@ const TARGETS = {
   carbs: { min: 180, max: 220 },
   fiber: { min: 25, max: 30 },
 };
+
+const TargetsContext = React.createContext(DEFAULT_TARGETS);
+
+function mergeTargets(loaded) {
+  if (!loaded || typeof loaded !== 'object') return DEFAULT_TARGETS;
+  return {
+    protein:        Number.isFinite(+loaded.protein)        ? +loaded.protein        : DEFAULT_targets.protein,
+    caloriesTarget: Number.isFinite(+loaded.caloriesTarget) ? +loaded.caloriesTarget : DEFAULT_targets.caloriesTarget,
+    caloriesFloor:  Number.isFinite(+loaded.caloriesFloor)  ? +loaded.caloriesFloor  : DEFAULT_targets.caloriesFloor,
+    fat:   { min: Number.isFinite(+loaded?.fat?.min)   ? +loaded.fat.min   : DEFAULT_targets.fat.min,
+             max: Number.isFinite(+loaded?.fat?.max)   ? +loaded.fat.max   : DEFAULT_targets.fat.max },
+    carbs: { min: Number.isFinite(+loaded?.carbs?.min) ? +loaded.carbs.min : DEFAULT_targets.carbs.min,
+             max: Number.isFinite(+loaded?.carbs?.max) ? +loaded.carbs.max : DEFAULT_targets.carbs.max },
+    fiber: { min: Number.isFinite(+loaded?.fiber?.min) ? +loaded.fiber.min : DEFAULT_targets.fiber.min,
+             max: Number.isFinite(+loaded?.fiber?.max) ? +loaded.fiber.max : DEFAULT_targets.fiber.max },
+  };
+}
 
 const PRESETS = [
   { name: 'Shake A', sub: '1.5 whey + banana + oats + yogurt + skim', kcal: 548, p: 60.5, f: 7, c: 67.5, fiber: 6, cat: 'anchor' },
@@ -1079,21 +1096,29 @@ function App() {
   const [sheetOpen, setSheetOpen] = useState(false);
   const [sheetTab, setSheetTab] = useState('quick');
   const [recentlyAddedId, setRecentlyAddedId] = useState(null);
+  const [targets, setTargets] = useState(DEFAULT_TARGETS);
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      const [mealsRaw, savedRaw] = await Promise.all([
+      const [mealsRaw, savedRaw, targetsRaw] = await Promise.all([
         storage.get(activeKey),
         storage.get('meals:saved'),
+        storage.get('targets:v1'),
       ]);
       if (cancelled) return;
       try { setMeals(mealsRaw ? JSON.parse(mealsRaw) || [] : []); } catch (e) { setMeals([]); }
       try { setSavedMeals(savedRaw ? JSON.parse(savedRaw) || [] : []); } catch (e) { setSavedMeals([]); }
+      try { setTargets(mergeTargets(targetsRaw ? JSON.parse(targetsRaw) : null)); } catch (e) { setTargets(DEFAULT_TARGETS); }
       setLoaded(true);
     })();
     return () => { cancelled = true; };
   }, [activeKey]);
+
+  useEffect(() => {
+    if (loaded) storage.set('targets:v1', JSON.stringify(targets));
+  }, [targets, loaded]);
 
   useEffect(() => {
     if (loaded) storage.set(activeKey, JSON.stringify(meals));
@@ -1127,10 +1152,10 @@ function App() {
     fiber: acc.fiber + (Number(m.fiber) || 0),
   }), { kcal: 0, p: 0, f: 0, c: 0, fiber: 0 }), [meals]);
 
-  const proteinHit = totals.p >= TARGETS.protein;
-  const kcalHit = totals.kcal >= TARGETS.caloriesTarget;
-  const proteinRemaining = Math.max(0, TARGETS.protein - totals.p);
-  const kcalRemaining = Math.max(0, TARGETS.caloriesTarget - totals.kcal);
+  const proteinHit = totals.p >= targets.protein;
+  const kcalHit = totals.kcal >= targets.caloriesTarget;
+  const proteinRemaining = Math.max(0, targets.protein - totals.p);
+  const kcalRemaining = Math.max(0, targets.caloriesTarget - totals.kcal);
   const impliedRatio = (!proteinHit && kcalRemaining > 0) ? (proteinRemaining / kcalRemaining) * 100 : null;
 
   const addMeal = useCallback((m) => {
@@ -1175,11 +1200,11 @@ function App() {
   const warnings = useMemo(() => {
     const out = [];
     const hour = now.getHours();
-    const allHit = totals.p >= TARGETS.protein
-      && totals.kcal >= TARGETS.caloriesFloor
-      && totals.f >= TARGETS.fat.min
-      && totals.c >= TARGETS.carbs.min
-      && totals.fiber >= TARGETS.fiber.min;
+    const allHit = totals.p >= targets.protein
+      && totals.kcal >= targets.caloriesFloor
+      && totals.f >= targets.fat.min
+      && totals.c >= targets.carbs.min
+      && totals.fiber >= targets.fiber.min;
 
     if (allHit) {
       out.push({ severity: 'good', msg: <><strong>All targets hit.</strong> You nailed it today.</> });
@@ -1187,34 +1212,34 @@ function App() {
     }
     if (meals.length === 0) return out;
 
-    if (totals.kcal < TARGETS.caloriesFloor) {
+    if (totals.kcal < targets.caloriesFloor) {
       if (hour >= 21) {
-        out.push({ severity: 'bad', msg: <><strong>Below 1,800 kcal floor</strong> — only {Math.round(totals.kcal)} logged. Persistent undereating on Mounjaro+Concerta risks lean mass loss. Eat now, even if not hungry.</> });
+        out.push({ severity: 'bad', msg: <><strong>Below {targets.caloriesFloor.toLocaleString()} kcal floor</strong> — only {Math.round(totals.kcal)} logged. Persistent undereating on Mounjaro+Concerta risks lean mass loss. Eat now, even if not hungry.</> });
       } else if (hour >= 19) {
-        out.push({ severity: 'bad', msg: <><strong>{Math.round(TARGETS.caloriesFloor - totals.kcal)} kcal below the 1,800 floor</strong> with ~{Math.max(1, 22 - hour)}h left. Stack chocolate milk + nuts + fruit immediately.</> });
-      } else if (hour >= 17 && totals.kcal < 1500) {
+        out.push({ severity: 'bad', msg: <><strong>{Math.round(targets.caloriesFloor - totals.kcal)} kcal below the {targets.caloriesFloor.toLocaleString()} floor</strong> with ~{Math.max(1, 22 - hour)}h left. Stack chocolate milk + nuts + fruit immediately.</> });
+      } else if (hour >= 17 && totals.kcal < targets.caloriesFloor - 300) {
         out.push({ severity: 'warn', msg: <><strong>Trending toward undershoot.</strong> {Math.round(totals.kcal)} kcal logged with {Math.max(0, 22 - hour)}h left. Plan a real dinner.</> });
       }
     }
 
-    if (totals.kcal >= TARGETS.caloriesFloor && totals.kcal < TARGETS.caloriesTarget) {
-      const need = TARGETS.caloriesTarget - totals.kcal;
-      out.push({ severity: 'info', msg: <><strong>{Math.round(need)} kcal to hit 2,200.</strong> {need > 500 ? 'Plan a carb/fat-forward meal: dal+rice, bean rice, sabzi+roti.' : 'A snack or two closes it: chocolate milk, nuts, fruit.'}</> });
-    } else if (totals.kcal < TARGETS.caloriesFloor && hour < 19) {
-      const need = TARGETS.caloriesTarget - totals.kcal;
-      out.push({ severity: 'info', msg: <><strong>{Math.round(need)} kcal to hit 2,200.</strong> Eat carb/fat-forward — rice, dal, roti, fruit, nuts.</> });
+    if (totals.kcal >= targets.caloriesFloor && totals.kcal < targets.caloriesTarget) {
+      const need = targets.caloriesTarget - totals.kcal;
+      out.push({ severity: 'info', msg: <><strong>{Math.round(need)} kcal to hit {targets.caloriesTarget.toLocaleString()}.</strong> {need > 500 ? 'Plan a carb/fat-forward meal: dal+rice, bean rice, sabzi+roti.' : 'A snack or two closes it: chocolate milk, nuts, fruit.'}</> });
+    } else if (totals.kcal < targets.caloriesFloor && hour < 19) {
+      const need = targets.caloriesTarget - totals.kcal;
+      out.push({ severity: 'info', msg: <><strong>{Math.round(need)} kcal to hit {targets.caloriesTarget.toLocaleString()}.</strong> Eat carb/fat-forward — rice, dal, roti, fruit, nuts.</> });
     }
 
     if (kcalRemaining < 500 && proteinRemaining > 25) {
       out.push({ severity: 'warn', msg: <><strong>{Math.round(proteinRemaining)}g protein needed</strong> with only {Math.round(kcalRemaining)} kcal of room. Pure-protein only: whey, chicken breast, hung curd.</> });
     }
 
-    const pctKcal = totals.kcal / TARGETS.caloriesTarget;
+    const pctKcal = totals.kcal / targets.caloriesTarget;
     if (pctKcal >= 0.40 && pctKcal < 0.85) {
       const lagging = [];
-      if (totals.f < TARGETS.fat.min * 0.35) lagging.push({ name: 'fat', tip: 'nuts, ghee, guac' });
-      if (totals.c < TARGETS.carbs.min * 0.35) lagging.push({ name: 'carbs', tip: 'rice, roti, dal' });
-      if (totals.fiber < TARGETS.fiber.min * 0.35) lagging.push({ name: 'fiber', tip: 'beans, sabzi, oats' });
+      if (totals.f < targets.fat.min * 0.35) lagging.push({ name: 'fat', tip: 'nuts, ghee, guac' });
+      if (totals.c < targets.carbs.min * 0.35) lagging.push({ name: 'carbs', tip: 'rice, roti, dal' });
+      if (totals.fiber < targets.fiber.min * 0.35) lagging.push({ name: 'fiber', tip: 'beans, sabzi, oats' });
       if (lagging.length > 0) {
         const names = lagging.map(l => l.name).join(', ');
         out.push({ severity: 'info', msg: <><strong>Pace check:</strong> {names} running behind. Plan your next meal around {lagging[0].tip}.</> });
@@ -1228,12 +1253,12 @@ function App() {
     }
 
     return out;
-  }, [totals, kcalRemaining, proteinRemaining, now, meals.length]);
+  }, [totals, kcalRemaining, proteinRemaining, now, meals.length, targets]);
 
   // pace
   const paceFrac = dayPaceFraction(now);
-  const kcalFrac = totals.kcal / TARGETS.caloriesTarget;
-  const proteinFrac = totals.p / TARGETS.protein;
+  const kcalFrac = totals.kcal / targets.caloriesTarget;
+  const proteinFrac = totals.p / targets.protein;
   // Use whichever is further behind to call out pace risk
   const worstFrac = Math.min(kcalFrac, proteinFrac);
   const paceDelta = worstFrac - paceFrac;
@@ -1249,8 +1274,9 @@ function App() {
   }
 
   return (
+    <TargetsContext.Provider value={targets}>
     <div className="app-shell">
-      <Topbar now={now} paceStatus={paceStatus} paceMsg={paceMsg} mealCount={meals.length} onClear={clearToday} />
+      <Topbar now={now} paceStatus={paceStatus} paceMsg={paceMsg} mealCount={meals.length} onClear={clearToday} onSettings={() => setSettingsOpen(true)} />
 
       <Hero totals={totals} />
 
@@ -1315,11 +1341,21 @@ function App() {
           setTab={setSheetTab}
         />
       )}
+
+      {settingsOpen && (
+        <SettingsSheet
+          targets={targets}
+          onClose={() => setSettingsOpen(false)}
+          onSave={(t) => { setTargets(t); setSettingsOpen(false); }}
+          onReset={() => { setTargets(DEFAULT_TARGETS); }}
+        />
+      )}
     </div>
+    </TargetsContext.Provider>
   );
 }
 
-function Topbar({ now, paceStatus, paceMsg, mealCount, onClear }) {
+function Topbar({ now, paceStatus, paceMsg, mealCount, onClear, onSettings }) {
   const time = now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
   return (
     <div className="topbar">
@@ -1337,19 +1373,23 @@ function Topbar({ now, paceStatus, paceMsg, mealCount, onClear }) {
         {mealCount > 0 && (
           <button className="ghost-btn" onClick={onClear} title="Clear today">CLEAR</button>
         )}
+        <button className="icon-btn" onClick={onSettings} title="Edit targets" aria-label="Settings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        </button>
       </div>
     </div>
   );
 }
 
 function Hero({ totals }) {
-  const proteinPct = Math.min(100, (totals.p / TARGETS.protein) * 100);
-  const kcalPct = Math.min(100, (totals.kcal / TARGETS.caloriesTarget) * 100);
-  const proteinColor = totals.p >= TARGETS.protein ? 'good' : (totals.p / TARGETS.protein > 0.7 ? 'warn' : 'bad');
-  const kcalColor = totals.kcal >= TARGETS.caloriesTarget ? 'good'
-    : (totals.kcal >= TARGETS.caloriesFloor ? 'warn' : 'bad');
-  const proteinLeft = Math.max(0, TARGETS.protein - totals.p);
-  const kcalLeft = Math.max(0, TARGETS.caloriesTarget - totals.kcal);
+  const targets = useContext(TargetsContext);
+  const proteinPct = Math.min(100, (totals.p / targets.protein) * 100);
+  const kcalPct = Math.min(100, (totals.kcal / targets.caloriesTarget) * 100);
+  const proteinColor = totals.p >= targets.protein ? 'good' : (totals.p / targets.protein > 0.7 ? 'warn' : 'bad');
+  const kcalColor = totals.kcal >= targets.caloriesTarget ? 'good'
+    : (totals.kcal >= targets.caloriesFloor ? 'warn' : 'bad');
+  const proteinLeft = Math.max(0, targets.protein - totals.p);
+  const kcalLeft = Math.max(0, targets.caloriesTarget - totals.kcal);
 
   return (
     <div className="hero">
@@ -1359,7 +1399,7 @@ function Hero({ totals }) {
           <span className={`hero-status ${proteinColor}`}>{proteinLeft === 0 ? '✓ HIT' : `−${Math.round(proteinLeft)}g`}</span>
         </div>
         <div className="hero-num mono">
-          {Math.round(totals.p)}<span className="target">/170</span>
+          {Math.round(totals.p)}<span className="target">/{targets.protein}</span>
         </div>
         <div className="hero-rail">
           <div className={`hero-rail-fill ${proteinColor}`} style={{ width: `${proteinPct}%` }} />
@@ -1372,7 +1412,7 @@ function Hero({ totals }) {
           <span className={`hero-status ${kcalColor}`}>{kcalLeft === 0 ? '✓ HIT' : `−${Math.round(kcalLeft)}`}</span>
         </div>
         <div className="hero-num mono">
-          {Math.round(totals.kcal)}<span className="target">/2200</span>
+          {Math.round(totals.kcal)}<span className="target">/{targets.caloriesTarget}</span>
         </div>
         <div className="hero-rail">
           <div className={`hero-rail-fill ${kcalColor}`} style={{ width: `${kcalPct}%` }} />
@@ -1531,39 +1571,36 @@ function PaceStrip({ now, paceFrac, kcalFrac, proteinFrac, paceStatus }) {
 }
 
 function BudgetTable({ totals, kcalRemaining, proteinRemaining }) {
+  const targets = useContext(TargetsContext);
   const rows = [
     {
       key: 'protein', label: 'Protein',
       have: Math.round(totals.p), unit: 'g',
-      target: '170g',
       remaining: proteinRemaining,
-      pct: Math.min(100, (totals.p / TARGETS.protein) * 100),
-      color: totals.p >= TARGETS.protein ? 'good' : (totals.p / TARGETS.protein > 0.7 ? 'warn' : 'bad'),
+      pct: Math.min(100, (totals.p / targets.protein) * 100),
+      color: totals.p >= targets.protein ? 'good' : (totals.p / targets.protein > 0.7 ? 'warn' : 'bad'),
       hard: true,
     },
     {
       key: 'fat', label: 'Fat',
       have: Math.round(totals.f), unit: 'g',
-      target: '70–80g',
-      remaining: Math.max(0, TARGETS.fat.min - totals.f),
-      pct: Math.min(100, (totals.f / TARGETS.fat.min) * 100),
-      color: totals.f >= TARGETS.fat.min ? 'good' : (kcalRemaining < 500 && totals.f < 50 ? 'bad' : 'dim'),
+      remaining: Math.max(0, targets.fat.min - totals.f),
+      pct: Math.min(100, (totals.f / targets.fat.min) * 100),
+      color: totals.f >= targets.fat.min ? 'good' : (kcalRemaining < 500 && totals.f < 50 ? 'bad' : 'dim'),
     },
     {
       key: 'carbs', label: 'Carbs',
       have: Math.round(totals.c), unit: 'g',
-      target: '180–220g',
-      remaining: Math.max(0, TARGETS.carbs.min - totals.c),
-      pct: Math.min(100, (totals.c / TARGETS.carbs.min) * 100),
-      color: totals.c >= TARGETS.carbs.min ? 'good' : (kcalRemaining < 500 && totals.c < 130 ? 'bad' : 'dim'),
+      remaining: Math.max(0, targets.carbs.min - totals.c),
+      pct: Math.min(100, (totals.c / targets.carbs.min) * 100),
+      color: totals.c >= targets.carbs.min ? 'good' : (kcalRemaining < 500 && totals.c < 130 ? 'bad' : 'dim'),
     },
     {
       key: 'fiber', label: 'Fiber',
       have: Math.round(totals.fiber), unit: 'g',
-      target: '25–30g',
-      remaining: Math.max(0, TARGETS.fiber.min - totals.fiber),
-      pct: Math.min(100, (totals.fiber / TARGETS.fiber.min) * 100),
-      color: totals.fiber >= TARGETS.fiber.min ? 'good' : (kcalRemaining < 500 && totals.fiber < 18 ? 'bad' : 'dim'),
+      remaining: Math.max(0, targets.fiber.min - totals.fiber),
+      pct: Math.min(100, (totals.fiber / targets.fiber.min) * 100),
+      color: totals.fiber >= targets.fiber.min ? 'good' : (kcalRemaining < 500 && totals.fiber < 18 ? 'bad' : 'dim'),
     },
   ];
 
@@ -1594,7 +1631,8 @@ function BudgetTable({ totals, kcalRemaining, proteinRemaining }) {
 }
 
 function ProteinDensityChart({ meals }) {
-  const TARGET = (TARGETS.protein / TARGETS.caloriesTarget) * 100;
+  const targets = useContext(TargetsContext);
+  const TARGET = (targets.protein / targets.caloriesTarget) * 100;
 
   const series = useMemo(() => {
     const pts = [{ x: 0, y: 0, name: '' }];
@@ -1608,7 +1646,7 @@ function ProteinDensityChart({ meals }) {
   }, [meals]);
 
   const lastKcal = series.length ? series[series.length - 1].x : 0;
-  const xMax = Math.max(TARGETS.caloriesTarget, lastKcal);
+  const xMax = Math.max(targets.caloriesTarget, lastKcal);
   const observedY = series.length ? Math.max(...series.map(p => p.y)) : 0;
   const yMax = Math.max(15, Math.ceil(observedY + 2));
 
@@ -1638,7 +1676,7 @@ function ProteinDensityChart({ meals }) {
   const yTicks = [0, 5, 10, 15];
   if (yMax > 18) yTicks.push(20);
   if (yMax > 23) yTicks.push(25);
-  const xTicks = [0, 1100, 2200];
+  const xTicks = [0, Math.round(targets.caloriesTarget / 2), targets.caloriesTarget];
 
   return (
     <div className="card chart-card" style={{ marginTop: 10 }}>
@@ -1666,7 +1704,7 @@ function ProteinDensityChart({ meals }) {
         </text>
 
         {/* 2200 kcal vertical guide */}
-        <line x1={xScale(TARGETS.caloriesTarget)} y1={padT} x2={xScale(TARGETS.caloriesTarget)} y2={H - padB} stroke="var(--hairline-strong)" strokeDasharray="2 3" />
+        <line x1={xScale(targets.caloriesTarget)} y1={padT} x2={xScale(targets.caloriesTarget)} y2={H - padB} stroke="var(--hairline-strong)" strokeDasharray="2 3" />
 
         {drawSeries.length > 0 && (
           <>
@@ -1700,7 +1738,7 @@ function ProteinDensityChart({ meals }) {
 
       <div className="chart-cap">
         {current == null ? (
-          <>Stay above <span className="num accent good">{TARGET.toFixed(1)}</span> by end of day to land 170g protein at 2,200 kcal.</>
+          <>Stay above <span className="num accent good">{TARGET.toFixed(1)}</span> by end of day to land {targets.protein}g protein at {targets.caloriesTarget.toLocaleString()} kcal.</>
         ) : current >= TARGET ? (
           <>Currently <span className="num accent good">{current.toFixed(1)}</span> · <span className="num">{(current - TARGET).toFixed(1)}</span> above target. Room for fillers.</>
         ) : current >= TARGET - 1 ? (
@@ -1973,13 +2011,154 @@ function CustomAdd({ onSubmit, onCancel }) {
   );
 }
 
+function SettingsSheet({ targets, onClose, onSave, onReset }) {
+  const [form, setForm] = useState({
+    protein: String(targets.protein),
+    caloriesTarget: String(targets.caloriesTarget),
+    caloriesFloor: String(targets.caloriesFloor),
+    fatMin: String(targets.fat.min),
+    fatMax: String(targets.fat.max),
+    carbsMin: String(targets.carbs.min),
+    carbsMax: String(targets.carbs.max),
+    fiberMin: String(targets.fiber.min),
+    fiberMax: String(targets.fiber.max),
+  });
+  const handle = (k) => (e) => setForm(p => ({ ...p, [k]: e.target.value }));
+
+  const parsed = {
+    protein:        parseFloat(form.protein),
+    caloriesTarget: parseFloat(form.caloriesTarget),
+    caloriesFloor:  parseFloat(form.caloriesFloor),
+    fatMin:   parseFloat(form.fatMin),
+    fatMax:   parseFloat(form.fatMax),
+    carbsMin: parseFloat(form.carbsMin),
+    carbsMax: parseFloat(form.carbsMax),
+    fiberMin: parseFloat(form.fiberMin),
+    fiberMax: parseFloat(form.fiberMax),
+  };
+
+  const errors = [];
+  Object.entries(parsed).forEach(([k, v]) => {
+    if (!Number.isFinite(v) || v <= 0) errors.push(`${k} must be a positive number`);
+  });
+  if (parsed.caloriesTarget < parsed.caloriesFloor) errors.push('Calorie target must be ≥ calorie floor');
+  if (parsed.fatMax   < parsed.fatMin)   errors.push('Fat max must be ≥ fat min');
+  if (parsed.carbsMax < parsed.carbsMin) errors.push('Carb max must be ≥ carb min');
+  if (parsed.fiberMax < parsed.fiberMin) errors.push('Fiber max must be ≥ fiber min');
+
+  const ratio = (Number.isFinite(parsed.protein) && Number.isFinite(parsed.caloriesTarget) && parsed.caloriesTarget > 0)
+    ? (parsed.protein / parsed.caloriesTarget) * 100
+    : null;
+
+  const submit = () => {
+    if (errors.length) return;
+    onSave({
+      protein:        parsed.protein,
+      caloriesTarget: parsed.caloriesTarget,
+      caloriesFloor:  parsed.caloriesFloor,
+      fat:   { min: parsed.fatMin,   max: parsed.fatMax },
+      carbs: { min: parsed.carbsMin, max: parsed.carbsMax },
+      fiber: { min: parsed.fiberMin, max: parsed.fiberMax },
+    });
+  };
+
+  const reset = () => {
+    if (!window.confirm('Reset all targets to defaults?')) return;
+    onReset();
+    setForm({
+      protein: String(DEFAULT_TARGETS.protein),
+      caloriesTarget: String(DEFAULT_TARGETS.caloriesTarget),
+      caloriesFloor: String(DEFAULT_TARGETS.caloriesFloor),
+      fatMin: String(DEFAULT_TARGETS.fat.min),
+      fatMax: String(DEFAULT_TARGETS.fat.max),
+      carbsMin: String(DEFAULT_TARGETS.carbs.min),
+      carbsMax: String(DEFAULT_TARGETS.carbs.max),
+      fiberMin: String(DEFAULT_TARGETS.fiber.min),
+      fiberMax: String(DEFAULT_TARGETS.fiber.max),
+    });
+  };
+
+  return (
+    <>
+      <div className="sheet-backdrop" onClick={onClose} />
+      <div className="sheet" role="dialog" aria-modal="true">
+        <div className="sheet-handle" />
+        <div className="sheet-head">
+          <div className="sheet-title">Edit targets</div>
+          <button className="icon-btn" onClick={onClose} aria-label="Close">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          </button>
+        </div>
+        <div className="sheet-body">
+          <div className="custom-form">
+            <div className="sheet-section">
+              <div className="sheet-section-head">
+                <span className="sheet-section-title">Protein & calories</span>
+                {ratio != null && <span className="sheet-section-meta mono">{ratio.toFixed(1)} g/100kcal</span>}
+              </div>
+              <div className="form-grid-3">
+                <div className="input-with-label"><span className="lbl">PROTEIN g</span><input className="mono" type="number" inputMode="decimal" value={form.protein} onChange={handle('protein')} /></div>
+                <div className="input-with-label"><span className="lbl">KCAL TARGET</span><input className="mono" type="number" inputMode="decimal" value={form.caloriesTarget} onChange={handle('caloriesTarget')} /></div>
+                <div className="input-with-label"><span className="lbl">KCAL FLOOR</span><input className="mono" type="number" inputMode="decimal" value={form.caloriesFloor} onChange={handle('caloriesFloor')} /></div>
+              </div>
+            </div>
+
+            <div className="sheet-section">
+              <div className="sheet-section-head">
+                <span className="sheet-section-title">Fat range (g)</span>
+              </div>
+              <div className="form-grid-2">
+                <div className="input-with-label"><span className="lbl">MIN</span><input className="mono" type="number" inputMode="decimal" value={form.fatMin} onChange={handle('fatMin')} /></div>
+                <div className="input-with-label"><span className="lbl">MAX</span><input className="mono" type="number" inputMode="decimal" value={form.fatMax} onChange={handle('fatMax')} /></div>
+              </div>
+            </div>
+
+            <div className="sheet-section">
+              <div className="sheet-section-head">
+                <span className="sheet-section-title">Carbs range (g)</span>
+              </div>
+              <div className="form-grid-2">
+                <div className="input-with-label"><span className="lbl">MIN</span><input className="mono" type="number" inputMode="decimal" value={form.carbsMin} onChange={handle('carbsMin')} /></div>
+                <div className="input-with-label"><span className="lbl">MAX</span><input className="mono" type="number" inputMode="decimal" value={form.carbsMax} onChange={handle('carbsMax')} /></div>
+              </div>
+            </div>
+
+            <div className="sheet-section">
+              <div className="sheet-section-head">
+                <span className="sheet-section-title">Fiber range (g)</span>
+              </div>
+              <div className="form-grid-2">
+                <div className="input-with-label"><span className="lbl">MIN</span><input className="mono" type="number" inputMode="decimal" value={form.fiberMin} onChange={handle('fiberMin')} /></div>
+                <div className="input-with-label"><span className="lbl">MAX</span><input className="mono" type="number" inputMode="decimal" value={form.fiberMax} onChange={handle('fiberMax')} /></div>
+              </div>
+            </div>
+
+            {errors.length > 0 && (
+              <div className="nudge bad" style={{ marginTop: 16 }}>
+                <div className="nudge-glyph" />
+                <div className="nudge-text">{errors[0]}</div>
+              </div>
+            )}
+
+            <div className="form-actions" style={{ marginTop: 16 }}>
+              <button className="btn btn-secondary" onClick={reset}>Reset to defaults</button>
+              <button className="btn" onClick={submit} disabled={errors.length > 0} style={errors.length > 0 ? { opacity: 0.5 } : null}>Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
 function DaySummary({ totals }) {
+  const targets = useContext(TargetsContext);
   const rows = [
-    { label: 'Calories', val: `${Math.round(totals.kcal)}`, target: '≥1,800', pass: totals.kcal >= TARGETS.caloriesFloor },
-    { label: 'Protein',  val: `${Math.round(totals.p)}g`,    target: '≥170g',   pass: totals.p >= TARGETS.protein },
-    { label: 'Fat',      val: `${Math.round(totals.f)}g`,    target: '≥70g',    pass: totals.f >= TARGETS.fat.min },
-    { label: 'Carbs',    val: `${Math.round(totals.c)}g`,    target: '≥180g',   pass: totals.c >= TARGETS.carbs.min },
-    { label: 'Fiber',    val: `${Math.round(totals.fiber)}g`,target: '≥25g',    pass: totals.fiber >= TARGETS.fiber.min },
+    { label: 'Calories', val: `${Math.round(totals.kcal)}`, target: `≥${targets.caloriesFloor.toLocaleString()}`, pass: totals.kcal >= targets.caloriesFloor },
+    { label: 'Protein',  val: `${Math.round(totals.p)}g`,    target: `≥${targets.protein}g`,                       pass: totals.p >= targets.protein },
+    { label: 'Fat',      val: `${Math.round(totals.f)}g`,    target: `≥${targets.fat.min}g`,                       pass: totals.f >= targets.fat.min },
+    { label: 'Carbs',    val: `${Math.round(totals.c)}g`,    target: `≥${targets.carbs.min}g`,                     pass: totals.c >= targets.carbs.min },
+    { label: 'Fiber',    val: `${Math.round(totals.fiber)}g`,target: `≥${targets.fiber.min}g`,                     pass: totals.fiber >= targets.fiber.min },
   ];
   return (
     <div className="card" style={{ marginTop: 10 }}>
@@ -2008,6 +2187,7 @@ function DaySummary({ totals }) {
 }
 
 function ArchitectureGuidance() {
+  const targets = useContext(TargetsContext);
   const items = [
     { n: '01', label: 'Protein anchor', meta: '~550 kcal · 60g P', detail: 'shake' },
     { n: '02', label: 'Protein meal',   meta: '400–600 kcal · 40–60g P', detail: 'seekh, enchiladas, chicken' },
@@ -2018,7 +2198,7 @@ function ArchitectureGuidance() {
     <div className="card" style={{ marginTop: 10 }}>
       <div className="empty-state">
         <h3>Day architecture</h3>
-        <p>2–3 protein-dense meals do the heavy lifting. 1–2 carb/fiber/fat-forward meals fill calories to 2,200 and cover floors. Build today around this shape.</p>
+        <p>2–3 protein-dense meals do the heavy lifting. 1–2 carb/fiber/fat-forward meals fill calories to {targets.caloriesTarget.toLocaleString()} and cover floors. Build today around this shape.</p>
         <div className="arch-list">
           {items.map(it => (
             <div key={it.n} className="arch-item">
