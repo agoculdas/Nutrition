@@ -819,152 +819,6 @@
     }
     .input-with-label input { padding-top: 22px; padding-bottom: 8px; }
 
-    /* === Meal builder === */
-    .builder { display: flex; flex-direction: column; gap: 14px; padding-bottom: 4px; }
-    .builder-total {
-      position: sticky; top: 56px; z-index: 3;
-      background: linear-gradient(180deg, var(--surface), var(--surface-2));
-      border: 1px solid var(--hairline-strong);
-      border-radius: 10px;
-      padding: 12px 14px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-    }
-    .builder-total-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
-    .builder-total-eyebrow {
-      font-family: var(--font-mono); font-size: 9.5px;
-      letter-spacing: 0.14em; text-transform: uppercase;
-      color: var(--muted); margin-bottom: 2px;
-    }
-    .builder-total-kcal {
-      font-size: 28px; font-weight: 500; letter-spacing: -0.04em; line-height: 1;
-      color: var(--ink);
-    }
-    .builder-total-unit { font-size: 12px; color: var(--muted); font-family: var(--font-mono); margin-left: 2px; letter-spacing: 0; }
-    .builder-total-pp { text-align: right; font-family: var(--font-mono); }
-    .builder-total-macros {
-      margin-top: 8px;
-      padding-top: 8px;
-      border-top: 1px dashed var(--hairline);
-      display: flex; flex-wrap: wrap; gap: 4px;
-      font-size: 11.5px;
-      color: var(--ink-2);
-    }
-    .builder-total-macros .sep { color: var(--dim); }
-    .builder-total-mlbl {
-      color: var(--muted); font-size: 9.5px;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      margin-right: 2px;
-    }
-
-    .builder-search {
-      display: flex; align-items: center; gap: 6px;
-      background: var(--surface-2);
-      border: 1px solid var(--hairline);
-      border-radius: 8px;
-      padding: 4px 6px 4px 12px;
-    }
-    .builder-search:focus-within { border-color: var(--hairline-strong); background: var(--surface); }
-    .builder-search-input {
-      flex: 1; min-width: 0;
-      background: transparent; border: none; outline: none;
-      color: var(--ink); padding: 8px 0;
-      font-family: var(--font-sans); font-size: 13.5px;
-    }
-    .builder-search-input::placeholder { color: var(--dim); }
-
-    .builder-group {
-      display: flex; flex-direction: column;
-    }
-    .builder-group-head {
-      font-family: var(--font-mono);
-      font-size: 10.5px; font-weight: 500;
-      letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--muted);
-      padding: 4px 2px 8px;
-      display: flex; justify-content: space-between; align-items: baseline;
-    }
-    .builder-group-count {
-      font-size: 10px; color: var(--dim); letter-spacing: 0.04em;
-    }
-
-    .builder-row {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 8px; align-items: center;
-      padding: 10px 12px;
-      background: var(--surface-2);
-      border: 1px solid var(--hairline);
-      border-radius: 8px;
-      margin-bottom: 6px;
-      transition: border-color 0.15s, background 0.15s;
-    }
-    .builder-row.active {
-      border-color: var(--good-line);
-      background: oklch(0.32 0.07 145 / 0.10);
-    }
-    .builder-row-info { min-width: 0; }
-    .builder-row-name {
-      font-size: 13px; font-weight: 500; color: var(--ink);
-      letter-spacing: -0.01em; line-height: 1.25;
-      margin-bottom: 3px; word-break: break-word;
-    }
-    .builder-row-unit { color: var(--muted); font-size: 10.5px; font-weight: 400; letter-spacing: 0; }
-    .builder-row-macros {
-      font-size: 11px; color: var(--muted); letter-spacing: -0.005em;
-    }
-    .builder-row-macros .sep { color: var(--dim); margin: 0 4px; }
-
-    .builder-stepper {
-      display: inline-flex; align-items: center;
-      background: var(--surface);
-      border: 1px solid var(--hairline-strong);
-      border-radius: 8px;
-      overflow: hidden;
-    }
-    .step-btn {
-      width: 32px; height: 32px;
-      background: transparent; border: none;
-      color: var(--ink); font-family: var(--font-mono);
-      font-size: 16px; line-height: 1; cursor: pointer;
-      display: inline-flex; align-items: center; justify-content: center;
-    }
-    .step-btn:hover:not(:disabled) { background: var(--surface-2); }
-    .step-btn:disabled { color: var(--dim); cursor: not-allowed; }
-    .step-qty {
-      width: 44px; height: 32px;
-      background: transparent; border: none; outline: none;
-      color: var(--ink);
-      text-align: center;
-      font-size: 13px; font-weight: 500;
-      border-left: 1px solid var(--hairline-strong);
-      border-right: 1px solid var(--hairline-strong);
-      -moz-appearance: textfield;
-      appearance: textfield;
-    }
-    .step-qty::-webkit-outer-spin-button,
-    .step-qty::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-    .step-qty::placeholder { color: var(--dim); }
-
-    .builder-foot {
-      position: sticky; bottom: 0;
-      background: linear-gradient(180deg, transparent, var(--surface) 35%);
-      padding: 14px 0 4px;
-      margin-top: 4px;
-    }
-    .builder-name-input {
-      width: 100%;
-      background: var(--surface-2);
-      border: 1px solid var(--hairline);
-      color: var(--ink);
-      padding: 11px 12px;
-      border-radius: 8px;
-      font-family: var(--font-sans);
-      font-size: 13.5px;
-      margin-bottom: 8px;
-    }
-    .builder-name-input:focus { outline: none; border-color: var(--hairline-strong); background: var(--surface); }
-    .builder-name-input::placeholder { color: var(--dim); }
-
     .btn {
       display: inline-flex; align-items: center; justify-content: center; gap: 6px;
       background: var(--ink);
@@ -1486,6 +1340,202 @@
     @supports (-webkit-touch-callout: none) {
       body { padding-bottom: env(safe-area-inset-bottom); }
     }
+
+    /* === Cuisine folders === */
+    .cuisine-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .cuisine-folder {
+      display: grid; grid-template-columns: 28px 1fr auto auto;
+      align-items: center; gap: 10px;
+      padding: 12px 12px;
+      background: var(--surface-2);
+      border: 1px solid var(--hairline);
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: var(--font-sans); color: var(--ink); text-align: left;
+      transition: border-color 0.15s, background 0.15s, transform 0.12s;
+    }
+    .cuisine-folder:hover { border-color: var(--hairline-strong); }
+    .cuisine-folder:active { transform: scale(0.985); background: var(--surface); }
+    .cuisine-glyph {
+      width: 28px; height: 28px;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--surface);
+      border: 1px solid var(--hairline-strong);
+      border-radius: 6px;
+      font-size: 10px; font-weight: 600; letter-spacing: 0.04em;
+      color: var(--ink-2);
+    }
+    .cuisine-label { font-size: 13px; font-weight: 500; letter-spacing: -0.005em; }
+    .cuisine-count {
+      font-size: 10.5px; color: var(--muted);
+      padding: 2px 6px;
+      border: 1px solid var(--hairline);
+      border-radius: 999px;
+      background: var(--surface);
+    }
+    .cuisine-chev { width: 12px; height: 12px; color: var(--dim); }
+    .cuisine-back {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: transparent; border: none;
+      color: var(--ink-2);
+      font-family: var(--font-sans); font-size: 12px; font-weight: 500;
+      cursor: pointer; padding: 4px 0; letter-spacing: -0.005em;
+    }
+    .cuisine-back:hover { color: var(--ink); }
+    .cuisine-back svg { width: 14px; height: 14px; }
+
+    /* === Builder === */
+    .builder-search-wrap { position: relative; margin-bottom: 12px; }
+    .builder-search-icon {
+      position: absolute; left: 12px; top: 50%;
+      transform: translateY(-50%);
+      width: 14px; height: 14px; color: var(--muted);
+      pointer-events: none;
+    }
+    .builder-search {
+      width: 100%;
+      background: var(--surface-2);
+      border: 1px solid var(--hairline);
+      color: var(--ink);
+      padding: 11px 36px 11px 34px;
+      border-radius: 8px;
+      font-family: var(--font-sans); font-size: 14px; letter-spacing: -0.005em;
+    }
+    .builder-search::placeholder { color: var(--dim); }
+    .builder-search:focus { outline: none; border-color: var(--hairline-strong); background: var(--surface); }
+    .builder-search-clear {
+      position: absolute; right: 6px; top: 50%;
+      transform: translateY(-50%);
+      width: 26px; height: 26px;
+      background: transparent; border: none;
+      color: var(--muted); cursor: pointer;
+      border-radius: 5px;
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+    .builder-search-clear svg { width: 12px; height: 12px; }
+    .builder-search-clear:hover { color: var(--ink); background: var(--hairline); }
+    .builder-results {
+      border: 1px solid var(--hairline);
+      border-radius: 8px;
+      background: var(--surface-2);
+      overflow: hidden;
+      margin-bottom: 14px;
+    }
+    .builder-result {
+      display: grid; grid-template-columns: 1fr auto auto;
+      align-items: center; gap: 10px;
+      width: 100%;
+      padding: 10px 12px;
+      background: transparent; border: none;
+      border-bottom: 1px solid var(--hairline);
+      cursor: pointer;
+      font-family: var(--font-sans); color: var(--ink); text-align: left;
+    }
+    .builder-result:last-child { border-bottom: none; }
+    .builder-result:hover { background: var(--surface); }
+    .builder-result-name { font-size: 13px; font-weight: 500; }
+    .builder-result-meta { font-size: 11px; color: var(--muted); }
+    .builder-result-group {
+      font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--dim);
+      padding: 2px 6px;
+      border: 1px solid var(--hairline);
+      border-radius: 3px;
+    }
+    .builder-empty { padding: 14px; font-size: 12px; color: var(--muted); text-align: center; }
+    .builder-suggest { padding: 4px 0 12px; }
+    .builder-chip-row { display: flex; flex-wrap: wrap; gap: 6px; }
+    .builder-chip {
+      background: var(--surface-2);
+      border: 1px solid var(--hairline);
+      color: var(--ink-2);
+      padding: 7px 10px;
+      border-radius: 999px;
+      font-family: var(--font-sans); font-size: 12px;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .builder-chip:hover { border-color: var(--hairline-strong); color: var(--ink); }
+    .builder-stack {
+      border: 1px solid var(--hairline);
+      border-radius: 10px;
+      background: var(--surface-2);
+      overflow: hidden;
+    }
+    .builder-group { border-bottom: 1px solid var(--hairline); }
+    .builder-group:last-child { border-bottom: none; }
+    .builder-group-head {
+      padding: 9px 12px 6px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--hairline);
+    }
+    .builder-row {
+      display: grid; grid-template-columns: 1fr 64px 64px 30px;
+      align-items: center; gap: 8px;
+      padding: 8px 8px 8px 12px;
+      border-bottom: 1px solid var(--hairline);
+      animation: meal-in 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .builder-row:last-child { border-bottom: none; }
+    .builder-row-name {
+      font-size: 13px; font-weight: 500; color: var(--ink); letter-spacing: -0.005em;
+      min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .builder-qty {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      color: var(--ink);
+      padding: 7px 8px;
+      border-radius: 6px;
+      font-size: 13px;
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+      -moz-appearance: textfield;
+    }
+    .builder-qty::-webkit-outer-spin-button,
+    .builder-qty::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    .builder-qty:focus { outline: none; border-color: var(--hairline-strong); }
+    .builder-unit {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      color: var(--ink);
+      padding: 7px 6px;
+      border-radius: 6px;
+      font-size: 12px;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+    }
+    .builder-unit:focus { outline: none; border-color: var(--hairline-strong); }
+    .builder-unit-static {
+      font-size: 11px; color: var(--muted); letter-spacing: 0.04em;
+      text-align: center;
+      padding: 7px 6px;
+      border: 1px dashed var(--hairline);
+      border-radius: 6px;
+    }
+    .builder-summary {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border: 1px solid var(--hairline);
+      border-radius: 10px;
+      background: var(--surface-2);
+    }
+    .builder-summary-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 9.5px; font-weight: 500; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .builder-summary-text { font-size: 13.5px; color: var(--ink); letter-spacing: -0.005em; line-height: 1.45; }
+    .builder-summary-stub {
+      font-size: 10px; color: var(--dim);
+      letter-spacing: 0.08em; text-transform: uppercase;
+      margin-top: 6px;
+    }
+
+    .sheet-tab { padding: 5px 9px !important; font-size: 11.5px !important; letter-spacing: -0.005em; }
   </style>
 </head>
 <body>
@@ -1563,7 +1613,6 @@ const PRESETS = [
   { name: 'Keema pav (2 pav)', sub: '', kcal: 550, p: 35, f: 28, c: 40, fiber: 2, cat: 'balanced', tags: ['lunch'], cuisine: 'indian' },
   { name: 'Prawn curry + rice', sub: '250g prawns, coconut milk curry, 1 cup rice — coconut amount varies', kcal: 710, p: 47, f: 25, c: 66, fiber: 2, cat: 'balanced', tags: ['dinner', 'needs-verification'], cuisine: 'indian' },
   { name: 'Butter chicken + 2 roti', sub: 'home version — needs verification (cream/butter)', kcal: 700, p: 45, f: 32, c: 52, fiber: 3, cat: 'balanced', tags: ['dinner', 'needs-verification'], cuisine: 'indian' },
-  { name: 'Calamari fry (starter)', sub: '', kcal: 300, p: 20, f: 16, c: 18, fiber: 1, cat: 'balanced', tags: ['starter', 'snack'], cuisine: 'indian' },
   { name: 'Paneer tikka 200g', sub: 'grilled, yogurt marinade', kcal: 350, p: 25, f: 24, c: 8, fiber: 0, cat: 'balanced', tags: ['dinner', 'vegetarian'], cuisine: 'indian' },
   { name: 'Chicken shawarma roll', sub: 'takeaway, single roll', kcal: 420, p: 28, f: 16, c: 40, fiber: 2, cat: 'balanced', tags: ['lunch', 'takeaway'], cuisine: 'middle-eastern' },
   { name: 'Overnight oats 100g', sub: 'check label — verify total carbs vs sugar', kcal: 134, p: 8, f: 3, c: 19, fiber: 3, cat: 'balanced', tags: ['breakfast', 'needs-verification'], cuisine: 'generic' },
@@ -1607,106 +1656,113 @@ const PRESETS = [
   { name: 'Thai massaman beef', sub: 'with rice, 1 plate', kcal: 700, p: 30, f: 35, c: 65, fiber: 5, cat: 'filler', tags: ['dinner', 'thai'], cuisine: 'asian' },
   { name: 'Thai prawn curry', sub: 'with rice, 1 plate', kcal: 530, p: 28, f: 22, c: 55, fiber: 3, cat: 'filler', tags: ['dinner', 'thai'], cuisine: 'asian' },
   { name: 'Pad thai', sub: 'chicken, 1 plate', kcal: 580, p: 28, f: 22, c: 65, fiber: 4, cat: 'filler', tags: ['dinner', 'thai'], cuisine: 'asian' },
-
-  // === Builder components (per-unit ingredients; hidden from Quick by 'component' tag) ===
-  // Proteins
-  { name: 'Chicken thigh', sub: 'cooked', kcal: 130, p: 19, f: 6, c: 0, fiber: 0, cat: 'anchor', tags: ['component'], cuisine: 'generic', unit: '100g', scale_step: 50, group: 'protein' },
-  { name: 'Chicken breast', sub: 'cooked', kcal: 165, p: 31, f: 3.5, c: 0, fiber: 0, cat: 'anchor', tags: ['component'], cuisine: 'generic', unit: '100g', scale_step: 50, group: 'protein' },
-  { name: 'Chicken mince', sub: 'cooked', kcal: 110, p: 19, f: 4, c: 0, fiber: 0, cat: 'anchor', tags: ['component'], cuisine: 'generic', unit: '100g', scale_step: 50, group: 'protein' },
-  { name: 'Lamb mince', sub: 'cooked', kcal: 175, p: 18, f: 11, c: 0, fiber: 0, cat: 'anchor', tags: ['component'], cuisine: 'generic', unit: '100g', scale_step: 50, group: 'protein' },
-  { name: 'Mutton (bone-in)', sub: 'meat only', kcal: 200, p: 20, f: 13, c: 0, fiber: 0, cat: 'balanced', tags: ['component'], cuisine: 'generic', unit: '100g', scale_step: 50, group: 'protein' },
-  { name: 'Prawns', sub: 'cleaned, cooked', kcal: 100, p: 20, f: 1, c: 0, fiber: 0, cat: 'anchor', tags: ['component'], cuisine: 'generic', unit: '100g', scale_step: 50, group: 'protein' },
-  { name: 'Calamari / squid', sub: 'cooked', kcal: 105, p: 18, f: 3, c: 1, fiber: 0, cat: 'anchor', tags: ['component'], cuisine: 'generic', unit: '100g', scale_step: 50, group: 'protein' },
-  { name: 'Crab meat', sub: 'cooked', kcal: 100, p: 20, f: 1.5, c: 0, fiber: 0, cat: 'anchor', tags: ['component'], cuisine: 'generic', unit: '100g', scale_step: 50, group: 'protein' },
-  { name: 'Paneer', sub: 'plain', kcal: 265, p: 18, f: 20, c: 3, fiber: 0, cat: 'balanced', tags: ['component'], cuisine: 'indian', unit: '100g', scale_step: 50, group: 'protein' },
-  { name: 'Tofu (firm)', sub: '', kcal: 145, p: 15, f: 8, c: 4, fiber: 0, cat: 'anchor', tags: ['component'], cuisine: 'generic', unit: '100g', scale_step: 50, group: 'protein' },
-  { name: 'Steak (sirloin)', sub: 'cooked', kcal: 200, p: 26, f: 10, c: 0, fiber: 0, cat: 'anchor', tags: ['component'], cuisine: 'continental', unit: '100g', scale_step: 50, group: 'protein' },
-  { name: 'Whey protein', sub: '1 scoop', kcal: 120, p: 25, f: 2, c: 3, fiber: 0, cat: 'anchor', tags: ['component'], cuisine: 'generic', unit: '1 scoop', scale_step: 0.5, group: 'protein' },
-
-  // Dairy & fats
-  { name: 'Greek yogurt', sub: 'per 100g', kcal: 65, p: 10, f: 2, c: 4, fiber: 0, cat: 'anchor', tags: ['component'], cuisine: 'generic', unit: '100g', scale_step: 50, group: 'dairy' },
-  { name: 'Hung curd', sub: 'per 100g', kcal: 65, p: 10, f: 2, c: 4, fiber: 0, cat: 'anchor', tags: ['component'], cuisine: 'indian', unit: '100g', scale_step: 50, group: 'dairy' },
-  { name: 'Whole milk', sub: '', kcal: 60, p: 3, f: 3, c: 5, fiber: 0, cat: 'filler', tags: ['component'], cuisine: 'generic', unit: '100ml', scale_step: 50, group: 'dairy' },
-  { name: 'Skim milk', sub: '', kcal: 35, p: 3.5, f: 0, c: 5, fiber: 0, cat: 'balanced', tags: ['component'], cuisine: 'generic', unit: '100ml', scale_step: 50, group: 'dairy' },
-  { name: 'Cheese (shredded)', sub: '', kcal: 110, p: 7, f: 9, c: 1, fiber: 0, cat: 'balanced', tags: ['component'], cuisine: 'generic', unit: '30g', scale_step: 1, group: 'dairy' },
-  { name: 'Butter', sub: '', kcal: 100, p: 0, f: 11, c: 0, fiber: 0, cat: 'filler', tags: ['component'], cuisine: 'generic', unit: '1 tbsp', scale_step: 0.5, group: 'dairy' },
-  { name: 'Ghee', sub: '', kcal: 45, p: 0, f: 5, c: 0, fiber: 0, cat: 'filler', tags: ['component'], cuisine: 'indian', unit: '1 tsp', scale_step: 0.5, group: 'dairy' },
-  { name: 'Cream', sub: '', kcal: 50, p: 0.5, f: 5, c: 1, fiber: 0, cat: 'filler', tags: ['component'], cuisine: 'generic', unit: '1 tbsp', scale_step: 0.5, group: 'dairy' },
-  { name: 'Sour cream', sub: '', kcal: 30, p: 0.5, f: 3, c: 0.5, fiber: 0, cat: 'filler', tags: ['component'], cuisine: 'generic', unit: '1 tbsp', scale_step: 0.5, group: 'dairy' },
-
-  // Carb bases
-  { name: 'Rice (white, cooked)', sub: 'per 100g', kcal: 130, p: 2.5, f: 0.5, c: 29, fiber: 0, cat: 'filler', tags: ['component'], cuisine: 'generic', unit: '100g', scale_step: 50, group: 'carb' },
-  { name: 'Roti (plain, 6")', sub: '', kcal: 80, p: 2.5, f: 0.8, c: 16, fiber: 1, cat: 'filler', tags: ['component'], cuisine: 'indian', unit: '1 piece', scale_step: 0.5, group: 'carb' },
-  { name: 'Puri', sub: '', kcal: 100, p: 2, f: 5, c: 12, fiber: 0.5, cat: 'filler', tags: ['component'], cuisine: 'indian', unit: '1 piece', scale_step: 1, group: 'carb' },
-  { name: 'Naan', sub: '', kcal: 260, p: 8, f: 5, c: 45, fiber: 2, cat: 'filler', tags: ['component'], cuisine: 'indian', unit: '1 piece', scale_step: 0.5, group: 'carb' },
-  { name: 'Pav', sub: '', kcal: 110, p: 3, f: 2, c: 18, fiber: 1, cat: 'filler', tags: ['component'], cuisine: 'indian', unit: '1 piece', scale_step: 1, group: 'carb' },
-  { name: 'Egg noodles', sub: 'cooked', kcal: 130, p: 4.5, f: 1, c: 25, fiber: 1, cat: 'filler', tags: ['component'], cuisine: 'asian', unit: '100g', scale_step: 50, group: 'carb' },
-  { name: 'Lentil pasta', sub: 'dry', kcal: 350, p: 25, f: 2, c: 50, fiber: 8, cat: 'balanced', tags: ['component'], cuisine: 'continental', unit: '100g', scale_step: 25, group: 'carb' },
-  { name: 'Regular pasta', sub: 'dry', kcal: 350, p: 12, f: 2, c: 70, fiber: 3, cat: 'filler', tags: ['component'], cuisine: 'continental', unit: '100g', scale_step: 25, group: 'carb' },
-  { name: 'High-protein tortilla', sub: '', kcal: 100, p: 12, f: 3, c: 10, fiber: 5, cat: 'anchor', tags: ['component'], cuisine: 'tex-mex', unit: '1 piece', scale_step: 1, group: 'carb' },
-  { name: 'Regular flour tortilla', sub: '6"', kcal: 100, p: 2, f: 3, c: 16, fiber: 1, cat: 'filler', tags: ['component'], cuisine: 'tex-mex', unit: '1 piece', scale_step: 1, group: 'carb' },
-  { name: 'Bread / toast', sub: '', kcal: 80, p: 3, f: 1, c: 14, fiber: 1, cat: 'filler', tags: ['component'], cuisine: 'generic', unit: '1 slice', scale_step: 1, group: 'carb' },
-  { name: 'Mashed potato', sub: '', kcal: 85, p: 2, f: 2, c: 15, fiber: 1, cat: 'filler', tags: ['component'], cuisine: 'continental', unit: '100g', scale_step: 50, group: 'carb' },
-  { name: 'Roast potato', sub: '', kcal: 150, p: 2.5, f: 5, c: 24, fiber: 2, cat: 'filler', tags: ['component'], cuisine: 'continental', unit: '100g', scale_step: 50, group: 'carb' },
-  { name: 'Oats', sub: 'dry', kcal: 115, p: 4, f: 2, c: 20, fiber: 3, cat: 'filler', tags: ['component'], cuisine: 'generic', unit: '30g', scale_step: 1, group: 'carb' },
-  { name: 'Sushi rice', sub: 'cooked', kcal: 140, p: 2.5, f: 0.5, c: 31, fiber: 0, cat: 'filler', tags: ['component'], cuisine: 'asian', unit: '100g', scale_step: 50, group: 'carb' },
-
-  // Legumes
-  { name: 'Toor dal', sub: 'cooked, per 100g', kcal: 100, p: 7, f: 0.5, c: 17, fiber: 2, cat: 'balanced', tags: ['component'], cuisine: 'indian', unit: '100g', scale_step: 50, group: 'legume' },
-  { name: 'Chickpeas / chole', sub: 'cooked', kcal: 120, p: 6, f: 2, c: 20, fiber: 5, cat: 'filler', tags: ['component'], cuisine: 'indian', unit: '100g', scale_step: 50, group: 'legume' },
-  { name: 'Rajma / kidney beans', sub: 'cooked', kcal: 115, p: 6, f: 0.5, c: 20, fiber: 4, cat: 'filler', tags: ['component'], cuisine: 'indian', unit: '100g', scale_step: 50, group: 'legume' },
-  { name: 'Black beans', sub: 'cooked', kcal: 130, p: 9, f: 0.5, c: 24, fiber: 7, cat: 'balanced', tags: ['component'], cuisine: 'tex-mex', unit: '100g', scale_step: 50, group: 'legume' },
-
-  // Vegetables & sides
-  { name: 'Steamed veg', sub: 'broccoli, beans, etc.', kcal: 35, p: 2.5, f: 0, c: 6, fiber: 3, cat: 'balanced', tags: ['component'], cuisine: 'generic', unit: '100g', scale_step: 50, group: 'veg' },
-  { name: 'Roasted veg', sub: 'peppers, courgette, onion', kcal: 45, p: 2, f: 1, c: 8, fiber: 2, cat: 'filler', tags: ['component'], cuisine: 'continental', unit: '100g', scale_step: 50, group: 'veg' },
-  { name: 'Stir fry veg', sub: 'mixed, no oil', kcal: 30, p: 2, f: 0, c: 5, fiber: 2, cat: 'balanced', tags: ['component'], cuisine: 'asian', unit: '100g', scale_step: 50, group: 'veg' },
-  { name: 'Jackfruit sabzi', sub: 'fried pata', kcal: 275, p: 3, f: 14.5, c: 35, fiber: 3, cat: 'filler', tags: ['component'], cuisine: 'indian', unit: '1 katori', scale_step: 0.5, group: 'veg' },
-  { name: 'Bhaji mash', sub: 'pav bhaji veg, no butter', kcal: 60, p: 2, f: 0, c: 12, fiber: 2, cat: 'filler', tags: ['component'], cuisine: 'indian', unit: '100g', scale_step: 50, group: 'veg' },
-  { name: 'Side salad', sub: '', kcal: 20, p: 1, f: 0, c: 4, fiber: 1.5, cat: 'filler', tags: ['component'], cuisine: 'generic', unit: '100g', scale_step: 50, group: 'veg' },
-  { name: 'Onion', sub: 'raw or cooked', kcal: 40, p: 1, f: 0, c: 10, fiber: 1, cat: 'filler', tags: ['component'], cuisine: 'generic', unit: '100g', scale_step: 25, group: 'veg' },
-
-  // Sauces & gravies
-  { name: 'Marinara sauce', sub: '', kcal: 55, p: 1.5, f: 3, c: 7, fiber: 1, cat: 'filler', tags: ['component'], cuisine: 'continental', unit: '100ml', scale_step: 25, group: 'sauce' },
-  { name: 'Coconut milk', sub: 'full fat', kcal: 150, p: 1.5, f: 15, c: 3, fiber: 0, cat: 'filler', tags: ['component'], cuisine: 'asian', unit: '100ml', scale_step: 25, group: 'sauce' },
-  { name: 'Onion-tomato gravy', sub: 'no oil', kcal: 30, p: 1, f: 0, c: 6, fiber: 1, cat: 'filler', tags: ['component'], cuisine: 'indian', unit: '1 katori', scale_step: 0.5, group: 'sauce' },
-  { name: 'Teriyaki glaze', sub: '', kcal: 25, p: 0.5, f: 0, c: 6, fiber: 0, cat: 'filler', tags: ['component'], cuisine: 'asian', unit: '1 tbsp', scale_step: 0.5, group: 'sauce' },
-  { name: 'Enchilada sauce', sub: '', kcal: 20, p: 0.5, f: 0.5, c: 3.5, fiber: 0, cat: 'filler', tags: ['component'], cuisine: 'tex-mex', unit: '50ml', scale_step: 1, group: 'sauce' },
-  { name: 'Guacamole', sub: '', kcal: 80, p: 1, f: 7, c: 4, fiber: 2, cat: 'filler', tags: ['component'], cuisine: 'tex-mex', unit: '50g', scale_step: 1, group: 'sauce' },
-  { name: 'Hummus', sub: '', kcal: 80, p: 3, f: 5, c: 6, fiber: 1, cat: 'filler', tags: ['component'], cuisine: 'middle-eastern', unit: '30g', scale_step: 1, group: 'sauce' },
-  { name: 'Peanut butter', sub: '', kcal: 95, p: 4, f: 8, c: 3, fiber: 1, cat: 'filler', tags: ['component'], cuisine: 'generic', unit: '1 tbsp', scale_step: 0.5, group: 'sauce' },
-  { name: 'Salsa', sub: '', kcal: 15, p: 0.5, f: 0, c: 3, fiber: 0.5, cat: 'filler', tags: ['component'], cuisine: 'tex-mex', unit: '50g', scale_step: 1, group: 'sauce' },
-  { name: 'Tadka', sub: 'ghee + spices', kcal: 50, p: 0, f: 5, c: 1, fiber: 0, cat: 'filler', tags: ['component'], cuisine: 'indian', unit: '1 tsp ghee', scale_step: 0.5, group: 'sauce' },
-
-  // Fruits
-  { name: 'Banana (piece)', sub: '', kcal: 105, p: 1, f: 0, c: 27, fiber: 3, cat: 'filler', tags: ['component'], cuisine: 'generic', unit: '1 piece', scale_step: 0.5, group: 'fruit' },
-  { name: 'Mango (Alphonso, piece)', sub: '', kcal: 150, p: 1, f: 0, c: 35, fiber: 3, cat: 'filler', tags: ['component'], cuisine: 'generic', unit: '1 piece', scale_step: 0.5, group: 'fruit' },
-  { name: 'Apple', sub: '', kcal: 95, p: 0.5, f: 0, c: 25, fiber: 4, cat: 'filler', tags: ['component'], cuisine: 'generic', unit: '1 piece', scale_step: 0.5, group: 'fruit' },
-
-  // Drinks
-  { name: 'Chocolate milk (mug)', sub: '', kcal: 180, p: 8, f: 5, c: 26, fiber: 0, cat: 'filler', tags: ['component'], cuisine: 'generic', unit: '1 mug', scale_step: 0.5, group: 'drink' },
-  { name: 'Salt lassi (glass)', sub: '', kcal: 150, p: 8, f: 5, c: 18, fiber: 0, cat: 'filler', tags: ['component'], cuisine: 'indian', unit: '1 glass', scale_step: 0.5, group: 'drink' },
-
-  // Supplements
-  { name: 'Creatine', sub: '5g', kcal: 0, p: 0, f: 0, c: 0, fiber: 0, cat: 'filler', tags: ['component'], cuisine: 'generic', unit: '5g', scale_step: 1, group: 'supplement' },
-];
-
-const BUILDER_GROUPS = [
-  { key: 'protein',    label: 'Proteins' },
-  { key: 'dairy',      label: 'Dairy & fats' },
-  { key: 'carb',       label: 'Carb bases' },
-  { key: 'legume',     label: 'Legumes' },
-  { key: 'veg',        label: 'Vegetables & sides' },
-  { key: 'sauce',      label: 'Sauces & gravies' },
-  { key: 'fruit',      label: 'Fruits' },
-  { key: 'drink',      label: 'Drinks' },
-  { key: 'supplement', label: 'Supplements' },
 ];
 
 const CATEGORIES = [
   { key: 'anchor',   label: 'Protein anchors', meta: '> 10 g/100kcal' },
   { key: 'balanced', label: 'Balanced meals',  meta: '6–10 g/100kcal' },
   { key: 'filler',   label: 'Fillers',         meta: '< 6 g/100kcal · carbs/fat/fiber' },
+];
+
+const CUISINES = [
+  { key: 'indian',          label: 'Indian',          glyph: 'IN' },
+  { key: 'asian',           label: 'Asian',           glyph: 'AS' },
+  { key: 'tex-mex',         label: 'Tex-Mex',         glyph: 'TM' },
+  { key: 'middle-eastern',  label: 'Middle Eastern',  glyph: 'ME' },
+  { key: 'continental',     label: 'Continental',     glyph: 'CN' },
+  { key: 'generic',         label: 'Generic',         glyph: 'GE' },
+];
+
+function isStaple(p) { return Array.isArray(p.tags) && p.tags.includes('staple'); }
+
+// Builder components — frontend-only stubs; backend will resolve real macros.
+// Sourced from meal-builder-constituents.md, mapped into the four UI groups
+// (protein / carb / veg / fat). Default qty is the unit baseline from the MD.
+const BUILDER_COMPONENTS = [
+  // === Proteins ===
+  { id: 'chicken-thigh',     name: 'Chicken thigh',           group: 'protein', defaultUnit: 'g',     units: ['g'],            defaultQty: 100 },
+  { id: 'chicken-breast',    name: 'Chicken breast',          group: 'protein', defaultUnit: 'g',     units: ['g'],            defaultQty: 100 },
+  { id: 'chicken-mince',     name: 'Chicken mince (cooked)',  group: 'protein', defaultUnit: 'g',     units: ['g'],            defaultQty: 100 },
+  { id: 'lamb-mince',        name: 'Lamb mince (cooked)',     group: 'protein', defaultUnit: 'g',     units: ['g'],            defaultQty: 100 },
+  { id: 'mutton-bone-in',    name: 'Mutton (bone-in)',        group: 'protein', defaultUnit: 'g',     units: ['g'],            defaultQty: 100 },
+  { id: 'prawns',            name: 'Prawns',                  group: 'protein', defaultUnit: 'g',     units: ['g'],            defaultQty: 100 },
+  { id: 'calamari',          name: 'Calamari / squid',        group: 'protein', defaultUnit: 'g',     units: ['g'],            defaultQty: 100 },
+  { id: 'crab-meat',         name: 'Crab meat',               group: 'protein', defaultUnit: 'g',     units: ['g'],            defaultQty: 100 },
+  { id: 'paneer',            name: 'Paneer',                  group: 'protein', defaultUnit: 'g',     units: ['g'],            defaultQty: 100 },
+  { id: 'tofu',              name: 'Tofu (firm)',             group: 'protein', defaultUnit: 'g',     units: ['g'],            defaultQty: 100 },
+  { id: 'steak-sirloin',     name: 'Steak (sirloin)',         group: 'protein', defaultUnit: 'g',     units: ['g'],            defaultQty: 100 },
+  { id: 'whey',              name: 'Whey protein',            group: 'protein', defaultUnit: 'scoop', units: ['scoop', 'g'],   defaultQty: 1 },
+  // Dairy proteins
+  { id: 'greek-yogurt',      name: 'Greek yogurt',            group: 'protein', defaultUnit: 'g',     units: ['g'],            defaultQty: 100 },
+  { id: 'hung-curd',         name: 'Hung curd',               group: 'protein', defaultUnit: 'g',     units: ['g'],            defaultQty: 100 },
+  { id: 'whole-milk',        name: 'Whole milk',              group: 'protein', defaultUnit: 'ml',    units: ['ml'],           defaultQty: 100 },
+  { id: 'skim-milk',         name: 'Skim milk',               group: 'protein', defaultUnit: 'ml',    units: ['ml'],           defaultQty: 100 },
+  { id: 'cheese-shredded',   name: 'Cheese (shredded)',       group: 'protein', defaultUnit: 'g',     units: ['g'],            defaultQty: 30 },
+  // Legumes (protein-leaning)
+  { id: 'toor-dal',          name: 'Toor dal (cooked)',       group: 'protein', defaultUnit: 'g',     units: ['g', 'cup'],     defaultQty: 100 },
+  { id: 'chickpeas',         name: 'Chickpeas / chole (cooked)', group: 'protein', defaultUnit: 'g',  units: ['g', 'cup'],     defaultQty: 100 },
+  { id: 'rajma',             name: 'Rajma / kidney beans (cooked)', group: 'protein', defaultUnit: 'g', units: ['g', 'cup'],   defaultQty: 100 },
+  { id: 'black-beans',       name: 'Black beans (cooked)',    group: 'protein', defaultUnit: 'g',     units: ['g', 'cup'],     defaultQty: 100 },
+  // Drinks (protein-leaning)
+  { id: 'chocolate-milk',    name: 'Chocolate milk',          group: 'protein', defaultUnit: 'mug',   units: ['mug', 'ml'],    defaultQty: 1 },
+  { id: 'salt-lassi',        name: 'Salt lassi',              group: 'protein', defaultUnit: 'glass', units: ['glass', 'ml'],  defaultQty: 1 },
+  // Supplement
+  { id: 'creatine',          name: 'Creatine',                group: 'protein', defaultUnit: 'g',     units: ['g'],            defaultQty: 5 },
+
+  // === Carbs ===
+  { id: 'rice-white',        name: 'Rice (white, cooked)',    group: 'carb', defaultUnit: 'g',  units: ['g', 'cup'],   defaultQty: 100 },
+  { id: 'roti',              name: 'Roti (plain, 6")',        group: 'carb', defaultUnit: 'pc', units: ['pc'],         defaultQty: 1 },
+  { id: 'puri',              name: 'Puri',                    group: 'carb', defaultUnit: 'pc', units: ['pc'],         defaultQty: 1 },
+  { id: 'naan',              name: 'Naan',                    group: 'carb', defaultUnit: 'pc', units: ['pc'],         defaultQty: 1 },
+  { id: 'pav',               name: 'Pav',                     group: 'carb', defaultUnit: 'pc', units: ['pc'],         defaultQty: 1 },
+  { id: 'egg-noodles',       name: 'Egg noodles (cooked)',    group: 'carb', defaultUnit: 'g',  units: ['g'],          defaultQty: 100 },
+  { id: 'lentil-pasta',      name: 'Lentil pasta (dry)',      group: 'carb', defaultUnit: 'g',  units: ['g'],          defaultQty: 100 },
+  { id: 'regular-pasta',     name: 'Regular pasta (dry)',     group: 'carb', defaultUnit: 'g',  units: ['g'],          defaultQty: 100 },
+  { id: 'hp-tortilla',       name: 'High-protein tortilla',   group: 'carb', defaultUnit: 'pc', units: ['pc'],         defaultQty: 1 },
+  { id: 'flour-tortilla',    name: 'Regular flour tortilla',  group: 'carb', defaultUnit: 'pc', units: ['pc'],         defaultQty: 1 },
+  { id: 'bread-toast',       name: 'Bread / toast',           group: 'carb', defaultUnit: 'pc', units: ['pc'],         defaultQty: 1 },
+  { id: 'mashed-potato',     name: 'Mashed potato',           group: 'carb', defaultUnit: 'g',  units: ['g'],          defaultQty: 100 },
+  { id: 'roast-potato',      name: 'Roast potato',            group: 'carb', defaultUnit: 'g',  units: ['g'],          defaultQty: 100 },
+  { id: 'oats-dry',          name: 'Oats (dry)',              group: 'carb', defaultUnit: 'g',  units: ['g'],          defaultQty: 30 },
+  { id: 'sushi-rice',        name: 'Sushi rice (cooked)',     group: 'carb', defaultUnit: 'g',  units: ['g'],          defaultQty: 100 },
+  // Fruits (carbs)
+  { id: 'banana',            name: 'Banana',                  group: 'carb', defaultUnit: 'pc', units: ['pc'],         defaultQty: 1 },
+  { id: 'mango-alphonso',    name: 'Mango (Alphonso)',        group: 'carb', defaultUnit: 'pc', units: ['pc'],         defaultQty: 1 },
+  { id: 'apple',             name: 'Apple',                   group: 'carb', defaultUnit: 'pc', units: ['pc'],         defaultQty: 1 },
+  // Sweet sauce
+  { id: 'teriyaki-glaze',    name: 'Teriyaki glaze',          group: 'carb', defaultUnit: 'tbsp', units: ['tbsp'],     defaultQty: 1 },
+
+  // === Veg / fiber ===
+  { id: 'steamed-veg',       name: 'Steamed veg',             group: 'veg', defaultUnit: 'g',     units: ['g', 'cup'],     defaultQty: 100 },
+  { id: 'roasted-veg',       name: 'Roasted veg',             group: 'veg', defaultUnit: 'g',     units: ['g', 'cup'],     defaultQty: 100 },
+  { id: 'stir-fry-veg',      name: 'Stir fry veg',            group: 'veg', defaultUnit: 'g',     units: ['g', 'cup'],     defaultQty: 100 },
+  { id: 'jackfruit-sabzi',   name: 'Jackfruit sabzi',         group: 'veg', defaultUnit: 'katori', units: ['katori', 'cup'], defaultQty: 1 },
+  { id: 'bhaji-mash',        name: 'Bhaji mash',              group: 'veg', defaultUnit: 'g',     units: ['g'],            defaultQty: 100 },
+  { id: 'side-salad',        name: 'Side salad',              group: 'veg', defaultUnit: 'g',     units: ['g', 'cup'],     defaultQty: 100 },
+  { id: 'onion',             name: 'Onion',                   group: 'veg', defaultUnit: 'g',     units: ['g'],            defaultQty: 50 },
+  // Tomato-based sauces (veg-coded)
+  { id: 'gravy-base',        name: 'Onion-tomato gravy',      group: 'veg', defaultUnit: 'katori', units: ['katori', 'cup'], defaultQty: 1 },
+  { id: 'enchilada-sauce',   name: 'Enchilada sauce',         group: 'veg', defaultUnit: 'ml',    units: ['ml', 'tbsp'],   defaultQty: 50 },
+  { id: 'salsa',             name: 'Salsa',                   group: 'veg', defaultUnit: 'g',     units: ['g', 'tbsp'],    defaultQty: 50 },
+
+  // === Fat / extras ===
+  { id: 'butter',            name: 'Butter',                  group: 'fat', defaultUnit: 'tbsp', units: ['tbsp', 'g'],   defaultQty: 1 },
+  { id: 'ghee',              name: 'Ghee',                    group: 'fat', defaultUnit: 'tsp',  units: ['tsp', 'g'],    defaultQty: 1 },
+  { id: 'cream',             name: 'Cream',                   group: 'fat', defaultUnit: 'tbsp', units: ['tbsp', 'ml'],  defaultQty: 1 },
+  { id: 'sour-cream',        name: 'Sour cream',              group: 'fat', defaultUnit: 'tbsp', units: ['tbsp', 'g'],   defaultQty: 1 },
+  { id: 'marinara-sauce',    name: 'Marinara sauce',          group: 'fat', defaultUnit: 'ml',   units: ['ml'],          defaultQty: 100 },
+  { id: 'coconut-milk',      name: 'Coconut milk (full fat)', group: 'fat', defaultUnit: 'ml',   units: ['ml'],          defaultQty: 100 },
+  { id: 'guacamole',         name: 'Guacamole',               group: 'fat', defaultUnit: 'g',    units: ['g', 'tbsp'],   defaultQty: 50 },
+  { id: 'hummus',            name: 'Hummus',                  group: 'fat', defaultUnit: 'g',    units: ['g', 'tbsp'],   defaultQty: 30 },
+  { id: 'peanut-butter',     name: 'Peanut butter',           group: 'fat', defaultUnit: 'tbsp', units: ['tbsp', 'g'],   defaultQty: 1 },
+  { id: 'tadka',             name: 'Tadka (ghee + spices)',   group: 'fat', defaultUnit: 'tsp',  units: ['tsp'],         defaultQty: 1 },
+];
+
+const BUILDER_GROUPS = [
+  { key: 'protein', label: 'Protein' },
+  { key: 'carb',    label: 'Carb' },
+  { key: 'veg',     label: 'Veg / fiber' },
+  { key: 'fat',     label: 'Fat / extras' },
 ];
 
 const storage = {
@@ -2565,9 +2621,9 @@ function AddSheet({ onClose, onAdd, presets, savedMeals, onRemoveSaved, tab, set
         <div className="sheet-head">
           <div className="sheet-title">Add meal</div>
           <div className="sheet-tabs" role="tablist">
-            <button className={`sheet-tab ${tab === 'quick' ? 'active' : ''}`} onClick={() => setTab('quick')}>Quick</button>
-            <button className={`sheet-tab ${tab === 'builder' ? 'active' : ''}`} onClick={() => setTab('builder')}>Builder</button>
+            <button className={`sheet-tab ${tab === 'quick' ? 'active' : ''}`} onClick={() => setTab('quick')}>Preset</button>
             <button className={`sheet-tab ${tab === 'custom' ? 'active' : ''}`} onClick={() => setTab('custom')}>Custom</button>
+            <button className={`sheet-tab ${tab === 'builder' ? 'active' : ''}`} onClick={() => setTab('builder')}>Builder</button>
           </div>
           <button className="icon-btn" onClick={onClose} aria-label="Close">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
@@ -2584,10 +2640,7 @@ function AddSheet({ onClose, onAdd, presets, savedMeals, onRemoveSaved, tab, set
               pulseId={pulseId}
             />
           ) : tab === 'builder' ? (
-            <BuilderTab
-              presets={presets}
-              onAdd={(m) => { handleAdd(m); }}
-            />
+            <BuilderAdd onSubmit={(m) => { handleAdd(m); }} onCancel={onClose} />
           ) : (
             <CustomAdd onSubmit={(m) => { handleAdd(m); }} onCancel={onClose} />
           )}
@@ -2598,8 +2651,69 @@ function AddSheet({ onClose, onAdd, presets, savedMeals, onRemoveSaved, tab, set
 }
 
 function QuickAdd({ presets, savedMeals, onAdd, onRemoveSaved, pulseId }) {
-  // Hide builder-only components from the Quick tab
-  presets = presets.filter(p => !p.tags?.includes('component'));
+  const [openCuisine, setOpenCuisine] = useState(null);
+  const staples = presets.filter(isStaple);
+  const nonStaples = presets.filter(p => !isStaple(p));
+  const cuisineCounts = {};
+  for (const p of nonStaples) cuisineCounts[p.cuisine] = (cuisineCounts[p.cuisine] || 0) + 1;
+  const cuisinesWithItems = CUISINES.filter(c => (cuisineCounts[c.key] || 0) > 0);
+
+  const renderCard = (p) => {
+    const pp = ppKc(p);
+    return (
+      <button
+        key={p.name}
+        className={`food-card ${pulseId === p.name ? 'pulse-good' : ''}`}
+        onClick={() => onAdd(p)}
+      >
+        <div className={`food-card-pp ${p.cat} mono`}>{pp.toFixed(1)}</div>
+        <div className="food-card-name">{p.name}</div>
+        <div className="food-card-meta">
+          <span className="kcal">{p.kcal}</span>
+          <span className="sep">·</span>
+          <span>{p.p}p</span>
+          <span className="sep">·</span>
+          <span>{p.f}f</span>
+          <span className="sep">·</span>
+          <span>{p.c}c</span>
+        </div>
+        {p.sub && <div className="food-card-meta" style={{ color: 'var(--dim)', fontSize: 10.5, fontFamily: 'var(--font-sans)' }}>{p.sub}</div>}
+      </button>
+    );
+  };
+
+  if (openCuisine) {
+    const cuisine = CUISINES.find(c => c.key === openCuisine);
+    const items = nonStaples.filter(p => p.cuisine === openCuisine);
+    return (
+      <div>
+        <div className="sheet-section" style={{ marginTop: 0 }}>
+          <button className="cuisine-back" onClick={() => setOpenCuisine(null)}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 18l-6-6 6-6"/></svg>
+            All cuisines
+          </button>
+          <div className="sheet-section-head" style={{ marginTop: 12 }}>
+            <span className="sheet-section-title">{cuisine.label}</span>
+            <span className="sheet-section-meta">{items.length} meals</span>
+          </div>
+        </div>
+        {CATEGORIES.map(cat => {
+          const inCat = items.filter(p => p.cat === cat.key);
+          if (inCat.length === 0) return null;
+          return (
+            <div key={cat.key} className="sheet-section">
+              <div className="sheet-section-head">
+                <span className="sheet-section-title">{cat.label}</span>
+                <span className="sheet-section-meta">{cat.meta}</span>
+              </div>
+              <div className="food-grid">{inCat.map(renderCard)}</div>
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
+
   return (
     <div>
       <div className="sheet-section">
@@ -2626,41 +2740,189 @@ function QuickAdd({ presets, savedMeals, onAdd, onRemoveSaved, pulseId }) {
       </div>
 
       {CATEGORIES.map(cat => {
-        const items = presets.filter(p => p.cat === cat.key);
+        const items = staples.filter(p => p.cat === cat.key);
+        if (items.length === 0) return null;
         return (
           <div key={cat.key} className="sheet-section">
             <div className="sheet-section-head">
-              <span className="sheet-section-title">{cat.label}</span>
-              <span className="sheet-section-meta">{cat.meta}</span>
+              <span className="sheet-section-title">Staples · {cat.label}</span>
+              <span className="sheet-section-meta">{items.length} · {cat.meta}</span>
             </div>
-            <div className="food-grid">
-              {items.map(p => {
-                const pp = ppKc(p);
-                return (
-                  <button
-                    key={p.name}
-                    className={`food-card ${pulseId === p.name ? 'pulse-good' : ''}`}
-                    onClick={() => onAdd(p)}
-                  >
-                    <div className={`food-card-pp ${cat.key} mono`}>{pp.toFixed(1)}</div>
-                    <div className="food-card-name">{p.name}</div>
-                    <div className="food-card-meta">
-                      <span className="kcal">{p.kcal}</span>
-                      <span className="sep">·</span>
-                      <span>{p.p}p</span>
-                      <span className="sep">·</span>
-                      <span>{p.f}f</span>
-                      <span className="sep">·</span>
-                      <span>{p.c}c</span>
-                    </div>
-                    {p.sub && <div className="food-card-meta" style={{ color: 'var(--dim)', fontSize: 10.5, fontFamily: 'var(--font-sans)' }}>{p.sub}</div>}
-                  </button>
-                );
-              })}
-            </div>
+            <div className="food-grid">{items.map(renderCard)}</div>
           </div>
         );
       })}
+
+      <div className="sheet-section">
+        <div className="sheet-section-head">
+          <span className="sheet-section-title">More by cuisine</span>
+          <span className="sheet-section-meta">{nonStaples.length} meals</span>
+        </div>
+        <div className="cuisine-grid">
+          {cuisinesWithItems.map(c => (
+            <button key={c.key} className="cuisine-folder" onClick={() => setOpenCuisine(c.key)}>
+              <span className="cuisine-glyph mono">{c.glyph}</span>
+              <span className="cuisine-label">{c.label}</span>
+              <span className="cuisine-count mono">{cuisineCounts[c.key]}</span>
+              <svg className="cuisine-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function BuilderAdd({ onSubmit, onCancel }) {
+  const [rows, setRows] = useState([]);
+  const [query, setQuery] = useState('');
+  const [name, setName] = useState('');
+
+  const addComponent = (c) => {
+    const key = Date.now() + Math.random();
+    setRows(prev => [...prev, { key, componentId: c.id, qty: c.defaultQty, unit: c.defaultUnit }]);
+    setQuery('');
+  };
+  const updateRow = (key, patch) => setRows(prev => prev.map(r => r.key === key ? { ...r, ...patch } : r));
+  const removeRow = (key) => setRows(prev => prev.filter(r => r.key !== key));
+
+  const matches = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return [];
+    return BUILDER_COMPONENTS.filter(c => c.name.toLowerCase().includes(q)).slice(0, 6);
+  }, [query]);
+
+  const grouped = useMemo(() => {
+    const out = {};
+    for (const r of rows) {
+      const c = BUILDER_COMPONENTS.find(x => x.id === r.componentId);
+      if (!c) continue;
+      out[c.group] = out[c.group] || [];
+      out[c.group].push({ ...r, _comp: c });
+    }
+    return out;
+  }, [rows]);
+
+  const summary = useMemo(() => {
+    if (!rows.length) return '';
+    return rows.map(r => {
+      const c = BUILDER_COMPONENTS.find(x => x.id === r.componentId);
+      if (!c) return '';
+      const qty = r.qty;
+      if (r.unit === 'pc') return `${qty}× ${c.name.toLowerCase()}`;
+      if (r.unit === 'g' || r.unit === 'ml') return `${qty}${r.unit} ${c.name.toLowerCase()}`;
+      return `${qty} ${r.unit} ${c.name.toLowerCase()}`;
+    }).filter(Boolean).join(' + ');
+  }, [rows]);
+
+  const submit = () => {
+    if (!rows.length) return;
+    const finalName = name.trim() || summary;
+    onSubmit({
+      name: finalName,
+      kcal: 0, p: 0, f: 0, c: 0, fiber: 0,
+      _builder: rows.map(r => ({ componentId: r.componentId, qty: Number(r.qty) || 0, unit: r.unit })),
+    });
+    setRows([]); setName(''); setQuery('');
+  };
+
+  return (
+    <div className="builder">
+      <div className="builder-search-wrap">
+        <svg className="builder-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input
+          className="builder-search"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Add component… try 'prawn', 'rice', 'roti'"
+          autoFocus
+        />
+        {query && (
+          <button className="builder-search-clear" onClick={() => setQuery('')} aria-label="Clear">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          </button>
+        )}
+      </div>
+
+      {query && (
+        <div className="builder-results">
+          {matches.length === 0 ? (
+            <div className="builder-empty">No match. Backend will resolve free-text later.</div>
+          ) : matches.map(c => (
+            <button key={c.id} className="builder-result" onClick={() => addComponent(c)}>
+              <span className="builder-result-name">{c.name}</span>
+              <span className="builder-result-meta mono">{c.defaultQty} {c.defaultUnit}</span>
+              <span className="builder-result-group mono">{c.group}</span>
+            </button>
+          ))}
+        </div>
+      )}
+
+      {!query && rows.length === 0 && (
+        <div className="builder-suggest">
+          <div className="sheet-section-title" style={{ marginBottom: 8 }}>Common starts</div>
+          <div className="builder-chip-row">
+            {BUILDER_COMPONENTS.slice(0, 8).map(c => (
+              <button key={c.id} className="builder-chip" onClick={() => addComponent(c)}>+ {c.name}</button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {rows.length > 0 && (
+        <>
+          <div className="builder-stack">
+            {BUILDER_GROUPS.map(g => {
+              const items = grouped[g.key];
+              if (!items || !items.length) return null;
+              return (
+                <div key={g.key} className="builder-group">
+                  <div className="builder-group-head">
+                    <span className="sheet-section-title">{g.label}</span>
+                  </div>
+                  {items.map(r => (
+                    <div key={r.key} className="builder-row">
+                      <span className="builder-row-name">{r._comp.name}</span>
+                      <input
+                        className="builder-qty mono"
+                        type="number"
+                        inputMode="decimal"
+                        value={r.qty}
+                        onChange={(e) => updateRow(r.key, { qty: e.target.value })}
+                      />
+                      {r._comp.units.length > 1 ? (
+                        <select className="builder-unit mono" value={r.unit} onChange={(e) => updateRow(r.key, { unit: e.target.value })}>
+                          {r._comp.units.map(u => <option key={u} value={u}>{u}</option>)}
+                        </select>
+                      ) : (
+                        <span className="builder-unit-static mono">{r.unit}</span>
+                      )}
+                      <button className="icon-btn" onClick={() => removeRow(r.key)} aria-label="Remove">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="builder-summary">
+            <div className="builder-summary-eyebrow">Preview</div>
+            <div className="builder-summary-text">{summary}</div>
+            <div className="builder-summary-stub mono">macros · resolved on save</div>
+          </div>
+
+          <div className="custom-form" style={{ marginTop: 12 }}>
+            <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Name (optional — defaults to component list)" />
+          </div>
+
+          <div className="form-actions">
+            <button className="btn btn-secondary" onClick={() => { setRows([]); setName(''); setQuery(''); }}>Clear</button>
+            <button className="btn" onClick={submit}>Add meal</button>
+          </div>
+        </>
+      )}
     </div>
   );
 }
@@ -2696,211 +2958,6 @@ function CustomAdd({ onSubmit, onCancel }) {
       </div>
     </div>
   );
-}
-
-function BuilderTab({ presets, onAdd }) {
-  const components = useMemo(
-    () => presets.filter(p => p.tags?.includes('component')),
-    [presets]
-  );
-  // selected: { [name]: quantity }
-  const [selected, setSelected] = useState({});
-  const [name, setName] = useState('');
-  const [query, setQuery] = useState('');
-
-  const setQty = (compName, qty) => {
-    setSelected(prev => {
-      const next = { ...prev };
-      if (qty <= 0) delete next[compName];
-      else next[compName] = qty;
-      return next;
-    });
-  };
-
-  const totals = useMemo(() => {
-    let kcal = 0, p = 0, f = 0, c = 0, fiber = 0;
-    for (const [compName, qty] of Object.entries(selected)) {
-      const comp = components.find(x => x.name === compName);
-      if (!comp) continue;
-      kcal  += (comp.kcal  || 0) * qty;
-      p     += (comp.p     || 0) * qty;
-      f     += (comp.f     || 0) * qty;
-      c     += (comp.c     || 0) * qty;
-      fiber += (comp.fiber || 0) * qty;
-    }
-    return { kcal, p, f, c, fiber };
-  }, [selected, components]);
-
-  const ratio = totals.kcal > 0 ? (totals.p / totals.kcal) * 100 : null;
-  const itemCount = Object.keys(selected).length;
-
-  const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    if (!q) return components;
-    return components.filter(c =>
-      c.name.toLowerCase().includes(q) ||
-      (c.sub || '').toLowerCase().includes(q) ||
-      (c.group || '').toLowerCase().includes(q)
-    );
-  }, [components, query]);
-
-  const submit = () => {
-    if (itemCount === 0) return;
-    const parts = Object.entries(selected).map(([n, q]) => {
-      const comp = components.find(x => x.name === n);
-      const unit = comp?.unit ? ` ${comp.unit}` : '';
-      return `${formatQty(q)}×${unit ? unit + ' ' : ' '}${n}`;
-    });
-    const finalName = (name.trim() || 'Custom build') + ` · ${parts.join(' + ')}`;
-    onAdd({
-      name: finalName,
-      kcal: Math.round(totals.kcal),
-      p: round1(totals.p),
-      f: round1(totals.f),
-      c: round1(totals.c),
-      fiber: round1(totals.fiber),
-    });
-    setSelected({});
-    setName('');
-    setQuery('');
-  };
-
-  return (
-    <div className="builder">
-      {/* Running total — sticky-ish header */}
-      <div className="builder-total">
-        <div className="builder-total-row">
-          <div>
-            <div className="builder-total-eyebrow">Running total</div>
-            <div className="builder-total-kcal mono">
-              {Math.round(totals.kcal)}<span className="builder-total-unit"> kcal</span>
-            </div>
-          </div>
-          <div className="builder-total-pp">
-            <span className="mono" style={{ fontSize: 14, color: 'var(--ink)' }}>
-              {ratio == null ? '—' : ratio.toFixed(1)}
-            </span>
-            <span className="builder-total-unit"> g/100kcal</span>
-          </div>
-        </div>
-        <div className="builder-total-macros mono">
-          <span><span className="builder-total-mlbl">P</span> {round1(totals.p)}g</span>
-          <span className="sep">·</span>
-          <span><span className="builder-total-mlbl">F</span> {round1(totals.f)}g</span>
-          <span className="sep">·</span>
-          <span><span className="builder-total-mlbl">C</span> {round1(totals.c)}g</span>
-          <span className="sep">·</span>
-          <span><span className="builder-total-mlbl">Fb</span> {round1(totals.fiber)}g</span>
-          <span className="sep">·</span>
-          <span><span className="builder-total-mlbl">items</span> {itemCount}</span>
-        </div>
-      </div>
-
-      {/* Search */}
-      <div className="builder-search">
-        <input
-          className="builder-search-input"
-          placeholder="Search ingredients…"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-        />
-        {query && (
-          <button className="icon-btn" onClick={() => setQuery('')} aria-label="Clear search" style={{ width: 28, height: 28 }}>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-          </button>
-        )}
-      </div>
-
-      {/* Groups */}
-      {BUILDER_GROUPS.map(g => {
-        const items = filtered.filter(c => c.group === g.key);
-        if (items.length === 0) return null;
-        return (
-          <div key={g.key} className="builder-group">
-            <div className="builder-group-head">{g.label} <span className="builder-group-count mono">{items.length}</span></div>
-            {items.map(comp => {
-              const qty = selected[comp.name] || 0;
-              return (
-                <BuilderRow key={comp.name} comp={comp} qty={qty} onChange={(q) => setQty(comp.name, q)} />
-              );
-            })}
-          </div>
-        );
-      })}
-
-      {/* Build action */}
-      <div className="builder-foot">
-        <input
-          className="builder-name-input"
-          placeholder="Optional name (e.g., Tonight's plate)"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <div className="form-actions">
-          <button className="btn btn-secondary" onClick={() => { setSelected({}); setName(''); }} disabled={itemCount === 0}>
-            Reset
-          </button>
-          <button className="btn" onClick={submit} disabled={itemCount === 0} style={itemCount === 0 ? { opacity: 0.45 } : null}>
-            Add to log{itemCount > 0 ? ` (${itemCount})` : ''}
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function BuilderRow({ comp, qty, onChange }) {
-  const step = comp.scale_step || 1;
-  const dec = () => onChange(Math.max(0, round1(qty - step)));
-  const inc = () => onChange(round1(qty + step));
-  const onInput = (e) => {
-    const v = parseFloat(e.target.value);
-    if (Number.isFinite(v) && v >= 0) onChange(v);
-    else if (e.target.value === '') onChange(0);
-  };
-  const active = qty > 0;
-  return (
-    <div className={`builder-row ${active ? 'active' : ''}`}>
-      <div className="builder-row-info">
-        <div className="builder-row-name">
-          {comp.name}
-          {comp.unit && <span className="builder-row-unit mono"> · {comp.unit}</span>}
-        </div>
-        <div className="builder-row-macros mono">
-          {comp.kcal} kcal
-          <span className="sep">·</span>
-          {comp.p}p
-          <span className="sep">·</span>
-          {comp.f}f
-          <span className="sep">·</span>
-          {comp.c}c
-          {comp.fiber ? <><span className="sep">·</span>{comp.fiber}fb</> : null}
-        </div>
-      </div>
-      <div className="builder-stepper">
-        <button className="step-btn" onClick={dec} disabled={qty <= 0} aria-label="Decrease">−</button>
-        <input
-          className="step-qty mono"
-          type="number"
-          inputMode="decimal"
-          step={step}
-          min="0"
-          value={qty || ''}
-          placeholder="0"
-          onChange={onInput}
-        />
-        <button className="step-btn" onClick={inc} aria-label="Increase">+</button>
-      </div>
-    </div>
-  );
-}
-
-function formatQty(q) {
-  if (q === Math.floor(q)) return String(q);
-  return String(Number(q.toFixed(2)));
-}
-function round1(n) {
-  return Math.round(n * 10) / 10;
 }
 
 function NumField({ label, unit, value, onChange, error, min, step }) {
