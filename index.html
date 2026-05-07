@@ -977,6 +977,133 @@
     .gear-btn:active { transform: scale(0.94); }
     .gear-btn svg { width: 15px; height: 15px; transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1); }
 
+    /* === History sheet === */
+    .history-head-row {
+      display: flex; align-items: baseline; justify-content: space-between;
+      padding: 4px 16px 12px;
+    }
+    .history-head-row .history-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 9.5px; font-weight: 500; letter-spacing: 0.14em;
+      color: var(--dim); text-transform: uppercase;
+    }
+    .history-head-row .history-range { font-size: 11.5px; color: var(--ink-2); font-family: var(--font-mono); }
+
+    .history-summary {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      padding: 0 16px 12px;
+    }
+    .history-summary-cell {
+      background: var(--surface-2);
+      border-radius: 8px;
+      padding: 10px 12px;
+      border: 1px solid var(--hairline);
+    }
+    .history-summary-label {
+      font-family: var(--font-mono);
+      font-size: 9px; font-weight: 500; letter-spacing: 0.14em;
+      color: var(--dim); text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .history-summary-value {
+      font-family: var(--font-mono);
+      font-size: 18px; color: var(--ink); font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+    .history-summary-sub {
+      font-family: var(--font-mono);
+      font-size: 10px; color: var(--ink-2);
+      margin-top: 2px;
+    }
+
+    .history-day {
+      padding: 12px 16px;
+      border-top: 1px solid var(--hairline);
+    }
+    .history-day:first-of-type { border-top: 1px solid var(--hairline-strong); }
+    .history-day.today { background: oklch(0.18 0.01 240 / 0.4); }
+    .history-day.empty { opacity: 0.5; }
+
+    .history-day-head {
+      display: flex; align-items: baseline; justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    .history-day-date {
+      font-size: 13px; color: var(--ink); font-weight: 500;
+      letter-spacing: -0.005em;
+    }
+    .history-day-date .day-rel { color: var(--dim); margin-left: 6px; font-weight: 400; }
+    .history-day-meta { font-family: var(--font-mono); font-size: 11px; color: var(--ink-2); }
+
+    .history-day-bars {
+      display: grid;
+      grid-template-columns: 60px 1fr auto;
+      gap: 8px;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      margin-bottom: 4px;
+    }
+    .history-day-bars .label { color: var(--dim); text-transform: uppercase; letter-spacing: 0.1em; font-size: 9.5px; }
+    .history-day-bars .track {
+      height: 6px;
+      background: var(--surface-2);
+      border-radius: 3px;
+      overflow: hidden;
+      position: relative;
+    }
+    .history-day-bars .fill {
+      height: 100%;
+      background: var(--ink-2);
+      border-radius: 3px;
+      transition: width 0.18s ease;
+    }
+    .history-day-bars .fill.hit { background: oklch(0.82 0.16 145); }
+    .history-day-bars .fill.under { background: oklch(0.72 0.05 50); }
+    .history-day-bars .fill.over { background: oklch(0.72 0.18 30); }
+    .history-day-bars .floor-tick {
+      position: absolute; top: -2px; bottom: -2px;
+      width: 1px; background: var(--ink-2); opacity: 0.5;
+    }
+    .history-day-bars .val { color: var(--ink-2); font-size: 10.5px; min-width: 70px; text-align: right; }
+    .history-day-bars .val.hit { color: oklch(0.82 0.16 145); }
+    .history-day-bars .val.over { color: oklch(0.72 0.18 30); }
+
+    .history-day-meals {
+      margin-top: 8px;
+      padding-left: 4px;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: var(--ink-2);
+    }
+    .history-day-meals .h-meal { display: flex; justify-content: space-between; padding: 2px 0; }
+    .history-day-meals .h-meal-name { color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 70%; }
+    .history-day-meals .h-meal-macros { color: var(--dim); }
+
+    .history-day-toggle {
+      background: transparent; border: 0; color: var(--dim);
+      font-size: 10.5px; padding: 4px 0; cursor: pointer;
+      font-family: var(--font-mono); letter-spacing: 0.05em;
+      margin-top: 4px;
+    }
+    .history-day-toggle:hover { color: var(--ink-2); }
+
+    .history-empty {
+      padding: 32px 16px;
+      text-align: center;
+      color: var(--dim);
+      font-size: 13px;
+    }
+
+    .history-export-row {
+      display: flex; gap: 8px; padding: 12px 16px 4px;
+      border-top: 1px solid var(--hairline);
+      margin-top: 8px;
+    }
+    .history-export-row .btn { flex: 1; }
+
     /* Saved pill */
     .saved-pill {
       display: inline-flex;
@@ -1529,6 +1656,18 @@
       margin-bottom: 4px;
     }
     .builder-summary-text { font-size: 13.5px; color: var(--ink); letter-spacing: -0.005em; line-height: 1.45; }
+    .builder-summary-macros {
+      margin-top: 8px;
+      display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px;
+      font-size: 11.5px; color: var(--ink-2);
+      letter-spacing: 0.01em;
+    }
+    .builder-summary-macros .bsm-kcal { color: var(--ink); font-weight: 600; }
+    .builder-summary-macros .bsm-sep { color: var(--rule); }
+    .builder-summary-macros .bsm-pp { font-weight: 600; }
+    .builder-summary-macros .bsm-pp-anchor { color: oklch(0.82 0.16 145); }
+    .builder-summary-macros .bsm-pp-balanced { color: oklch(0.85 0.10 85); }
+    .builder-summary-macros .bsm-pp-filler { color: oklch(0.72 0.05 50); }
     .builder-summary-stub {
       font-size: 10px; color: var(--dim);
       letter-spacing: 0.08em; text-transform: uppercase;
@@ -1536,6 +1675,198 @@
     }
 
     .sheet-tab { padding: 5px 9px !important; font-size: 11.5px !important; letter-spacing: -0.005em; }
+
+    /* === Builder folders (organized library) === */
+    .builder-folders {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px;
+      padding: 4px;
+      background: var(--surface-2);
+      border: 1px solid var(--hairline);
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    .builder-folder {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 2px;
+      padding: 8px 4px 7px;
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 6px;
+      cursor: pointer;
+      color: var(--muted);
+      font-family: var(--font-sans);
+      transition: background 0.12s, color 0.12s, border-color 0.12s;
+    }
+    .builder-folder:hover { color: var(--ink-2); }
+    .builder-folder.active {
+      background: var(--surface);
+      color: var(--ink);
+      border-color: var(--hairline-strong);
+    }
+    .builder-folder-label {
+      font-size: 12px; font-weight: 500; letter-spacing: -0.005em;
+    }
+    .builder-folder-meta {
+      font-family: var(--font-mono);
+      font-size: 9.5px; letter-spacing: 0.06em;
+      color: var(--dim);
+    }
+    .builder-folder.active .builder-folder-meta { color: var(--muted); }
+    .builder-folder-meta .sel { color: var(--good); }
+
+    .builder-library {
+      border: 1px solid var(--hairline);
+      border-radius: 10px;
+      background: var(--surface);
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+    .builder-sub {
+      border-bottom: 1px solid var(--hairline);
+    }
+    .builder-sub:last-child { border-bottom: none; }
+    .builder-sub-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 5px 12px 4px;
+      background: var(--surface-2);
+      border-bottom: 1px solid var(--hairline);
+    }
+    .builder-sub-title {
+      font-family: var(--font-mono);
+      font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--muted);
+    }
+    .builder-sub-count {
+      font-family: var(--font-mono);
+      font-size: 9.5px; letter-spacing: 0.08em;
+      color: var(--dim);
+    }
+    .builder-tiles {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--hairline);
+    }
+    .builder-tile {
+      position: relative;
+      display: flex; flex-direction: column; gap: 3px;
+      padding: 9px 12px 9px 12px;
+      background: var(--surface);
+      border: none;
+      text-align: left;
+      cursor: pointer;
+      color: var(--ink);
+      font-family: var(--font-sans);
+      transition: background 0.12s;
+      min-height: 52px;
+      -webkit-user-select: none; user-select: none;
+      -webkit-touch-callout: none;
+    }
+    .builder-tile:hover { background: var(--surface-2); }
+    .builder-tile.selected {
+      background: var(--surface-2);
+      box-shadow: inset 2px 0 0 var(--good);
+    }
+    .builder-tile-name {
+      font-size: 12.5px; font-weight: 500; letter-spacing: -0.005em;
+      color: var(--ink);
+      padding-right: 22px;
+      line-height: 1.3;
+    }
+    .builder-tile-meta {
+      font-family: var(--font-mono);
+      font-size: 10px; letter-spacing: 0.02em;
+      color: var(--muted);
+    }
+    .builder-tile.selected .builder-tile-meta { color: var(--ink-2); }
+
+    /* Inline qty stepper inside a selected tile */
+    .builder-tile-stepper {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 2px;
+    }
+    .builder-step-btn {
+      width: 20px; height: 20px;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--surface);
+      border: 1px solid var(--hairline-strong);
+      border-radius: 4px;
+      color: var(--ink-2);
+      font-family: var(--font-mono);
+      font-size: 12px; line-height: 1;
+      cursor: pointer;
+      padding: 0;
+    }
+    .builder-step-btn:hover { color: var(--ink); border-color: var(--muted); }
+    .builder-step-val {
+      font-family: var(--font-mono);
+      font-size: 11px; color: var(--ink);
+      min-width: 44px; text-align: center;
+      letter-spacing: 0;
+    }
+
+    /* Top-right badge: count + tap to remove all */
+    .builder-tile-badge {
+      position: absolute; top: 8px; right: 8px;
+      height: 18px; min-width: 18px;
+      padding: 0 5px;
+      border-radius: 9px;
+      display: inline-flex; align-items: center; justify-content: center; gap: 3px;
+      font-family: var(--font-mono);
+      font-size: 9.5px; font-weight: 600;
+      background: var(--good);
+      color: var(--bg);
+      border: none;
+      cursor: pointer;
+      transition: background 0.12s;
+    }
+    .builder-tile-badge:hover { background: var(--ink); }
+    .builder-tile-badge svg { width: 8px; height: 8px; }
+
+    .builder-empty-folder {
+      padding: 28px 14px;
+      text-align: center;
+      font-size: 12px; color: var(--muted);
+    }
+    .builder-selected-head {
+      display: flex; align-items: center; justify-content: space-between;
+      margin: 4px 2px 6px;
+    }
+    .builder-selected-head .sheet-section-title { color: var(--ink-2); }
+    .builder-selected-meta {
+      font-family: var(--font-mono);
+      font-size: 10px; color: var(--dim);
+      letter-spacing: 0.06em;
+    }
+
+    /* Toast pinned to sheet */
+    .builder-toast {
+      position: sticky; bottom: 8px;
+      align-self: center;
+      margin: 8px auto 0;
+      padding: 7px 12px;
+      background: var(--ink);
+      color: var(--bg);
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 11px; letter-spacing: 0;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+      pointer-events: none;
+      z-index: 5;
+      animation: toast-in 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes toast-in {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .builder-toast-host {
+      position: sticky; bottom: 8px;
+      display: flex; justify-content: center;
+      pointer-events: none;
+      z-index: 5;
+    }
   </style>
 </head>
 <body>
@@ -1675,94 +2006,88 @@ const CUISINES = [
 
 function isStaple(p) { return Array.isArray(p.tags) && p.tags.includes('staple'); }
 
-// Builder components — frontend-only stubs; backend will resolve real macros.
-// Sourced from meal-builder-constituents.md, mapped into the four UI groups
-// (protein / carb / veg / fat). Default qty is the unit baseline from the MD.
+// Builder components — macros per default unit (sourced from
+// meal-builder-constituents.md). `unitFactor[u]` = multiplier that converts
+// 1 unit `u` into N of the default unit. Default unit's factor is always 1.
+// Macros for a row = qty * unitFactor[unit] * macros.
 const BUILDER_COMPONENTS = [
   // === Proteins ===
-  { id: 'chicken-thigh',     name: 'Chicken thigh',           group: 'protein', defaultUnit: 'g',     units: ['g'],            defaultQty: 100 },
-  { id: 'chicken-breast',    name: 'Chicken breast',          group: 'protein', defaultUnit: 'g',     units: ['g'],            defaultQty: 100 },
-  { id: 'chicken-mince',     name: 'Chicken mince (cooked)',  group: 'protein', defaultUnit: 'g',     units: ['g'],            defaultQty: 100 },
-  { id: 'lamb-mince',        name: 'Lamb mince (cooked)',     group: 'protein', defaultUnit: 'g',     units: ['g'],            defaultQty: 100 },
-  { id: 'mutton-bone-in',    name: 'Mutton (bone-in)',        group: 'protein', defaultUnit: 'g',     units: ['g'],            defaultQty: 100 },
-  { id: 'prawns',            name: 'Prawns',                  group: 'protein', defaultUnit: 'g',     units: ['g'],            defaultQty: 100 },
-  { id: 'calamari',          name: 'Calamari / squid',        group: 'protein', defaultUnit: 'g',     units: ['g'],            defaultQty: 100 },
-  { id: 'crab-meat',         name: 'Crab meat',               group: 'protein', defaultUnit: 'g',     units: ['g'],            defaultQty: 100 },
-  { id: 'paneer',            name: 'Paneer',                  group: 'protein', defaultUnit: 'g',     units: ['g'],            defaultQty: 100 },
-  { id: 'tofu',              name: 'Tofu (firm)',             group: 'protein', defaultUnit: 'g',     units: ['g'],            defaultQty: 100 },
-  { id: 'steak-sirloin',     name: 'Steak (sirloin)',         group: 'protein', defaultUnit: 'g',     units: ['g'],            defaultQty: 100 },
-  { id: 'whey',              name: 'Whey protein',            group: 'protein', defaultUnit: 'scoop', units: ['scoop', 'g'],   defaultQty: 1 },
-  // Dairy proteins
-  { id: 'greek-yogurt',      name: 'Greek yogurt',            group: 'protein', defaultUnit: 'g',     units: ['g'],            defaultQty: 100 },
-  { id: 'hung-curd',         name: 'Hung curd',               group: 'protein', defaultUnit: 'g',     units: ['g'],            defaultQty: 100 },
-  { id: 'whole-milk',        name: 'Whole milk',              group: 'protein', defaultUnit: 'ml',    units: ['ml'],           defaultQty: 100 },
-  { id: 'skim-milk',         name: 'Skim milk',               group: 'protein', defaultUnit: 'ml',    units: ['ml'],           defaultQty: 100 },
-  { id: 'cheese-shredded',   name: 'Cheese (shredded)',       group: 'protein', defaultUnit: 'g',     units: ['g'],            defaultQty: 30 },
-  // Legumes (protein-leaning)
-  { id: 'toor-dal',          name: 'Toor dal (cooked)',       group: 'protein', defaultUnit: 'g',     units: ['g', 'cup'],     defaultQty: 100 },
-  { id: 'chickpeas',         name: 'Chickpeas / chole (cooked)', group: 'protein', defaultUnit: 'g',  units: ['g', 'cup'],     defaultQty: 100 },
-  { id: 'rajma',             name: 'Rajma / kidney beans (cooked)', group: 'protein', defaultUnit: 'g', units: ['g', 'cup'],   defaultQty: 100 },
-  { id: 'black-beans',       name: 'Black beans (cooked)',    group: 'protein', defaultUnit: 'g',     units: ['g', 'cup'],     defaultQty: 100 },
-  // Drinks (protein-leaning)
-  { id: 'chocolate-milk',    name: 'Chocolate milk',          group: 'protein', defaultUnit: 'mug',   units: ['mug', 'ml'],    defaultQty: 1 },
-  { id: 'salt-lassi',        name: 'Salt lassi',              group: 'protein', defaultUnit: 'glass', units: ['glass', 'ml'],  defaultQty: 1 },
-  // Supplement
-  { id: 'creatine',          name: 'Creatine',                group: 'protein', defaultUnit: 'g',     units: ['g'],            defaultQty: 5 },
+  { id: 'chicken-thigh',     name: 'Chicken thigh',           group: 'protein', sub: 'Meat',       defaultUnit: 'g',     units: ['g'],            defaultQty: 100, step: 50, macros: { kcal: 130, p: 19, f: 6, c: 0, fiber: 0 } },
+  { id: 'chicken-breast',    name: 'Chicken breast',          group: 'protein', sub: 'Meat',       defaultUnit: 'g',     units: ['g'],            defaultQty: 100, step: 50, macros: { kcal: 165, p: 31, f: 3.5, c: 0, fiber: 0 } },
+  { id: 'chicken-mince',     name: 'Chicken mince (cooked)',  group: 'protein', sub: 'Meat',       defaultUnit: 'g',     units: ['g'],            defaultQty: 100, step: 50, macros: { kcal: 110, p: 19, f: 4, c: 0, fiber: 0 } },
+  { id: 'lamb-mince',        name: 'Lamb mince (cooked)',     group: 'protein', sub: 'Meat',       defaultUnit: 'g',     units: ['g'],            defaultQty: 100, step: 50, macros: { kcal: 175, p: 18, f: 11, c: 0, fiber: 0 } },
+  { id: 'mutton-bone-in',    name: 'Mutton (bone-in)',        group: 'protein', sub: 'Meat',       defaultUnit: 'g',     units: ['g'],            defaultQty: 100, step: 50, macros: { kcal: 200, p: 20, f: 13, c: 0, fiber: 0 } },
+  { id: 'steak-sirloin',     name: 'Steak (sirloin)',         group: 'protein', sub: 'Meat',       defaultUnit: 'g',     units: ['g'],            defaultQty: 100, step: 50, macros: { kcal: 200, p: 26, f: 10, c: 0, fiber: 0 } },
+  { id: 'prawns',            name: 'Prawns',                  group: 'protein', sub: 'Seafood',    defaultUnit: 'g',     units: ['g'],            defaultQty: 100, step: 50, macros: { kcal: 100, p: 20, f: 1, c: 0, fiber: 0 } },
+  { id: 'calamari',          name: 'Calamari / squid',        group: 'protein', sub: 'Seafood',    defaultUnit: 'g',     units: ['g'],            defaultQty: 100, step: 50, macros: { kcal: 105, p: 18, f: 3, c: 1, fiber: 0 } },
+  { id: 'crab-meat',         name: 'Crab meat',               group: 'protein', sub: 'Seafood',    defaultUnit: 'g',     units: ['g'],            defaultQty: 100, step: 50, macros: { kcal: 100, p: 20, f: 1.5, c: 0, fiber: 0 } },
+  { id: 'paneer',            name: 'Paneer',                  group: 'protein', sub: 'Veg protein',defaultUnit: 'g',     units: ['g'],            defaultQty: 100, step: 50, macros: { kcal: 265, p: 18, f: 20, c: 3, fiber: 0 } },
+  { id: 'tofu',              name: 'Tofu (firm)',             group: 'protein', sub: 'Veg protein',defaultUnit: 'g',     units: ['g'],            defaultQty: 100, step: 50, macros: { kcal: 145, p: 15, f: 8, c: 4, fiber: 0 } },
+  { id: 'greek-yogurt',      name: 'Greek yogurt',            group: 'protein', sub: 'Dairy',      defaultUnit: 'g',     units: ['g'],            defaultQty: 100, step: 50, macros: { kcal: 65, p: 10, f: 2, c: 4, fiber: 0 } },
+  { id: 'hung-curd',         name: 'Hung curd',               group: 'protein', sub: 'Dairy',      defaultUnit: 'g',     units: ['g'],            defaultQty: 100, step: 50, macros: { kcal: 65, p: 10, f: 2, c: 4, fiber: 0 } },
+  { id: 'whole-milk',        name: 'Whole milk',              group: 'protein', sub: 'Dairy',      defaultUnit: 'ml',    units: ['ml'],           defaultQty: 100, step: 50, macros: { kcal: 60, p: 3, f: 3, c: 5, fiber: 0 } },
+  { id: 'skim-milk',         name: 'Skim milk',               group: 'protein', sub: 'Dairy',      defaultUnit: 'ml',    units: ['ml'],           defaultQty: 100, step: 50, macros: { kcal: 35, p: 3.5, f: 0, c: 5, fiber: 0 } },
+  { id: 'cheese-shredded',   name: 'Cheese (shredded)',       group: 'protein', sub: 'Dairy',      defaultUnit: 'g',     units: ['g'],            defaultQty: 30,  step: 10, macros: { kcal: 110, p: 7, f: 9, c: 1, fiber: 0 } },
+  { id: 'toor-dal',          name: 'Toor dal (cooked)',       group: 'protein', sub: 'Legumes',    defaultUnit: 'g',     units: ['g', 'cup'],     defaultQty: 100, step: 50, unitFactor: { g: 1, cup: 200 }, macros: { kcal: 100, p: 7, f: 0.5, c: 17, fiber: 2 } },
+  { id: 'chickpeas',         name: 'Chickpeas / chole (cooked)', group: 'protein', sub: 'Legumes', defaultUnit: 'g',     units: ['g', 'cup'],     defaultQty: 100, step: 50, unitFactor: { g: 1, cup: 200 }, macros: { kcal: 120, p: 6, f: 2, c: 20, fiber: 5 } },
+  { id: 'rajma',             name: 'Rajma / kidney beans (cooked)', group: 'protein', sub: 'Legumes', defaultUnit: 'g',  units: ['g', 'cup'],     defaultQty: 100, step: 50, unitFactor: { g: 1, cup: 200 }, macros: { kcal: 115, p: 6, f: 0.5, c: 20, fiber: 4 } },
+  { id: 'black-beans',       name: 'Black beans (cooked)',    group: 'protein', sub: 'Legumes',    defaultUnit: 'g',     units: ['g', 'cup'],     defaultQty: 100, step: 50, unitFactor: { g: 1, cup: 200 }, macros: { kcal: 130, p: 9, f: 0.5, c: 24, fiber: 7 } },
+  { id: 'chocolate-milk',    name: 'Chocolate milk',          group: 'protein', sub: 'Drinks',     defaultUnit: 'mug',   units: ['mug', 'ml'],    defaultQty: 1,   step: 0.5, unitFactor: { mug: 1, ml: 1 / 250 }, macros: { kcal: 180, p: 8, f: 5, c: 26, fiber: 0 } },
+  { id: 'salt-lassi',        name: 'Salt lassi',              group: 'protein', sub: 'Drinks',     defaultUnit: 'glass', units: ['glass', 'ml'],  defaultQty: 1,   step: 0.5, unitFactor: { glass: 1, ml: 1 / 250 }, macros: { kcal: 150, p: 8, f: 5, c: 18, fiber: 0 } },
+  { id: 'whey',              name: 'Whey protein',            group: 'protein', sub: 'Supplement', defaultUnit: 'scoop', units: ['scoop', 'g'],   defaultQty: 1,   step: 0.5, unitFactor: { scoop: 1, g: 1 / 30 }, macros: { kcal: 120, p: 25, f: 2, c: 3, fiber: 0 } },
+  { id: 'creatine',          name: 'Creatine',                group: 'protein', sub: 'Supplement', defaultUnit: 'g',     units: ['g'],            defaultQty: 5,   step: 1, macros: { kcal: 0, p: 0, f: 0, c: 0, fiber: 0 } },
 
   // === Carbs ===
-  { id: 'rice-white',        name: 'Rice (white, cooked)',    group: 'carb', defaultUnit: 'g',  units: ['g', 'cup'],   defaultQty: 100 },
-  { id: 'roti',              name: 'Roti (plain, 6")',        group: 'carb', defaultUnit: 'pc', units: ['pc'],         defaultQty: 1 },
-  { id: 'puri',              name: 'Puri',                    group: 'carb', defaultUnit: 'pc', units: ['pc'],         defaultQty: 1 },
-  { id: 'naan',              name: 'Naan',                    group: 'carb', defaultUnit: 'pc', units: ['pc'],         defaultQty: 1 },
-  { id: 'pav',               name: 'Pav',                     group: 'carb', defaultUnit: 'pc', units: ['pc'],         defaultQty: 1 },
-  { id: 'egg-noodles',       name: 'Egg noodles (cooked)',    group: 'carb', defaultUnit: 'g',  units: ['g'],          defaultQty: 100 },
-  { id: 'lentil-pasta',      name: 'Lentil pasta (dry)',      group: 'carb', defaultUnit: 'g',  units: ['g'],          defaultQty: 100 },
-  { id: 'regular-pasta',     name: 'Regular pasta (dry)',     group: 'carb', defaultUnit: 'g',  units: ['g'],          defaultQty: 100 },
-  { id: 'hp-tortilla',       name: 'High-protein tortilla',   group: 'carb', defaultUnit: 'pc', units: ['pc'],         defaultQty: 1 },
-  { id: 'flour-tortilla',    name: 'Regular flour tortilla',  group: 'carb', defaultUnit: 'pc', units: ['pc'],         defaultQty: 1 },
-  { id: 'bread-toast',       name: 'Bread / toast',           group: 'carb', defaultUnit: 'pc', units: ['pc'],         defaultQty: 1 },
-  { id: 'mashed-potato',     name: 'Mashed potato',           group: 'carb', defaultUnit: 'g',  units: ['g'],          defaultQty: 100 },
-  { id: 'roast-potato',      name: 'Roast potato',            group: 'carb', defaultUnit: 'g',  units: ['g'],          defaultQty: 100 },
-  { id: 'oats-dry',          name: 'Oats (dry)',              group: 'carb', defaultUnit: 'g',  units: ['g'],          defaultQty: 30 },
-  { id: 'sushi-rice',        name: 'Sushi rice (cooked)',     group: 'carb', defaultUnit: 'g',  units: ['g'],          defaultQty: 100 },
-  // Fruits (carbs)
-  { id: 'banana',            name: 'Banana',                  group: 'carb', defaultUnit: 'pc', units: ['pc'],         defaultQty: 1 },
-  { id: 'mango-alphonso',    name: 'Mango (Alphonso)',        group: 'carb', defaultUnit: 'pc', units: ['pc'],         defaultQty: 1 },
-  { id: 'apple',             name: 'Apple',                   group: 'carb', defaultUnit: 'pc', units: ['pc'],         defaultQty: 1 },
-  // Sweet sauce
-  { id: 'teriyaki-glaze',    name: 'Teriyaki glaze',          group: 'carb', defaultUnit: 'tbsp', units: ['tbsp'],     defaultQty: 1 },
+  { id: 'rice-white',        name: 'Rice (white, cooked)',    group: 'carb', sub: 'Grains',     defaultUnit: 'g',  units: ['g', 'cup'],   defaultQty: 100, step: 50, unitFactor: { g: 1, cup: 200 }, macros: { kcal: 130, p: 2.5, f: 0.5, c: 29, fiber: 0 } },
+  { id: 'sushi-rice',        name: 'Sushi rice (cooked)',     group: 'carb', sub: 'Grains',     defaultUnit: 'g',  units: ['g'],          defaultQty: 100, step: 50, macros: { kcal: 140, p: 2.5, f: 0.5, c: 31, fiber: 0 } },
+  { id: 'oats-dry',          name: 'Oats (dry)',              group: 'carb', sub: 'Grains',     defaultUnit: 'g',  units: ['g'],          defaultQty: 30,  step: 10, macros: { kcal: 115, p: 4, f: 2, c: 20, fiber: 3 } },
+  { id: 'roti',              name: 'Roti (plain, 6")',        group: 'carb', sub: 'Breads',     defaultUnit: 'pc', units: ['pc'],         defaultQty: 1,   step: 0.5, macros: { kcal: 80, p: 2.5, f: 0.8, c: 16, fiber: 1 } },
+  { id: 'puri',              name: 'Puri',                    group: 'carb', sub: 'Breads',     defaultUnit: 'pc', units: ['pc'],         defaultQty: 1,   step: 1, macros: { kcal: 100, p: 2, f: 5, c: 12, fiber: 0.5 } },
+  { id: 'naan',              name: 'Naan',                    group: 'carb', sub: 'Breads',     defaultUnit: 'pc', units: ['pc'],         defaultQty: 1,   step: 0.5, macros: { kcal: 260, p: 8, f: 5, c: 45, fiber: 2 } },
+  { id: 'pav',               name: 'Pav',                     group: 'carb', sub: 'Breads',     defaultUnit: 'pc', units: ['pc'],         defaultQty: 1,   step: 1, macros: { kcal: 110, p: 3, f: 2, c: 18, fiber: 1 } },
+  { id: 'bread-toast',       name: 'Bread / toast',           group: 'carb', sub: 'Breads',     defaultUnit: 'pc', units: ['pc'],         defaultQty: 1,   step: 1, macros: { kcal: 80, p: 3, f: 1, c: 14, fiber: 1 } },
+  { id: 'hp-tortilla',       name: 'High-protein tortilla',   group: 'carb', sub: 'Breads',     defaultUnit: 'pc', units: ['pc'],         defaultQty: 1,   step: 1, macros: { kcal: 100, p: 12, f: 3, c: 10, fiber: 5 } },
+  { id: 'flour-tortilla',    name: 'Regular flour tortilla',  group: 'carb', sub: 'Breads',     defaultUnit: 'pc', units: ['pc'],         defaultQty: 1,   step: 1, macros: { kcal: 100, p: 2, f: 3, c: 16, fiber: 1 } },
+  { id: 'egg-noodles',       name: 'Egg noodles (cooked)',    group: 'carb', sub: 'Pasta',      defaultUnit: 'g',  units: ['g'],          defaultQty: 100, step: 50, macros: { kcal: 130, p: 4.5, f: 1, c: 25, fiber: 1 } },
+  { id: 'lentil-pasta',      name: 'Lentil pasta (dry)',      group: 'carb', sub: 'Pasta',      defaultUnit: 'g',  units: ['g'],          defaultQty: 100, step: 25, macros: { kcal: 350, p: 25, f: 2, c: 50, fiber: 8 } },
+  { id: 'regular-pasta',     name: 'Regular pasta (dry)',     group: 'carb', sub: 'Pasta',      defaultUnit: 'g',  units: ['g'],          defaultQty: 100, step: 25, macros: { kcal: 350, p: 12, f: 2, c: 70, fiber: 3 } },
+  { id: 'mashed-potato',     name: 'Mashed potato',           group: 'carb', sub: 'Potato',     defaultUnit: 'g',  units: ['g'],          defaultQty: 100, step: 50, macros: { kcal: 85, p: 2, f: 2, c: 15, fiber: 1 } },
+  { id: 'roast-potato',      name: 'Roast potato',            group: 'carb', sub: 'Potato',     defaultUnit: 'g',  units: ['g'],          defaultQty: 100, step: 50, macros: { kcal: 150, p: 2.5, f: 5, c: 24, fiber: 2 } },
+  { id: 'banana',            name: 'Banana',                  group: 'carb', sub: 'Fruits',     defaultUnit: 'pc', units: ['pc'],         defaultQty: 1,   step: 0.5, macros: { kcal: 105, p: 1, f: 0, c: 27, fiber: 3 } },
+  { id: 'mango-alphonso',    name: 'Mango (Alphonso)',        group: 'carb', sub: 'Fruits',     defaultUnit: 'pc', units: ['pc'],         defaultQty: 1,   step: 0.5, macros: { kcal: 150, p: 1, f: 0, c: 35, fiber: 3 } },
+  { id: 'apple',             name: 'Apple',                   group: 'carb', sub: 'Fruits',     defaultUnit: 'pc', units: ['pc'],         defaultQty: 1,   step: 0.5, macros: { kcal: 95, p: 0.5, f: 0, c: 25, fiber: 4 } },
+  { id: 'teriyaki-glaze',    name: 'Teriyaki glaze',          group: 'carb', sub: 'Sweet sauce',defaultUnit: 'tbsp', units: ['tbsp'],     defaultQty: 1,   step: 0.5, macros: { kcal: 25, p: 0.5, f: 0, c: 6, fiber: 0 } },
 
   // === Veg / fiber ===
-  { id: 'steamed-veg',       name: 'Steamed veg',             group: 'veg', defaultUnit: 'g',     units: ['g', 'cup'],     defaultQty: 100 },
-  { id: 'roasted-veg',       name: 'Roasted veg',             group: 'veg', defaultUnit: 'g',     units: ['g', 'cup'],     defaultQty: 100 },
-  { id: 'stir-fry-veg',      name: 'Stir fry veg',            group: 'veg', defaultUnit: 'g',     units: ['g', 'cup'],     defaultQty: 100 },
-  { id: 'jackfruit-sabzi',   name: 'Jackfruit sabzi',         group: 'veg', defaultUnit: 'katori', units: ['katori', 'cup'], defaultQty: 1 },
-  { id: 'bhaji-mash',        name: 'Bhaji mash',              group: 'veg', defaultUnit: 'g',     units: ['g'],            defaultQty: 100 },
-  { id: 'side-salad',        name: 'Side salad',              group: 'veg', defaultUnit: 'g',     units: ['g', 'cup'],     defaultQty: 100 },
-  { id: 'onion',             name: 'Onion',                   group: 'veg', defaultUnit: 'g',     units: ['g'],            defaultQty: 50 },
-  // Tomato-based sauces (veg-coded)
-  { id: 'gravy-base',        name: 'Onion-tomato gravy',      group: 'veg', defaultUnit: 'katori', units: ['katori', 'cup'], defaultQty: 1 },
-  { id: 'enchilada-sauce',   name: 'Enchilada sauce',         group: 'veg', defaultUnit: 'ml',    units: ['ml', 'tbsp'],   defaultQty: 50 },
-  { id: 'salsa',             name: 'Salsa',                   group: 'veg', defaultUnit: 'g',     units: ['g', 'tbsp'],    defaultQty: 50 },
+  { id: 'steamed-veg',       name: 'Steamed veg',             group: 'veg', sub: 'Cooked veg',  defaultUnit: 'g',     units: ['g', 'cup'],     defaultQty: 100, step: 50, unitFactor: { g: 1, cup: 100 }, macros: { kcal: 35, p: 2.5, f: 0, c: 6, fiber: 3 } },
+  { id: 'roasted-veg',       name: 'Roasted veg',             group: 'veg', sub: 'Cooked veg',  defaultUnit: 'g',     units: ['g', 'cup'],     defaultQty: 100, step: 50, unitFactor: { g: 1, cup: 100 }, macros: { kcal: 45, p: 2, f: 1, c: 8, fiber: 2 } },
+  { id: 'stir-fry-veg',      name: 'Stir fry veg',            group: 'veg', sub: 'Cooked veg',  defaultUnit: 'g',     units: ['g', 'cup'],     defaultQty: 100, step: 50, unitFactor: { g: 1, cup: 100 }, macros: { kcal: 30, p: 2, f: 0, c: 5, fiber: 2 } },
+  { id: 'jackfruit-sabzi',   name: 'Jackfruit sabzi',         group: 'veg', sub: 'Sabzi',       defaultUnit: 'katori', units: ['katori', 'cup'], defaultQty: 1, step: 0.5, unitFactor: { katori: 1, cup: 1.5 }, macros: { kcal: 275, p: 3, f: 14.5, c: 35, fiber: 3 } },
+  { id: 'bhaji-mash',        name: 'Bhaji mash',              group: 'veg', sub: 'Sabzi',       defaultUnit: 'g',     units: ['g'],            defaultQty: 100, step: 50, macros: { kcal: 60, p: 2, f: 0, c: 12, fiber: 2 } },
+  { id: 'side-salad',        name: 'Side salad',              group: 'veg', sub: 'Raw',         defaultUnit: 'g',     units: ['g', 'cup'],     defaultQty: 100, step: 50, unitFactor: { g: 1, cup: 50 }, macros: { kcal: 20, p: 1, f: 0, c: 4, fiber: 1.5 } },
+  { id: 'onion',             name: 'Onion',                   group: 'veg', sub: 'Raw',         defaultUnit: 'g',     units: ['g'],            defaultQty: 50,  step: 25, macros: { kcal: 40, p: 1, f: 0, c: 10, fiber: 1 } },
+  { id: 'gravy-base',        name: 'Onion-tomato gravy',      group: 'veg', sub: 'Sauces',      defaultUnit: 'katori', units: ['katori', 'cup'], defaultQty: 1, step: 0.5, unitFactor: { katori: 1, cup: 1.5 }, macros: { kcal: 30, p: 1, f: 0, c: 6, fiber: 1 } },
+  { id: 'enchilada-sauce',   name: 'Enchilada sauce',         group: 'veg', sub: 'Sauces',      defaultUnit: 'ml',    units: ['ml', 'tbsp'],   defaultQty: 50,  step: 25, unitFactor: { ml: 1, tbsp: 15 }, macros: { kcal: 20, p: 0.5, f: 0.5, c: 3.5, fiber: 0 } },
+  { id: 'salsa',             name: 'Salsa',                   group: 'veg', sub: 'Sauces',      defaultUnit: 'g',     units: ['g', 'tbsp'],    defaultQty: 50,  step: 25, unitFactor: { g: 1, tbsp: 15 }, macros: { kcal: 15, p: 0.5, f: 0, c: 3, fiber: 0.5 } },
 
   // === Fat / extras ===
-  { id: 'butter',            name: 'Butter',                  group: 'fat', defaultUnit: 'tbsp', units: ['tbsp', 'g'],   defaultQty: 1 },
-  { id: 'ghee',              name: 'Ghee',                    group: 'fat', defaultUnit: 'tsp',  units: ['tsp', 'g'],    defaultQty: 1 },
-  { id: 'cream',             name: 'Cream',                   group: 'fat', defaultUnit: 'tbsp', units: ['tbsp', 'ml'],  defaultQty: 1 },
-  { id: 'sour-cream',        name: 'Sour cream',              group: 'fat', defaultUnit: 'tbsp', units: ['tbsp', 'g'],   defaultQty: 1 },
-  { id: 'marinara-sauce',    name: 'Marinara sauce',          group: 'fat', defaultUnit: 'ml',   units: ['ml'],          defaultQty: 100 },
-  { id: 'coconut-milk',      name: 'Coconut milk (full fat)', group: 'fat', defaultUnit: 'ml',   units: ['ml'],          defaultQty: 100 },
-  { id: 'guacamole',         name: 'Guacamole',               group: 'fat', defaultUnit: 'g',    units: ['g', 'tbsp'],   defaultQty: 50 },
-  { id: 'hummus',            name: 'Hummus',                  group: 'fat', defaultUnit: 'g',    units: ['g', 'tbsp'],   defaultQty: 30 },
-  { id: 'peanut-butter',     name: 'Peanut butter',           group: 'fat', defaultUnit: 'tbsp', units: ['tbsp', 'g'],   defaultQty: 1 },
-  { id: 'tadka',             name: 'Tadka (ghee + spices)',   group: 'fat', defaultUnit: 'tsp',  units: ['tsp'],         defaultQty: 1 },
+  { id: 'butter',            name: 'Butter',                  group: 'fat', sub: 'Cooking fat', defaultUnit: 'tbsp', units: ['tbsp', 'g'],   defaultQty: 1, step: 0.5, unitFactor: { tbsp: 1, g: 1 / 14 }, macros: { kcal: 100, p: 0, f: 11, c: 0, fiber: 0 } },
+  { id: 'ghee',              name: 'Ghee',                    group: 'fat', sub: 'Cooking fat', defaultUnit: 'tsp',  units: ['tsp', 'g'],    defaultQty: 1, step: 0.5, unitFactor: { tsp: 1, g: 1 / 5 }, macros: { kcal: 45, p: 0, f: 5, c: 0, fiber: 0 } },
+  { id: 'tadka',             name: 'Tadka (ghee + spices)',   group: 'fat', sub: 'Cooking fat', defaultUnit: 'tsp',  units: ['tsp'],         defaultQty: 1, step: 0.5, macros: { kcal: 50, p: 0, f: 5, c: 1, fiber: 0 } },
+  { id: 'cream',             name: 'Cream',                   group: 'fat', sub: 'Dairy fat',   defaultUnit: 'tbsp', units: ['tbsp', 'ml'],  defaultQty: 1, step: 0.5, unitFactor: { tbsp: 1, ml: 1 / 15 }, macros: { kcal: 50, p: 0.5, f: 5, c: 1, fiber: 0 } },
+  { id: 'sour-cream',        name: 'Sour cream',              group: 'fat', sub: 'Dairy fat',   defaultUnit: 'tbsp', units: ['tbsp', 'g'],   defaultQty: 1, step: 0.5, unitFactor: { tbsp: 1, g: 1 / 15 }, macros: { kcal: 30, p: 0.5, f: 3, c: 0.5, fiber: 0 } },
+  { id: 'coconut-milk',      name: 'Coconut milk (full fat)', group: 'fat', sub: 'Dairy fat',   defaultUnit: 'ml',   units: ['ml'],          defaultQty: 100, step: 25, macros: { kcal: 150, p: 1.5, f: 15, c: 3, fiber: 0 } },
+  { id: 'marinara-sauce',    name: 'Marinara sauce',          group: 'fat', sub: 'Sauces',      defaultUnit: 'ml',   units: ['ml'],          defaultQty: 100, step: 25, macros: { kcal: 55, p: 1.5, f: 3, c: 7, fiber: 1 } },
+  { id: 'guacamole',         name: 'Guacamole',               group: 'fat', sub: 'Spreads',     defaultUnit: 'g',    units: ['g', 'tbsp'],   defaultQty: 50, step: 25, unitFactor: { g: 1, tbsp: 15 }, macros: { kcal: 80, p: 1, f: 7, c: 4, fiber: 2 } },
+  { id: 'hummus',            name: 'Hummus',                  group: 'fat', sub: 'Spreads',     defaultUnit: 'g',    units: ['g', 'tbsp'],   defaultQty: 30, step: 10, unitFactor: { g: 1, tbsp: 15 }, macros: { kcal: 80, p: 3, f: 5, c: 6, fiber: 1 } },
+  { id: 'peanut-butter',     name: 'Peanut butter',           group: 'fat', sub: 'Spreads',     defaultUnit: 'tbsp', units: ['tbsp', 'g'],   defaultQty: 1, step: 0.5, unitFactor: { tbsp: 1, g: 1 / 16 }, macros: { kcal: 95, p: 4, f: 8, c: 3, fiber: 1 } },
 ];
 
 const BUILDER_GROUPS = [
   { key: 'protein', label: 'Protein' },
   { key: 'carb',    label: 'Carb' },
-  { key: 'veg',     label: 'Veg / fiber' },
-  { key: 'fat',     label: 'Fat / extras' },
+  { key: 'veg',     label: 'Veg' },
+  { key: 'fat',     label: 'Fat' },
 ];
 
 const storage = {
@@ -1824,12 +2149,14 @@ function App() {
   const [activeKey, setActiveKey] = useState(dateKey());
   const [loaded, setLoaded] = useState(false);
   const [editingId, setEditingId] = useState(null);
+  const [editingBuilderMeal, setEditingBuilderMeal] = useState(null); // meal being rebuilt in Builder
   const [now, setNow] = useState(new Date());
   const [sheetOpen, setSheetOpen] = useState(false);
   const [sheetTab, setSheetTab] = useState('quick');
   const [recentlyAddedId, setRecentlyAddedId] = useState(null);
   const [targets, setTargets] = useState(DEFAULT_TARGETS);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [historyOpen, setHistoryOpen] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -1908,6 +2235,7 @@ function App() {
 
   const saveForQuickAdd = useCallback((m) => {
     const entry = { id: Date.now(), name: m.name, sub: m.sub, kcal: m.kcal, p: m.p, f: m.f, c: m.c, fiber: m.fiber };
+    if (m._builder) entry._builder = m._builder;
     setSavedMeals(prev => {
       if (prev.some(x => x.name === entry.name && x.kcal === entry.kcal)) return prev;
       const next = [entry, ...prev];
@@ -2008,7 +2336,7 @@ function App() {
   return (
     <TargetsContext.Provider value={targets}>
     <div className="app-shell">
-      <Topbar now={now} paceStatus={paceStatus} paceMsg={paceMsg} mealCount={meals.length} onClear={clearToday} onSettings={() => setSettingsOpen(true)} />
+      <Topbar now={now} paceStatus={paceStatus} paceMsg={paceMsg} mealCount={meals.length} onClear={clearToday} onSettings={() => setSettingsOpen(true)} onHistory={() => setHistoryOpen(true)} />
 
       <Hero totals={totals} />
 
@@ -2054,6 +2382,7 @@ function App() {
           onUpdate={updateMeal}
           onRemove={removeMeal}
           onSaveQuick={saveForQuickAdd}
+          onRebuild={(m) => { setEditingBuilderMeal(m); setSheetTab('builder'); setSheetOpen(true); }}
           recentlyAddedId={recentlyAddedId}
         />
       )}
@@ -2064,13 +2393,23 @@ function App() {
 
       {sheetOpen && (
         <AddSheet
-          onClose={() => setSheetOpen(false)}
-          onAdd={(m) => { addMeal(m); }}
+          onClose={() => { setSheetOpen(false); setEditingBuilderMeal(null); }}
+          onAdd={(m) => {
+            if (editingBuilderMeal) {
+              updateMeal(editingBuilderMeal.id, m);
+              setEditingBuilderMeal(null);
+              setSheetOpen(false);
+            } else {
+              addMeal(m);
+            }
+          }}
+          onSavePreset={saveForQuickAdd}
           presets={PRESETS}
           savedMeals={savedMeals}
           onRemoveSaved={removeSaved}
           tab={sheetTab}
           setTab={setSheetTab}
+          editingBuilderMeal={editingBuilderMeal}
         />
       )}
 
@@ -2083,12 +2422,20 @@ function App() {
           onReset={() => { setTargets(DEFAULT_TARGETS); }}
         />
       )}
+      {historyOpen && (
+        <HistorySheet
+          targets={targets}
+          activeKey={activeKey}
+          todayMeals={meals}
+          onClose={() => setHistoryOpen(false)}
+        />
+      )}
     </div>
     </TargetsContext.Provider>
   );
 }
 
-function Topbar({ now, paceStatus, paceMsg, mealCount, onClear, onSettings }) {
+function Topbar({ now, paceStatus, paceMsg, mealCount, onClear, onSettings, onHistory }) {
   const time = now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
   return (
     <div className="topbar">
@@ -2108,6 +2455,9 @@ function Topbar({ now, paceStatus, paceMsg, mealCount, onClear, onSettings }) {
         {mealCount > 0 && (
           <button className="ghost-btn" onClick={onClear} title="Clear today">CLEAR</button>
         )}
+        <button className="gear-btn" onClick={onHistory} title="History" aria-label="History">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/><path d="M12 7v5l3.5 2"/></svg>
+        </button>
         <button className="gear-btn" onClick={onSettings} title="Edit targets" aria-label="Edit targets">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M4 5.5C4 4.67 4.67 4 5.5 4H17a3 3 0 0 1 3 3v12.2a.8.8 0 0 1-1.2.7L17 19l-2 1-2-1-2 1-2-1-2 1-1.8-1.1A.8.8 0 0 1 4 19.2V5.5z"/><path d="M8 9h8M8 12.5h8M8 16h5"/></svg>
         </button>
@@ -2486,7 +2836,7 @@ function ProteinDensityChart({ meals }) {
   );
 }
 
-function MealList({ meals, editingId, onEdit, onUpdate, onRemove, onSaveQuick, recentlyAddedId }) {
+function MealList({ meals, editingId, onEdit, onUpdate, onRemove, onSaveQuick, onRebuild, recentlyAddedId }) {
   return (
     <div className="card" style={{ marginTop: 10 }}>
       <div className="card-head">
@@ -2505,13 +2855,14 @@ function MealList({ meals, editingId, onEdit, onUpdate, onRemove, onSaveQuick, r
           onEdit={() => onEdit(m.id)}
           onRemove={() => onRemove(m.id)}
           onSaveQuick={() => onSaveQuick(m)}
+          onRebuild={m._builder ? () => onRebuild(m) : null}
         />
       ))}
     </div>
   );
 }
 
-function MealItem({ meal, flash, onEdit, onRemove, onSaveQuick }) {
+function MealItem({ meal, flash, onEdit, onRemove, onSaveQuick, onRebuild }) {
   const ratio = ppKc(meal);
   const fiberBolus = meal.fiber > 17;
   const role = categoryFromPp(ratio);
@@ -2543,6 +2894,11 @@ function MealItem({ meal, flash, onEdit, onRemove, onSaveQuick }) {
         <button className="icon-btn" onClick={onSaveQuick} title="Save for quick-add" aria-label="Save">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2l3 7 7 .5-5.5 4.5 1.5 7-6-3.8L6 21l1.5-7L2 9.5 9 9z"/></svg>
         </button>
+        {onRebuild && (
+          <button className="icon-btn" onClick={onRebuild} title="Rebuild components" aria-label="Rebuild">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>
+          </button>
+        )}
         <button className="icon-btn" onClick={onEdit} title="Edit" aria-label="Edit">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 1 1 3 3L7 19l-4 1 1-4z"/></svg>
         </button>
@@ -2604,7 +2960,7 @@ function FabAdd({ onClick }) {
   );
 }
 
-function AddSheet({ onClose, onAdd, presets, savedMeals, onRemoveSaved, tab, setTab }) {
+function AddSheet({ onClose, onAdd, onSavePreset, presets, savedMeals, onRemoveSaved, tab, setTab, editingBuilderMeal }) {
   const [pulseId, setPulseId] = useState(null);
   const handleAdd = (m) => {
     setPulseId(m.name);
@@ -2619,10 +2975,10 @@ function AddSheet({ onClose, onAdd, presets, savedMeals, onRemoveSaved, tab, set
       <div className="sheet" role="dialog" aria-modal="true">
         <div className="sheet-handle" />
         <div className="sheet-head">
-          <div className="sheet-title">Add meal</div>
+          <div className="sheet-title">{editingBuilderMeal ? 'Edit meal' : 'Add meal'}</div>
           <div className="sheet-tabs" role="tablist">
-            <button className={`sheet-tab ${tab === 'quick' ? 'active' : ''}`} onClick={() => setTab('quick')}>Preset</button>
-            <button className={`sheet-tab ${tab === 'custom' ? 'active' : ''}`} onClick={() => setTab('custom')}>Custom</button>
+            <button className={`sheet-tab ${tab === 'quick' ? 'active' : ''}`} onClick={() => setTab('quick')} disabled={!!editingBuilderMeal}>Preset</button>
+            <button className={`sheet-tab ${tab === 'custom' ? 'active' : ''}`} onClick={() => setTab('custom')} disabled={!!editingBuilderMeal}>Custom</button>
             <button className={`sheet-tab ${tab === 'builder' ? 'active' : ''}`} onClick={() => setTab('builder')}>Builder</button>
           </div>
           <button className="icon-btn" onClick={onClose} aria-label="Close">
@@ -2640,7 +2996,12 @@ function AddSheet({ onClose, onAdd, presets, savedMeals, onRemoveSaved, tab, set
               pulseId={pulseId}
             />
           ) : tab === 'builder' ? (
-            <BuilderAdd onSubmit={(m) => { handleAdd(m); }} onCancel={onClose} />
+            <BuilderAdd
+              onSubmit={(m) => { handleAdd(m); }}
+              onCancel={onClose}
+              onSavePreset={onSavePreset}
+              editingMeal={editingBuilderMeal}
+            />
           ) : (
             <CustomAdd onSubmit={(m) => { handleAdd(m); }} onCancel={onClose} />
           )}
@@ -2773,24 +3134,189 @@ function QuickAdd({ presets, savedMeals, onAdd, onRemoveSaved, pulseId }) {
   );
 }
 
-function BuilderAdd({ onSubmit, onCancel }) {
-  const [rows, setRows] = useState([]);
-  const [query, setQuery] = useState('');
-  const [name, setName] = useState('');
+// Recent components persistence (last 6 per folder).
+const RECENT_KEY = 'nutrition.builder.recent.v1';
+const RECENT_LIMIT = 6;
+function loadRecent() {
+  try {
+    const raw = localStorage.getItem(RECENT_KEY);
+    if (!raw) return {};
+    const obj = JSON.parse(raw);
+    return obj && typeof obj === 'object' ? obj : {};
+  } catch (e) { return {}; }
+}
+function saveRecent(r) {
+  try { localStorage.setItem(RECENT_KEY, JSON.stringify(r)); } catch (e) {}
+}
 
-  const addComponent = (c) => {
-    const key = Date.now() + Math.random();
-    setRows(prev => [...prev, { key, componentId: c.id, qty: c.defaultQty, unit: c.defaultUnit }]);
-    setQuery('');
+function BuilderAdd({ onSubmit, onCancel, onSavePreset, editingMeal }) {
+  const [rows, setRows] = useState(() => {
+    if (editingMeal && Array.isArray(editingMeal._builder)) {
+      return editingMeal._builder.map(r => ({
+        key: Date.now() + Math.random(),
+        componentId: r.componentId,
+        qty: r.qty,
+        unit: r.unit,
+      }));
+    }
+    return [];
+  });
+  const [query, setQuery] = useState('');
+  const [name, setName] = useState(editingMeal ? editingMeal.name : '');
+  const [activeFolder, setActiveFolder] = useState('protein');
+  const [recent, setRecent] = useState(() => loadRecent());
+  const [toast, setToast] = useState(null);
+  const searchRef = useRef(null);
+  const toastTimerRef = useRef(null);
+  const longPressTimerRef = useRef(null);
+
+  // Focus search when builder mounts.
+  useEffect(() => {
+    const t = setTimeout(() => { try { searchRef.current && searchRef.current.focus(); } catch(e) {} }, 50);
+    return () => clearTimeout(t);
+  }, []);
+
+  // Cleanup toast timer on unmount.
+  useEffect(() => () => { if (toastTimerRef.current) clearTimeout(toastTimerRef.current); }, []);
+
+  const fireToast = (msg) => {
+    setToast({ msg, id: Date.now() });
+    if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
+    toastTimerRef.current = setTimeout(() => setToast(null), 1400);
   };
+
+  const pushRecent = (c) => {
+    setRecent(prev => {
+      const cur = prev[c.group] || [];
+      const next = [c.id, ...cur.filter(id => id !== c.id)].slice(0, RECENT_LIMIT);
+      const out = { ...prev, [c.group]: next };
+      saveRecent(out);
+      return out;
+    });
+  };
+
+  // Tap a tile: bump qty on existing row by one defaultQty step, or add a new row.
+  const addOrBump = (c) => {
+    setRows(prev => {
+      const existingIdx = prev.findIndex(r => r.componentId === c.id);
+      if (existingIdx >= 0) {
+        const next = [...prev];
+        const cur = next[existingIdx];
+        // bump in cur.unit if it matches default unit; else just bump default qty.
+        const stepUnit = cur.unit === c.defaultUnit ? cur.unit : c.defaultUnit;
+        const stepBy = c.defaultQty;
+        const curQty = Number(cur.qty) || 0;
+        next[existingIdx] = { ...cur, qty: curQty + stepBy, unit: stepUnit };
+        fireToast(`+${stepBy}${stepUnit === 'pc' ? '' : stepUnit} ${c.name.toLowerCase()}`);
+        return next;
+      }
+      const key = Date.now() + Math.random();
+      fireToast(`Added ${c.name.toLowerCase()}`);
+      return [...prev, { key, componentId: c.id, qty: c.defaultQty, unit: c.defaultUnit }];
+    });
+    pushRecent(c);
+  };
+
+  // Step qty up or down on the (single) existing row by one `step`.
+  const stepQty = (c, dir) => {
+    setRows(prev => {
+      const idx = prev.findIndex(r => r.componentId === c.id);
+      if (idx < 0) return prev;
+      const next = [...prev];
+      const cur = next[idx];
+      const step = c.step || c.defaultQty;
+      const raw = (Number(cur.qty) || 0) + dir * step;
+      // Snap to step grid + round to avoid 0.30000004
+      const snapped = Math.round(raw / step) * step;
+      const newQty = Math.max(0, Math.round(snapped * 100) / 100);
+      if (newQty === 0) {
+        return prev.filter(r => r.componentId !== c.id);
+      }
+      next[idx] = { ...cur, qty: newQty };
+      return next;
+    });
+  };
+
+  // Remove ALL rows of this component (used by long-press and badge tap).
+  const removeAllOf = (c) => {
+    setRows(prev => prev.filter(r => r.componentId !== c.id));
+    fireToast(`Removed ${c.name.toLowerCase()}`);
+  };
+
+  // Long-press handlers on tiles.
+  const onTilePressStart = (c) => {
+    if (longPressTimerRef.current) clearTimeout(longPressTimerRef.current);
+    longPressTimerRef.current = setTimeout(() => {
+      removeAllOf(c);
+      longPressTimerRef.current = 'fired';
+    }, 550);
+  };
+  const onTilePressEnd = (c, e) => {
+    const fired = longPressTimerRef.current === 'fired';
+    if (longPressTimerRef.current && longPressTimerRef.current !== 'fired') clearTimeout(longPressTimerRef.current);
+    longPressTimerRef.current = null;
+    if (fired) { e && e.preventDefault(); return false; }
+    return true;
+  };
+  const onTileClick = (c, e) => {
+    // If long-press already fired, swallow the click.
+    if (longPressTimerRef.current === 'fired') {
+      longPressTimerRef.current = null;
+      e && e.preventDefault();
+      return;
+    }
+    addOrBump(c);
+  };
+
   const updateRow = (key, patch) => setRows(prev => prev.map(r => r.key === key ? { ...r, ...patch } : r));
   const removeRow = (key) => setRows(prev => prev.filter(r => r.key !== key));
 
-  const matches = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    if (!q) return [];
-    return BUILDER_COMPONENTS.filter(c => c.name.toLowerCase().includes(q)).slice(0, 6);
-  }, [query]);
+  const q = query.trim().toLowerCase();
+
+  // Per-folder filtered + sub-grouped library (with Recent prepended).
+  const folderLibrary = useMemo(() => {
+    const out = {};
+    const byId = new Map(BUILDER_COMPONENTS.map(c => [c.id, c]));
+    for (const g of BUILDER_GROUPS) {
+      const inGroup = BUILDER_COMPONENTS.filter(c => c.group === g.key);
+      const filtered = q ? inGroup.filter(c => c.name.toLowerCase().includes(q)) : inGroup;
+      const subs = {};
+      const subOrder = [];
+      // Recent (only if not searching, and we actually have recent ids for this folder)
+      if (!q) {
+        const ids = (recent[g.key] || []).map(id => byId.get(id)).filter(Boolean);
+        if (ids.length) {
+          subs['Recent'] = ids;
+          subOrder.push('Recent');
+        }
+      }
+      for (const c of filtered) {
+        const sub = c.sub || 'Other';
+        if (!subs[sub]) { subs[sub] = []; subOrder.push(sub); }
+        subs[sub].push(c);
+      }
+      out[g.key] = { total: inGroup.length, shown: filtered.length, subs, subOrder };
+    }
+    return out;
+  }, [q, recent]);
+
+  // Selection counts per component id (multiple rows of same id stack).
+  const selectionCount = useMemo(() => {
+    const out = {};
+    for (const r of rows) out[r.componentId] = (out[r.componentId] || 0) + 1;
+    return out;
+  }, [rows]);
+
+  // Folder selection counts (number of rows with that group).
+  const folderSelected = useMemo(() => {
+    const out = {};
+    for (const r of rows) {
+      const c = BUILDER_COMPONENTS.find(x => x.id === r.componentId);
+      if (!c) continue;
+      out[c.group] = (out[c.group] || 0) + 1;
+    }
+    return out;
+  }, [rows]);
 
   const grouped = useMemo(() => {
     const out = {};
@@ -2801,6 +3327,32 @@ function BuilderAdd({ onSubmit, onCancel }) {
       out[c.group].push({ ...r, _comp: c });
     }
     return out;
+  }, [rows]);
+
+  // Compute macros for a row: qty in row.unit → multiply unitFactor → ratio over defaultQty.
+  const macrosForRow = (r) => {
+    const c = BUILDER_COMPONENTS.find(x => x.id === r.componentId);
+    if (!c) return { kcal: 0, p: 0, f: 0, c: 0, fiber: 0 };
+    const factor = (c.unitFactor && c.unitFactor[r.unit] != null) ? c.unitFactor[r.unit] : 1;
+    const qtyInDefault = (Number(r.qty) || 0) * factor;
+    const ratio = qtyInDefault / c.defaultQty;
+    const m = c.macros;
+    return {
+      kcal: m.kcal * ratio,
+      p: m.p * ratio,
+      f: m.f * ratio,
+      c: m.c * ratio,
+      fiber: m.fiber * ratio,
+    };
+  };
+
+  const totals = useMemo(() => {
+    const t = { kcal: 0, p: 0, f: 0, c: 0, fiber: 0 };
+    for (const r of rows) {
+      const m = macrosForRow(r);
+      t.kcal += m.kcal; t.p += m.p; t.f += m.f; t.c += m.c; t.fiber += m.fiber;
+    }
+    return t;
   }, [rows]);
 
   const summary = useMemo(() => {
@@ -2815,15 +3367,39 @@ function BuilderAdd({ onSubmit, onCancel }) {
     }).filter(Boolean).join(' + ');
   }, [rows]);
 
+  const ppk = totals.kcal > 0 ? (totals.p / totals.kcal) * 100 : 0;
+  const ppkTier = totals.kcal > 0 ? categoryFromPp(ppk) : '';
+
+  const buildPayload = () => {
+    const finalName = name.trim() || summary;
+    return {
+      name: finalName,
+      kcal: Math.round(totals.kcal),
+      p: Math.round(totals.p * 10) / 10,
+      f: Math.round(totals.f * 10) / 10,
+      c: Math.round(totals.c * 10) / 10,
+      fiber: Math.round(totals.fiber * 10) / 10,
+      _builder: rows.map(r => ({ componentId: r.componentId, qty: Number(r.qty) || 0, unit: r.unit })),
+    };
+  };
+
   const submit = () => {
     if (!rows.length) return;
-    const finalName = name.trim() || summary;
-    onSubmit({
-      name: finalName,
-      kcal: 0, p: 0, f: 0, c: 0, fiber: 0,
-      _builder: rows.map(r => ({ componentId: r.componentId, qty: Number(r.qty) || 0, unit: r.unit })),
-    });
+    onSubmit(buildPayload());
     setRows([]); setName(''); setQuery('');
+  };
+
+  const savePreset = () => {
+    if (!rows.length || !onSavePreset) return;
+    const payload = buildPayload();
+    if (!name.trim()) {
+      const proposed = window.prompt('Name this preset', summary.length > 60 ? summary.slice(0, 57) + '…' : summary);
+      if (!proposed || !proposed.trim()) return;
+      payload.name = proposed.trim();
+      setName(payload.name);
+    }
+    onSavePreset(payload);
+    fireToast(`Saved "${payload.name}" to presets`);
   };
 
   return (
@@ -2831,11 +3407,24 @@ function BuilderAdd({ onSubmit, onCancel }) {
       <div className="builder-search-wrap">
         <svg className="builder-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
         <input
+          ref={searchRef}
           className="builder-search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Add component… try 'prawn', 'rice', 'roti'"
-          autoFocus
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' && q) {
+              // If exactly one match across all folders, add it.
+              const all = BUILDER_COMPONENTS.filter(c => c.name.toLowerCase().includes(q));
+              if (all.length === 1) {
+                addOrBump(all[0]);
+                setActiveFolder(all[0].group);
+                setQuery('');
+              }
+            } else if (e.key === 'Escape' && query) {
+              setQuery('');
+            }
+          }}
+          placeholder="Filter components…"
         />
         {query && (
           <button className="builder-search-clear" onClick={() => setQuery('')} aria-label="Clear">
@@ -2844,33 +3433,117 @@ function BuilderAdd({ onSubmit, onCancel }) {
         )}
       </div>
 
-      {query && (
-        <div className="builder-results">
-          {matches.length === 0 ? (
-            <div className="builder-empty">No match. Backend will resolve free-text later.</div>
-          ) : matches.map(c => (
-            <button key={c.id} className="builder-result" onClick={() => addComponent(c)}>
-              <span className="builder-result-name">{c.name}</span>
-              <span className="builder-result-meta mono">{c.defaultQty} {c.defaultUnit}</span>
-              <span className="builder-result-group mono">{c.group}</span>
+      <div className="builder-folders" role="tablist">
+        {BUILDER_GROUPS.map(g => {
+          const lib = folderLibrary[g.key];
+          const sel = folderSelected[g.key] || 0;
+          const isActive = activeFolder === g.key;
+          return (
+            <button
+              key={g.key}
+              className={`builder-folder ${isActive ? 'active' : ''}`}
+              onClick={() => setActiveFolder(g.key)}
+              role="tab"
+              aria-selected={isActive}
+            >
+              <span className="builder-folder-label">{g.label}</span>
+              <span className="builder-folder-meta mono">
+                {q ? `${lib.shown}/${lib.total}` : lib.total}
+                {sel > 0 && <> · <span className="sel">+{sel}</span></>}
+              </span>
             </button>
-          ))}
-        </div>
-      )}
+          );
+        })}
+      </div>
 
-      {!query && rows.length === 0 && (
-        <div className="builder-suggest">
-          <div className="sheet-section-title" style={{ marginBottom: 8 }}>Common starts</div>
-          <div className="builder-chip-row">
-            {BUILDER_COMPONENTS.slice(0, 8).map(c => (
-              <button key={c.id} className="builder-chip" onClick={() => addComponent(c)}>+ {c.name}</button>
-            ))}
-          </div>
+      <div className="builder-library">
+        {(() => {
+          const lib = folderLibrary[activeFolder];
+          if (!lib || (lib.subOrder.length === 0)) {
+            return <div className="builder-empty-folder">No matches in this folder.</div>;
+          }
+          return lib.subOrder.map(subKey => {
+            const items = lib.subs[subKey];
+            const showHead = items.length > 1 || subKey === 'Recent';
+            return (
+              <div key={subKey} className="builder-sub">
+                {showHead && (
+                  <div className="builder-sub-head">
+                    <span className="builder-sub-title">{subKey}</span>
+                    <span className="builder-sub-count mono">{items.length}</span>
+                  </div>
+                )}
+                <div className="builder-tiles">
+                  {items.map(c => {
+                    const row = rows.find(r => r.componentId === c.id);
+                    const selected = !!row;
+                    return (
+                      <div
+                        key={subKey + ':' + c.id}
+                        className={`builder-tile ${selected ? 'selected' : ''}`}
+                        role="button"
+                        tabIndex={0}
+                        onClick={(e) => onTileClick(c, e)}
+                        onMouseDown={() => onTilePressStart(c)}
+                        onMouseUp={(e) => onTilePressEnd(c, e)}
+                        onMouseLeave={(e) => onTilePressEnd(c, e)}
+                        onTouchStart={() => onTilePressStart(c)}
+                        onTouchEnd={(e) => onTilePressEnd(c, e)}
+                        onTouchCancel={(e) => onTilePressEnd(c, e)}
+                        onContextMenu={(e) => { e.preventDefault(); removeAllOf(c); }}
+                      >
+                        <span className="builder-tile-name">{c.name}</span>
+                        {selected ? (
+                          <span className="builder-tile-stepper" onClick={(e) => e.stopPropagation()} onMouseDown={(e) => e.stopPropagation()} onTouchStart={(e) => e.stopPropagation()}>
+                            <button
+                              className="builder-step-btn"
+                              onClick={(e) => { e.stopPropagation(); stepQty(c, -1); }}
+                              aria-label="Decrease"
+                            >−</button>
+                            <span className="builder-step-val mono">{row.qty}{row.unit === 'pc' ? '' : ' ' + row.unit}</span>
+                            <button
+                              className="builder-step-btn"
+                              onClick={(e) => { e.stopPropagation(); stepQty(c, +1); }}
+                              aria-label="Increase"
+                            >+</button>
+                          </span>
+                        ) : (
+                          <span className="builder-tile-meta mono">{c.defaultQty} {c.defaultUnit}</span>
+                        )}
+                        {selected && (
+                          <button
+                            className="builder-tile-badge"
+                            onClick={(e) => { e.stopPropagation(); removeAllOf(c); }}
+                            onMouseDown={(e) => e.stopPropagation()}
+                            onTouchStart={(e) => e.stopPropagation()}
+                            aria-label="Remove"
+                            title="Tap to remove"
+                          >
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                          </button>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          });
+        })()}
+      </div>
+
+      {toast && (
+        <div className="builder-toast-host" key={toast.id}>
+          <div className="builder-toast">{toast.msg}</div>
         </div>
       )}
 
       {rows.length > 0 && (
         <>
+          <div className="builder-selected-head">
+            <span className="sheet-section-title">In this meal</span>
+            <span className="builder-selected-meta mono">{rows.length} item{rows.length === 1 ? '' : 's'}</span>
+          </div>
           <div className="builder-stack">
             {BUILDER_GROUPS.map(g => {
               const items = grouped[g.key];
@@ -2910,7 +3583,27 @@ function BuilderAdd({ onSubmit, onCancel }) {
           <div className="builder-summary">
             <div className="builder-summary-eyebrow">Preview</div>
             <div className="builder-summary-text">{summary}</div>
-            <div className="builder-summary-stub mono">macros · resolved on save</div>
+            <div className="builder-summary-macros mono">
+              <span className="bsm-kcal">{Math.round(totals.kcal)} kcal</span>
+              <span className="bsm-sep">·</span>
+              <span>P {Math.round(totals.p * 10) / 10}</span>
+              <span className="bsm-sep">·</span>
+              <span>F {Math.round(totals.f * 10) / 10}</span>
+              <span className="bsm-sep">·</span>
+              <span>C {Math.round(totals.c * 10) / 10}</span>
+              {totals.fiber > 0.05 && (
+                <>
+                  <span className="bsm-sep">·</span>
+                  <span>Fib {Math.round(totals.fiber * 10) / 10}</span>
+                </>
+              )}
+              {totals.kcal > 0 && (
+                <>
+                  <span className="bsm-sep">·</span>
+                  <span className={`bsm-pp bsm-pp-${ppkTier}`}>{ppk.toFixed(1)} g/100k</span>
+                </>
+              )}
+            </div>
           </div>
 
           <div className="custom-form" style={{ marginTop: 12 }}>
@@ -2919,7 +3612,10 @@ function BuilderAdd({ onSubmit, onCancel }) {
 
           <div className="form-actions">
             <button className="btn btn-secondary" onClick={() => { setRows([]); setName(''); setQuery(''); }}>Clear</button>
-            <button className="btn" onClick={submit}>Add meal</button>
+            {onSavePreset && !editingMeal && (
+              <button className="btn btn-secondary" onClick={savePreset} title="Save this combo as a reusable preset">Save preset</button>
+            )}
+            <button className="btn" onClick={submit}>{editingMeal ? 'Save changes' : 'Add meal'}</button>
           </div>
         </>
       )}
@@ -3029,6 +3725,309 @@ function RangePair({ name, unit, minVal, maxVal, onMinChange, onMaxChange, slide
       {context && <div className="range-pair-context">{context}</div>}
       {error && <div className="field-error" style={{ marginTop: 8 }}>{error}</div>}
     </div>
+  );
+}
+
+function HistorySheet({ targets, activeKey, todayMeals, onClose }) {
+  const [range, setRange] = useState(7); // 7 or 30
+  const [days, setDays] = useState([]);
+  const [expanded, setExpanded] = useState({}); // { 'YYYY-MM-DD': true }
+
+  // Load all days in range
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      const out = [];
+      const today = new Date();
+      for (let i = 0; i < range; i++) {
+        const d = new Date(today);
+        d.setDate(today.getDate() - i);
+        const key = dateKey(d);
+        let mealsArr = [];
+        if (key === activeKey) {
+          mealsArr = todayMeals;
+        } else {
+          try {
+            const raw = await storage.get(key);
+            mealsArr = raw ? JSON.parse(raw) || [] : [];
+          } catch (e) { mealsArr = []; }
+        }
+        out.push({ key, date: d, meals: mealsArr });
+      }
+      if (!cancelled) setDays(out);
+    })();
+    return () => { cancelled = true; };
+  }, [range, activeKey, todayMeals]);
+
+  const dayTotals = (meals) => meals.reduce((acc, m) => ({
+    kcal: acc.kcal + (Number(m.kcal) || 0),
+    p:    acc.p    + (Number(m.p)    || 0),
+    f:    acc.f    + (Number(m.f)    || 0),
+    c:    acc.c    + (Number(m.c)    || 0),
+    fiber: acc.fiber + (Number(m.fiber) || 0),
+    count: acc.count + 1,
+  }), { kcal: 0, p: 0, f: 0, c: 0, fiber: 0, count: 0 });
+
+  // Aggregate stats over range
+  const stats = useMemo(() => {
+    const loggedDays = days.filter(d => d.meals.length > 0);
+    if (loggedDays.length === 0) {
+      return { logged: 0, total: days.length, avgKcal: 0, avgP: 0, hitDays: 0, ppKc: 0 };
+    }
+    let totalKcal = 0, totalP = 0, hitDays = 0;
+    for (const d of loggedDays) {
+      const t = dayTotals(d.meals);
+      totalKcal += t.kcal;
+      totalP += t.p;
+      const hit = t.p >= targets.protein
+        && t.kcal >= targets.caloriesFloor
+        && t.kcal <= targets.caloriesTarget * 1.05
+        && t.f >= targets.fat.min
+        && t.c >= targets.carbs.min
+        && t.fiber >= targets.fiber.min;
+      if (hit) hitDays++;
+    }
+    return {
+      logged: loggedDays.length,
+      total: days.length,
+      avgKcal: Math.round(totalKcal / loggedDays.length),
+      avgP: Math.round(totalP / loggedDays.length),
+      hitDays,
+      ppKc: totalKcal > 0 ? (totalP / totalKcal) * 100 : 0,
+    };
+  }, [days, targets]);
+
+  const fmtDate = (d) => {
+    const today = new Date(); today.setHours(0,0,0,0);
+    const dd = new Date(d); dd.setHours(0,0,0,0);
+    const diff = Math.round((today - dd) / 86400000);
+    const main = d.toLocaleDateString([], { weekday: 'short', month: 'short', day: 'numeric' });
+    let rel = '';
+    if (diff === 0) rel = 'Today';
+    else if (diff === 1) rel = 'Yesterday';
+    return { main, rel };
+  };
+
+  const exportCSV = () => {
+    const rows = [['date', 'time', 'name', 'sub', 'kcal', 'protein_g', 'fat_g', 'carbs_g', 'fiber_g']];
+    for (const d of [...days].reverse()) {
+      for (const m of d.meals) {
+        const at = m.addedAt ? new Date(m.addedAt) : null;
+        const time = at ? at.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
+        rows.push([
+          d.key,
+          time,
+          (m.name || '').replace(/"/g, '""'),
+          (m.sub || '').replace(/"/g, '""'),
+          Math.round(Number(m.kcal) || 0),
+          Math.round((Number(m.p) || 0) * 10) / 10,
+          Math.round((Number(m.f) || 0) * 10) / 10,
+          Math.round((Number(m.c) || 0) * 10) / 10,
+          Math.round((Number(m.fiber) || 0) * 10) / 10,
+        ]);
+      }
+    }
+    const csv = rows.map(r => r.map(v => {
+      const s = String(v);
+      return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+    }).join(',')).join('\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    const stamp = dateKey();
+    a.download = `nutrition-${range}d-${stamp}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  };
+
+  const printSummary = () => {
+    const w = window.open('', '_blank', 'width=800,height=900');
+    if (!w) return;
+    const rangeLabel = range === 7 ? 'Last 7 days' : 'Last 30 days';
+    const start = days[days.length - 1]?.date;
+    const end = days[0]?.date;
+    const dateRange = start && end ? `${start.toLocaleDateString()} – ${end.toLocaleDateString()}` : '';
+    const css = `
+      * { box-sizing: border-box; }
+      body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #111; max-width: 720px; margin: 24px auto; padding: 0 24px; line-height: 1.5; }
+      h1 { font-size: 22px; margin: 0 0 4px; }
+      .meta { color: #666; font-size: 13px; margin-bottom: 24px; }
+      .summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 28px; padding: 12px; background: #f7f7f7; border-radius: 6px; }
+      .summary-cell .l { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: #666; }
+      .summary-cell .v { font-size: 20px; font-weight: 600; font-feature-settings: 'tnum'; }
+      .day { border-top: 1px solid #ddd; padding: 14px 0; page-break-inside: avoid; }
+      .day-h { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
+      .day-h .d { font-weight: 600; }
+      .day-h .t { color: #666; font-size: 13px; font-feature-settings: 'tnum'; }
+      .day-totals { font-size: 12px; color: #444; font-feature-settings: 'tnum'; margin-bottom: 6px; }
+      .meal { font-size: 12px; padding: 2px 0 2px 12px; display: flex; justify-content: space-between; }
+      .meal .n { color: #222; }
+      .meal .m { color: #666; font-feature-settings: 'tnum'; }
+      .empty { color: #aaa; font-style: italic; font-size: 12px; padding: 4px 0 4px 12px; }
+      @media print { body { margin: 12mm; } }
+    `;
+    let html = `<!doctype html><html><head><meta charset="utf-8"><title>Nutrition · ${rangeLabel}</title><style>${css}</style></head><body>`;
+    html += `<h1>Nutrition history</h1><div class="meta">${rangeLabel} · ${dateRange}</div>`;
+    html += `<div class="summary">
+      <div class="summary-cell"><div class="l">Days logged</div><div class="v">${stats.logged}/${stats.total}</div></div>
+      <div class="summary-cell"><div class="l">Avg kcal</div><div class="v">${stats.avgKcal}</div></div>
+      <div class="summary-cell"><div class="l">Avg protein</div><div class="v">${stats.avgP}g</div></div>
+      <div class="summary-cell"><div class="l">All-targets days</div><div class="v">${stats.hitDays}</div></div>
+    </div>`;
+    for (const d of [...days].reverse()) {
+      const t = dayTotals(d.meals);
+      const f = fmtDate(d.date);
+      html += `<div class="day"><div class="day-h"><span class="d">${f.main}${f.rel ? ' · ' + f.rel : ''}</span><span class="t">${t.count} meals</span></div>`;
+      if (t.count === 0) {
+        html += `<div class="empty">No meals logged.</div>`;
+      } else {
+        html += `<div class="day-totals">${Math.round(t.kcal)} kcal · P ${Math.round(t.p)} · F ${Math.round(t.f)} · C ${Math.round(t.c)} · Fiber ${Math.round(t.fiber)}</div>`;
+        for (const m of d.meals) {
+          html += `<div class="meal"><span class="n">${(m.name || '').replace(/[<>]/g,'')}</span><span class="m">${Math.round(Number(m.kcal) || 0)} · P ${Math.round(Number(m.p) || 0)}</span></div>`;
+        }
+      }
+      html += `</div>`;
+    }
+    html += `</body></html>`;
+    w.document.open();
+    w.document.write(html);
+    w.document.close();
+    setTimeout(() => { try { w.focus(); w.print(); } catch (e) {} }, 250);
+  };
+
+  const proteinTarget = targets.protein;
+  const kcalTarget = targets.caloriesTarget;
+  const kcalFloor = targets.caloriesFloor;
+
+  return (
+    <>
+      <div className="sheet-backdrop" onClick={onClose} />
+      <div className="sheet" role="dialog" aria-modal="true">
+        <div className="sheet-handle" />
+        <div className="sheet-head">
+          <div className="sheet-title">History</div>
+          <div className="sheet-tabs" role="tablist">
+            <button className={`sheet-tab ${range === 7 ? 'active' : ''}`} onClick={() => setRange(7)} role="tab">7 days</button>
+            <button className={`sheet-tab ${range === 30 ? 'active' : ''}`} onClick={() => setRange(30)} role="tab">30 days</button>
+          </div>
+        </div>
+
+        <div className="sheet-body" style={{ padding: 0 }}>
+          <div className="history-head-row">
+            <span className="history-eyebrow">Range summary</span>
+            <span className="history-range">{stats.logged}/{stats.total} days logged</span>
+          </div>
+
+          <div className="history-summary">
+            <div className="history-summary-cell">
+              <div className="history-summary-label">Avg kcal</div>
+              <div className="history-summary-value">{stats.avgKcal || '—'}</div>
+              <div className="history-summary-sub">target {kcalTarget}</div>
+            </div>
+            <div className="history-summary-cell">
+              <div className="history-summary-label">Avg protein</div>
+              <div className="history-summary-value">{stats.avgP || '—'}<span style={{ fontSize: 12, color: 'var(--ink-2)' }}>g</span></div>
+              <div className="history-summary-sub">target {proteinTarget}g</div>
+            </div>
+            <div className="history-summary-cell">
+              <div className="history-summary-label">Avg ppKc</div>
+              <div className="history-summary-value">{stats.ppKc ? stats.ppKc.toFixed(1) : '—'}</div>
+              <div className="history-summary-sub">g per 100 kcal</div>
+            </div>
+            <div className="history-summary-cell">
+              <div className="history-summary-label">All-target days</div>
+              <div className="history-summary-value">{stats.hitDays}</div>
+              <div className="history-summary-sub">of {stats.logged} logged</div>
+            </div>
+          </div>
+
+          {days.length === 0 && (
+            <div className="history-empty">Loading…</div>
+          )}
+
+          {days.map(d => {
+            const t = dayTotals(d.meals);
+            const isToday = d.key === activeKey;
+            const isEmpty = t.count === 0;
+            const f = fmtDate(d.date);
+
+            // Calorie status
+            let kcalStatus = 'under';
+            if (t.kcal >= kcalFloor && t.kcal <= kcalTarget * 1.05) kcalStatus = 'hit';
+            else if (t.kcal > kcalTarget * 1.05) kcalStatus = 'over';
+            const kcalPct = Math.min(100, (t.kcal / kcalTarget) * 100);
+            const floorPct = Math.min(100, (kcalFloor / kcalTarget) * 100);
+
+            // Protein status
+            const proteinStatus = t.p >= proteinTarget ? 'hit' : 'under';
+            const proteinPct = Math.min(100, (t.p / proteinTarget) * 100);
+
+            const isExp = !!expanded[d.key];
+
+            return (
+              <div key={d.key} className={`history-day ${isToday ? 'today' : ''} ${isEmpty ? 'empty' : ''}`}>
+                <div className="history-day-head">
+                  <div className="history-day-date">
+                    {f.main}
+                    {f.rel && <span className="day-rel">{f.rel}</span>}
+                  </div>
+                  <div className="history-day-meta mono">
+                    {isEmpty ? 'No meals' : `${t.count} ${t.count === 1 ? 'meal' : 'meals'}`}
+                  </div>
+                </div>
+
+                {!isEmpty && (
+                  <>
+                    <div className="history-day-bars">
+                      <span className="label">Kcal</span>
+                      <span className="track">
+                        <span className={`fill ${kcalStatus}`} style={{ width: kcalPct + '%' }} />
+                        <span className="floor-tick" style={{ left: floorPct + '%' }} />
+                      </span>
+                      <span className={`val ${kcalStatus === 'hit' ? 'hit' : kcalStatus === 'over' ? 'over' : ''}`}>
+                        {Math.round(t.kcal)} / {kcalTarget}
+                      </span>
+                    </div>
+                    <div className="history-day-bars">
+                      <span className="label">Protein</span>
+                      <span className="track">
+                        <span className={`fill ${proteinStatus}`} style={{ width: proteinPct + '%' }} />
+                      </span>
+                      <span className={`val ${proteinStatus === 'hit' ? 'hit' : ''}`}>
+                        {Math.round(t.p)} / {proteinTarget}g
+                      </span>
+                    </div>
+
+                    <button className="history-day-toggle" onClick={() => setExpanded(p => ({ ...p, [d.key]: !p[d.key] }))}>
+                      {isExp ? '▾ HIDE MEALS' : '▸ SHOW MEALS'}
+                    </button>
+
+                    {isExp && (
+                      <div className="history-day-meals">
+                        {d.meals.map(m => (
+                          <div key={m.id} className="h-meal">
+                            <span className="h-meal-name">{m.name}</span>
+                            <span className="h-meal-macros">{Math.round(Number(m.kcal) || 0)} · P {Math.round(Number(m.p) || 0)}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </>
+                )}
+              </div>
+            );
+          })}
+
+          <div className="history-export-row">
+            <button className="btn btn-secondary" onClick={exportCSV}>Export CSV</button>
+            <button className="btn btn-secondary" onClick={printSummary}>Print summary</button>
+          </div>
+        </div>
+      </div>
+    </>
   );
 }
 
